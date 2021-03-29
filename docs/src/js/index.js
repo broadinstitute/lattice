@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     plotTypeDemo();
     coordinatedScatterDemo();
     initCovidMap();
+    comutDemo();
 });
 
 const plotTypeDemo = () => {
@@ -31,4 +32,14 @@ const coordinatedScatterDemo = () => {
 
     // demos
     init();
+};
+
+const comutDemo = () => {
+    const rootId = "comut-plot";
+    const dataFiles = {
+        config: "/src/config/config.json",
+        data: "/src/data/ACC-TP.coMut_table.json"
+    }
+
+    iCoMut.init(rootId, dataFiles);
 };
