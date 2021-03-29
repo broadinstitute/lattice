@@ -1,0 +1,20 @@
+{
+  "name": "lattice-homepage",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "build": "webpack --mode production --config webpack.config.js",
+    "serve": "webpack-dev-server --config webpack.config.dev.js"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Pattern Development Team",
+    "email": "pattern-dev@broadinstitute.org"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
