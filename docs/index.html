@@ -8,16 +8,118 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/src/css/libs/lattice-lib.min.css">
+    <link rel="stylesheet" type="text/css" href="/src/css/index.css">
+
+    <script src="/src/js/libs/random-generator.min.js"></script>
+    <script src="/src/js/libs/lattice-lib.min.js"></script>
+    <script src="/src/js/libs/icomut.min.js"></script>
+    <script src="/src/js/demos/basic-plots-demo.js"></script>
+    <script src="/src/js/demos/scatterplot-histograms-demo.js"></script>
+    <script src="/src/js/demos/covid-us-map-demo.js"></script>
 
     <!-- including for HTML hot reload using webpack -->
     <script src="dist/js/homepage.webpack.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>lattice.js</h1>
-        <h2>a library for creating coordinated multivariate visualizations</h2>
+        <h1>Lattice.js</h1>
+        <h2>A library for creating coordinated multivariate visualizations</h2>
     </header>
+
+    <section>
+        <h3>Plot demos</h3>
+        <div class="container">
+            <div class="row">
+                <div>
+                    <h4>area plot</h4>
+                    <div id="area-plot"></div> 
+                </div>
+                <div>
+                    <h4>barcode plot</h4>
+                    <div id="barcode-plot"></div> 
+                </div>
+                <div>
+                    <h4>bar plot</h4>
+                    <div id="bar-plot"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <h4>categorical heatmap</h4>
+                    <div id="cat-heatmap"></div>
+                </div>
+                <div>
+                    <h4>column plot</h4>
+                    <div id="column-plot"></div>
+                </div>
+                <div>
+                    <h4>heatmap</h4>
+                    <div id="heatmap"></div> 
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <h4>scatter plot</h4>
+                    <div id="scatter-plot"></div> 
+                </div>
+                <div>
+                    <h4>stacked bar plot</h4>
+                    <div id="stacked-bar"></div> 
+                </div>
+                <div>
+                    <h4>stacked column plot</h4>
+                    <div id="stacked-column"></div> 
+                </div>
+            </div>
+            
+            <hr>
+
+            <h3>available plot types</h3>
+            <div id="plot-types"></div>
+            <hr>
+
+            <h3>customizable config params for scatterplot</h3>
+            <div><pre id="plot-config-opt"></pre></div> 
+            <hr>
+        </div>
+    </section>
+
+    <section>
+        <h3>Lattice demo</h3>
+        <div class="container">
+            <h4>Scatter plot with summary histograms</h4>
+            <div>
+                Change distribution 
+                <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
+            </div>
+                    
+            <div id="lattice"></div>
+            <hr>
+            
+            <h3>lattice config customization</h3>
+            <div><pre id="lattice-config-opt"></pre></div>
+            <hr>
+        </div>
+    </section>
+
+    <section>
+        <h3>US COVID Map</h3>
+        <div class="container">
+            <h4>Daily new positive cases</h4>
+            <div id="covid-plot"></div> 
+        </div>
+    </section>
+
+    <section>
+        <h3>CoMut Plot</h3>
+        <div class="container">
+            <div id="comut-plot"></div> 
+        </div>
+    </section>
+
 </body>
 
 </html>
