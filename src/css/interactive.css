@@ -1,0 +1,5 @@
+/* default styling for items that are register a mouseover event */
+.ljs--mouseover {
+    stroke-width: 1;
+    stroke: #6a6a6a;
+}

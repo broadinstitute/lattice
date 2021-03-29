@@ -1,0 +1,26 @@
+{
+  "name": "pattern-viz",
+  "version": "1.0.0",
+  "description": "Visualizations developed by the Pattern team",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/broadinstitute/pattern-viz.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Pattern Development Team",
+    "email": "pattern-dev@broadinstitute.org"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/broadinstitute/pattern-viz/issues"
+  },
+  "homepage": "https://github.com/broadinstitute/pattern-viz#readme",
+  "dependencies": {
+    "d3": "^5.15.0"
+  }
+}

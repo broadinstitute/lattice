@@ -1,0 +1,10 @@
+.ljs--x-axis text, .ljs--y-axis text {
+    font-size:.55rem;
+    font-weight:300;
+    color:#808080;
+}
+
+.ljs--x-axis path, .ljs--x-axis > .tick line, .ljs--y-axis path, .ljs--y-axis > .tick line  {
+    stroke-width:.5px;
+    stroke: #B2B2B2;
+}
