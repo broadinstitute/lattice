@@ -1,9 +1,9 @@
-function init(){
+function initCovidMap(){
     const rootId = "covid-plot";
     // data source: "https://api.covidtracking.com/v1/states/daily.json" // they are soon going to stop updating data, not sure if the API will continue to work
     const dataFiles = [
-        "data/us.states.data.json",
-        "data/daily.03112021.json"
+        "src/data/us.states.data.json",
+        "src/data/daily.03112021.json"
     ];
     Promise.all(createPromises(dataFiles))
         .then((resp) => {

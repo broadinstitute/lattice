@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     plotTypeDemo();
     coordinatedScatterDemo();
+    initCovidMap();
 });
 
 const plotTypeDemo = () => {
@@ -27,7 +28,7 @@ const plotTypeDemo = () => {
 const coordinatedScatterDemo = () => {
     // show lattice config default settings
     document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
-    
+
     // demos
     init();
 };

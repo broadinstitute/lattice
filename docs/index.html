@@ -15,6 +15,7 @@
     <script src="/src/js/libs/lattice-lib.min.js"></script>
     <script src="/src/js/demos/basic-plots-demo.js"></script>
     <script src="/src/js/demos/scatterplot-histograms-demo.js"></script>
+    <script src="/src/js/demos/covid-us-map-demo.js"></script>
 
     <!-- including for HTML hot reload using webpack -->
     <script src="dist/js/homepage.webpack.min.js"></script>
@@ -100,6 +101,14 @@
             <h3>lattice config customization</h3>
             <div><pre id="lattice-config-opt"></pre></div>
             <hr>
+        </div>
+    </section>
+
+    <section>
+        <h3>US COVID Map</h3>
+        <div class="container">
+            <h5>Daily new positive cases</h5>
+            <div id="covid-plot"></div> 
         </div>
     </section>
 
