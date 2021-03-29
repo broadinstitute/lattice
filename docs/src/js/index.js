@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     plotTypeDemo();
+    coordinatedScatterDemo();
 });
 
 const plotTypeDemo = () => {
@@ -21,4 +22,12 @@ const plotTypeDemo = () => {
     demoScatterPlot();
     demoStackedBarPlot();
     demoStackedColumnPlot();
+};
+
+const coordinatedScatterDemo = () => {
+    // show lattice config default settings
+    document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
+    
+    // demos
+    init();
 };

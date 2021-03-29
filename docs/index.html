@@ -14,6 +14,7 @@
     <script src="/src/js/libs/random-generator.min.js"></script>
     <script src="/src/js/libs/lattice-lib.min.js"></script>
     <script src="/src/js/demos/basic-plots-demo.js"></script>
+    <script src="/src/js/demos/scatterplot-histograms-demo.js"></script>
 
     <!-- including for HTML hot reload using webpack -->
     <script src="dist/js/homepage.webpack.min.js"></script>
@@ -82,6 +83,25 @@
         </div>
     </section>
 
+    <section>
+        <h3>Lattice demo</h3>
+        <div class="container">
+            <h4>Scatter plot with summary histograms</h4>
+            <div>
+                Change distribution 
+                <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
+            </div>
+                    
+            <div id="lattice"></div>
+            <hr>
+            
+            <h3>lattice config customization</h3>
+            <div><pre id="lattice-config-opt"></pre></div>
+            <hr>
+        </div>
+    </section>
 
 </body>
 
