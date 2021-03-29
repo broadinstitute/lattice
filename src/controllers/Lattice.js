@@ -1,0 +1,216 @@
+import { Plot } from "./Plot";
+import { LATTICE_DEFAULT_PADDING } from "../utils/constants";
+import { createGroup, createSvg } from "../utils/plot-utils";
+import * as d3 from "d3";
+
+export class Lattice {
+    /**
+     * Constructor for Lattice controller. This is one of two entry points for a user using this library.
+     * @param {Array[Object]} plots - Specifies the configuration for each individual plot. Expected attributes are:
+     *                              - row
+     *                              - column
+     *                              - Plot object attributes (excluding rootId and parentId)
+     * @param {String} rootId - div ID that the SVG should be created in
+     * @param {Object} userInput - optional, available options are described 
+     * @param {Object} UNNAMED - contains all optional parameters
+     *          {String} parentId - div ID that the plot should be created in, if the SVG already exists
+     *          {Number} width - outer width of lattice plot
+     *          {Number} height - outer height of lattice plot
+     *          {Object} grid - attrs: {Int} rows, {Int} columns -- can be used to specify the number of rows and columns
+     *                                {Array[Object]} rowSizes -- can be used to customize size of each row
+     *                                                            attr: {Int} row, zero-based
+     *                                                                  {Float} size - Decimal between [0, 1]
+     *                                {Array[Object]} columnSizes -- can be used to customize size of each column
+     *                                                               attr: {Int} column, zero-based
+     *                                                                    {Float} size - Decimal between [0, 1]
+     *          {Object} padding - attr: top, right, bottom, left; padding to apply around the chart
+     */
+    constructor(plots, rootId, userInput) {
+        this.rootId = rootId;
+        this._userInput = userInput;
+
+        // initiate default values for the following properties
+        this.customizableProp = ["parentId",  "width", "height", "padding", "grid"];
+
+        this.parentId = undefined;
+        this.width = 1000;
+        this.height = 600;
+        this.grid = {
+            rows: d3.max(plots.map((x) => x.row)) + 1 || 1,
+            columns: d3.max(plots.map((x) => x.column)) + 1 || 1,
+            rowSizes: undefined,
+            columnSizes: undefined
+        };
+        this.gridInternal = {
+            plotSizes: undefined
+        };
+        this.title = undefined;
+        this.padding={
+            top:LATTICE_DEFAULT_PADDING, 
+            right:LATTICE_DEFAULT_PADDING, 
+            bottom:LATTICE_DEFAULT_PADDING, 
+            left:LATTICE_DEFAULT_PADDING
+        };
+
+        this.changeSettings(userInput);
+
+        // computed values
+        this.innerWidth = this.width - this.padding.left - this.padding.right;
+        this.innerHeight = this.height - this.padding.top - this.padding.bottom;
+
+        this.plots = plots.map(d => {
+            let plotConfig = {
+                width: this.innerWidth * this.gridInternal.plotSizes[d.row][d.column].colSize,
+                height: this.innerHeight * this.gridInternal.plotSizes[d.row][d.column].rowSize,
+            };
+            plotConfig = Object.assign({}, plotConfig, d);
+            const plot = new Plot(d.data, d.type, rootId, plotConfig);
+            plot.row = d.row;
+            plot.column = d.column;
+            plot.rowStart = this.gridInternal.plotSizes[d.row][d.column].rowStart;
+            plot.colStart = this.gridInternal.plotSizes[d.row][d.column].colStart;
+            return plot;
+        }, this);
+        this.xScale = d3.scaleLinear().domain([0, 1]).range([0, this.innerWidth]);
+        this.yScale = d3.scaleLinear().domain([0, 1]).range([0, this.innerHeight]);
+    }
+
+    changeSettings(userInput){
+        let lattice = this;
+        Object.keys(userInput).forEach((prop)=>{
+            switch(prop){
+            case "padding":
+                lattice.padding = Object.assign({}, lattice.padding, userInput.padding);
+                break;
+            case "grid":
+                lattice.grid = Object.assign({}, lattice.grid, userInput.grid);
+                break;
+            default:
+                lattice[prop] = userInput[prop];
+            }
+        });
+        lattice._validateGridInfo();
+        lattice._updateGridInfo();
+       
+    }
+
+    /**
+     * This method allows users to see what properties of the lattice object are customizable
+     */
+    getCustomizable(){
+        let config = {};
+        this.customizableProp.forEach((prop)=>{
+            config[prop] = this[prop];
+        });
+        return config;
+    }
+
+    /**
+     * rendering function for the lattice plot
+     * creates an SVG/group element as needed for the initial lattice, generates a group for each individual plot
+     * loops through to call each plot's render function after adding a parentId 
+     */
+    render() {
+        let svg;
+        if (this.parentId === undefined) {
+            this.parentId = createSvg(this.rootId, this.width, this.height, "lattice");
+        }
+        svg = createGroup(this.parentId, this.padding, "lattice");
+        
+        const svgId = svg.attr("id");
+        let plot = svg.selectAll(".ljs--lattice-plot").data(this.plots);
+        plot.enter()
+            .append("g")
+            .attr("class", "ljs--lattice-plot")
+            .attr("id", (d) => `${svgId}-${d.row}-${d.column}`) // this needs to be the same as the parentId given below
+            .attr("transform", (d) => {
+                let x = this.xScale(d.colStart);
+                let y = this.yScale(d.rowStart);
+                return `translate(${x}, ${y})`;
+            })
+            .each((d) =>{
+                d.parentId = `${svgId}-${d.row}-${d.column}`;
+                d.render();
+            })
+            .attr("opacity", 0)
+            .transition()
+            .duration(500)
+            .attr("opacity", 1);
+        plot.exit().remove();
+
+    }
+
+    /**
+     * Private function.
+     * Called by the constructor to validate that:
+     * - ALL rows are customized if passed in by user
+     * - ALL columns are customized if passed in by user
+     * - that the customized percentages add up to 1 (100%)
+     * If no customizations were made, calculates the needed grid information for generating lattice grid
+     */
+    _validateGridInfo() {
+        if (this.grid.rowSizes !== undefined) {
+            this.grid.rows = this.grid.rowSizes.length; // if the attr rowsizes is defined, the value of rows should be the array length of rowSizes, and will disregard user input
+            const rowGridTotal = this.grid.rowSizes.reduce((a, b) => a + b.size, 0);
+            if (Number(rowGridTotal.toPrecision(2)) != 1) {
+                console.error("In rowSizes, sum of all size values must add up to 1.");
+                throw "In rowSizes, sum of all size values must add up to 1.";
+            }
+        } else {
+            this.grid.rowSizes = [];
+            for (let i = 0; i < this.grid.rows; i++) {
+                this.grid.rowSizes.push({ row: i, size: 1/this.grid.rows });
+            }
+        }
+
+        if (this.grid.columnSizes !== undefined) {
+            this.grid.columns = this.grid.columnSizes.length;
+            const colGridTotal = this.grid.columnSizes.reduce((a, b) => a + b.size, 0);
+            if (Number(colGridTotal.toPrecision(2)) != 1) {
+                console.error("In columnSizes, sum of all size values must add up to 1.");
+                throw "In columnSizes, sum of all size values must add up to 1.";
+            }
+        } else {
+            this.grid.columnSizes = [];
+            for (let i = 0; i < this.grid.columns; i++) {
+                this.grid.columnSizes.push({ column: i, size: 1/this.grid.columns });
+            }
+        }
+    }
+
+    /**
+     * Private function.
+     * Calculates where each plot in the grid should start, as well as the relative height/width of each plot within the grid
+     */
+    _updateGridInfo() {
+        this.grid.rowSizes.sort((a, b) => a.row - b.row);
+        this.grid.columnSizes.sort((a, b) => a.column - b.column);
+        this.grid.rowSizes.forEach((d, i) => {
+            if (i == 0) {
+                d.start = 0;
+            } else {
+                const prev = this.grid.rowSizes[i-1];
+                d.start = prev.start + prev.size;
+            }
+        });
+        this.grid.columnSizes.forEach((d, i) => {
+            if (i == 0) {
+                d.start = 0;
+            } else {
+                const prev = this.grid.columnSizes[i-1];
+                d.start = prev.start + prev.size;
+            }
+        });
+
+        this.gridInternal.plotSizes = this.grid.rowSizes.map(i => {
+            return this.grid.columnSizes.map(j => {
+                return {
+                    rowSize: i.size,
+                    rowStart: i.start,
+                    colSize: j.size,
+                    colStart: j.start
+                };
+            });
+        });
+    }
+}
