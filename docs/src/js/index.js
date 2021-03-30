@@ -41,5 +41,5 @@ const comutDemo = () => {
         data: "/src/data/ACC-TP.coMut_table.json"
     }
 
-    iCoMut.init(rootId, dataFiles);
+    iCoMut.init(rootId, dataFiles, window.innerWidth * .8);
 };
