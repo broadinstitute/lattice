@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@media screen and (min-width: 512px){
+    .flex-container {
+        display: flex;
+    }
+}
 :root {
     --logo-blue: #96d0cb;
     --broad-grey: #63666a;
+    --broad-green: #80bc42;
     --light-grey: #eeeeee;
     --text: rgb(44, 46, 47);
 }
@@ -16,19 +22,18 @@ main, header, aside, section, footer {
     padding: 0.5rem;
     color: var(--broad-grey);
 }
+
 header {
     border-bottom:solid 1px var(--light-grey);
     min-height: 20px;
 }
+
 footer {
     border-top: solid 1px var(--light-grey);
     color: var(--text);
 }
-@media screen and (min-width: 512px){
-    .flex-container {
-        display: flex;
-    }
-}
+
+/* layout controls */
 .center {
     margin: auto;
     max-width: 72rem;
@@ -47,7 +52,34 @@ footer {
     color: var(--text);
     font-size: 0.875rem;
 }
+
 h1.header{
     color: var(--logo-blue);
     margin: 0px;
+}
+
+/* button */
+button {
+    background-color: var(--logo-blue); 
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8rem;
+}
+button:hover {
+    background-color: var(--broad-grey); 
+    color: white;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 6px 0 rgba(0,0,0,0.19);
+
+}
+button:focus {
+    outline: 0px;
+    background-color: var(--broad-grey); 
+}
+button:active {
+    transform: scale(0.95);
 }
