@@ -29,99 +29,102 @@
         <h1>Lattice.js</h1>
         <h2>A library for creating coordinated multivariate visualizations</h2>
     </header>
-
-    <section>
-        <h3>Plot demos</h3>
-        <div class="container">
-            <div class="row">
-                <div>
-                    <h4>area plot</h4>
-                    <div id="area-plot"></div> 
+    <main>
+        <section>
+            <h3>Plot demos</h3>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <h4>area plot</h4>
+                        <div id="area-plot"></div> 
+                    </div>
+                    <div>
+                        <h4>barcode plot</h4>
+                        <div id="barcode-plot"></div> 
+                    </div>
+                    <div>
+                        <h4>bar plot</h4>
+                        <div id="bar-plot"></div>
+                    </div>
                 </div>
-                <div>
-                    <h4>barcode plot</h4>
-                    <div id="barcode-plot"></div> 
+                <div class="row">
+                    <div>
+                        <h4>categorical heatmap</h4>
+                        <div id="cat-heatmap"></div>
+                    </div>
+                    <div>
+                        <h4>column plot</h4>
+                        <div id="column-plot"></div>
+                    </div>
+                    <div>
+                        <h4>heatmap</h4>
+                        <div id="heatmap"></div> 
+                    </div>
                 </div>
-                <div>
-                    <h4>bar plot</h4>
-                    <div id="bar-plot"></div>
+                <div class="row">
+                    <div>
+                        <h4>scatter plot</h4>
+                        <div id="scatter-plot"></div> 
+                    </div>
+                    <div>
+                        <h4>stacked bar plot</h4>
+                        <div id="stacked-bar"></div> 
+                    </div>
+                    <div>
+                        <h4>stacked column plot</h4>
+                        <div id="stacked-column"></div> 
+                    </div>
                 </div>
+                
+                <hr>
+    
+                <h3>available plot types</h3>
+                <div id="plot-types"></div>
+                <hr>
+    
+                <h3>customizable config params for scatterplot</h3>
+                <div><pre id="plot-config-opt"></pre></div> 
+                <hr>
             </div>
-            <div class="row">
+        </section>
+    
+        <section>
+            <h3>Lattice demo</h3>
+            <div class="container">
+                <h4>Scatter plot with summary histograms</h4>
                 <div>
-                    <h4>categorical heatmap</h4>
-                    <div id="cat-heatmap"></div>
+                    Change distribution 
+                    <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
                 </div>
-                <div>
-                    <h4>column plot</h4>
-                    <div id="column-plot"></div>
-                </div>
-                <div>
-                    <h4>heatmap</h4>
-                    <div id="heatmap"></div> 
-                </div>
+                        
+                <div id="lattice"></div>
+                <hr>
+                
+                <h3>lattice config customization</h3>
+                <div><pre id="lattice-config-opt"></pre></div>
+                <hr>
             </div>
-            <div class="row">
-                <div>
-                    <h4>scatter plot</h4>
-                    <div id="scatter-plot"></div> 
-                </div>
-                <div>
-                    <h4>stacked bar plot</h4>
-                    <div id="stacked-bar"></div> 
-                </div>
-                <div>
-                    <h4>stacked column plot</h4>
-                    <div id="stacked-column"></div> 
-                </div>
+        </section>
+    
+        <section>
+            <h3>US COVID Map</h3>
+            <div class="container">
+                <h4>Daily new positive cases</h4>
+                <div id="covid-plot"></div> 
             </div>
-            
-            <hr>
-
-            <h3>available plot types</h3>
-            <div id="plot-types"></div>
-            <hr>
-
-            <h3>customizable config params for scatterplot</h3>
-            <div><pre id="plot-config-opt"></pre></div> 
-            <hr>
-        </div>
-    </section>
-
-    <section>
-        <h3>Lattice demo</h3>
-        <div class="container">
-            <h4>Scatter plot with summary histograms</h4>
-            <div>
-                Change distribution 
-                <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
-                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
-                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
+        </section>
+    
+        <section>
+            <h3>CoMut Plot</h3>
+            <div class="container">
+                <div id="comut-plot"></div> 
             </div>
-                    
-            <div id="lattice"></div>
-            <hr>
-            
-            <h3>lattice config customization</h3>
-            <div><pre id="lattice-config-opt"></pre></div>
-            <hr>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section>
-        <h3>US COVID Map</h3>
-        <div class="container">
-            <h4>Daily new positive cases</h4>
-            <div id="covid-plot"></div> 
-        </div>
-    </section>
-
-    <section>
-        <h3>CoMut Plot</h3>
-        <div class="container">
-            <div id="comut-plot"></div> 
-        </div>
-    </section>
+    <footer></footer>
 
 </body>
 
