@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lattice Library Demos</title>
+        <!-- why do we need bootstrap css? -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="/build/css/lattice-lib.min.css">
+        <script src="/build/js/random-generator.min.js"></script>
+        <script src="/build/js/lattice-lib.min.js"></script>
+        <script src="/demo/scatterplot-histograms-demo.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid" style="padding: 2.5rem;">
+            <h2>Scatter plot with two-side histograms</h1>
+            <div>
+                Change distribution 
+                <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
+            </div>
+                    
+            <div id="lattice" style="padding: 2.5rem;"></div>
+           
+            <hr>
+            <h3>lattice config customization</h2>
+            <div><pre id="lattice-config-opt"></pre></div>
+            <hr>
+            <h3>plot config customization</h2>
+            <div><pre id="plot-config-opt"></pre></div> 
+            <hr>
+            <br>
+        </div>
+    </body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // show lattice config default settings
+        document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
+        // show plot config default settings
+        document.getElementById("plot-config-opt").innerHTML = LatticeLib.getPlotOptions();
+        
+        // demos
+        init();
+    });
+</script>

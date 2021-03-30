@@ -1,0 +1,241 @@
+{
+    "excludedSamples": ["all_q"],
+    "panels": [
+        {
+            "id": "MutationRate",
+            "label": "Mutation Rate",
+            "searchKeyword": "rate_",
+            "displayLegend": true,
+            "row": 0,
+            "panelOptions": {},
+            "colors": ["#376770", "#9bcad3"],
+            "plots": [
+                {
+                    "column": 2,
+                    "plotType": "stackedcolumnplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "Mutations per Mb" } 
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 0 }
+                    }
+                }
+            ]
+            }, {
+            "id": "MutationSignature",
+            "label": "Mutation Signature",
+            "searchKeyword": "MutsigCateg_",
+            "displayLegend": true,
+            "row": 1,
+            "panelOptions": {},
+            "colors": ["#C72C43", "#F67F55", "#FCD97F", "#E2F590", "#8BCD84"],
+            "plots": [
+                {
+                    "column": 2,
+                    "plotType": "stackedcolumnplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "Mutation" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 0 }
+                    }
+                }
+            ]
+        }, {
+            "id": "VitalStatus",
+            "label": "VitalStatus",
+            "searchKeyword": "CLI_vitalstatus",
+            "displayLegend": true,
+            "row": 2,
+            "panelOptions": {},
+            "colors": ["#800040", "#535353"],
+            "plots": [
+                {
+                    "column": 2,
+                    "plotType": "stripplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "Vital status" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 0 }
+                    }
+                }
+            ]
+        }, {
+            "id": "Histology",
+            "label": "Histology",
+            "searchKeyword": "CLI_histology",
+            "displayLegend": true,
+            "row": 3,
+            "panelOptions": {},
+            "colors": ["#BDF7FD", "#FEBF85", "#B87DB2", "#388885", "#C1EFAE", "#845930", "#1F4951", "#376770", "#AD5B56", "#E6A561", "#333333", "#3A4B4D", "#6F9196", "#D1D1D1"],
+            "plots": [
+                {
+                    "column": 2,
+                    "plotType": "stripplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "Histology" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 0 }
+                    }
+                }
+            ]
+        }, {
+            "id": "GeneMutation",
+            "label": "Gene Mutation",
+            "searchKeyword": "SMG_mutsig_",
+            "displayLegend": true,
+            "row": 4,
+            "panelOptions": {
+                "sort": "count",
+                "limit": 25,
+                "clusterKey": {
+                    "0": "No Mutation",
+                    "1": "Syn",
+                    "2": "In-frame INDEL",
+                    "3": "Other Non Syn",
+                    "4": "Missense",
+                    "5": "Splice Site",
+                    "6": "Frameshift",
+                    "7": "Nonsense"
+                }
+            },
+            "colors": ["#FFF", "#59D0F4", "#376770", "#639D4B", "#004080", "#0080ff", "#A6DA8F", "#EA89DA"],
+            "plots": [
+                {
+                    "column": 1,
+                    "plotType": "stackedbarplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": true, "title": "" },
+                            "y": { "display": false, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10 }
+                    }
+                }, {
+                    "column": 2,
+                    "plotType": "categoricalheatmap",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10 }
+                    }
+                }, {
+                    "column": 3,
+                    "plotType": "heatmap",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": false, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10, "left": 10 }
+                    }
+                }
+            ]
+        }, {
+            "id": "CopyNumberGain",
+            "label": "Copy Number Gain",
+            "searchKeyword": "Amp_",
+            "displayLegend": true,
+            "row": 5,
+            "panelOptions": {
+                "sort": "qval",
+                "limit": 0.01,
+                "clusterKey": {
+                    "0": "No Change",
+                    "1": "Deletion",
+                    "2": "Loss",
+                    "3": "Gain",
+                    "4": "Amplification",
+                    "5": "NA"
+                }
+            },
+            "colors": ["#FFF", "#2B69CA", "#68AEFF", "#FF5468", "#FF0825", "#EEE"],
+            "plots": [
+                {
+                    "column": 1,
+                    "plotType": "stackedbarplot",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": true, "title": "" },
+                            "y": { "display": false, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10 }
+                    }
+                }, {
+                    "column": 2,
+                    "plotType": "categoricalheatmap",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": true, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10 }
+                    }
+                }, {
+                    "column": 3,
+                    "plotType": "heatmap",
+                    "plotOptions": {
+                        "axis": {
+                            "x": { "display": false, "title": "" },
+                            "y": { "display": false, "title": "" }
+                        },
+                        "padding": { "top": 10, "bottom": 10, "right": 10, "left": 10 }
+                    }
+                }
+            ]
+        }
+    ],
+    "sampleBasedColumn": 2,
+    "initialSort": {
+        "dataType": "MutationRate",
+        "order": 1
+    },
+    "grid": {
+        "columns": 4,
+        "rows": 4,
+        "columnSizes": [
+            {
+                "column": 0,
+                "size": 0.16
+            }, {
+                "column": 1,
+                "size": 0.16
+            }, {
+                "column": 2,
+                "size": 0.64
+            }, {
+                "column": 3,
+                "size": 0.05
+            }
+        ],
+        "rowSizes": [
+            {
+                "row": 0,
+                "size": 0.15
+            }, {
+                "row": 1,
+                "size": 0.15
+            }, {
+                "row": 2,
+                "size": 0.05
+            }, {
+                "row": 3,
+                "size": 0.05
+            }, {
+                "row": 4,
+                "size": 0.5
+            }, {
+                "row": 5,
+                "size": 0.1
+            }
+        ]
+    }
+}

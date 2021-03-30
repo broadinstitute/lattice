@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Plots in Lattice.js</title>
+        <!-- why do we need bootstrap css? -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="/build/css/lattice-lib.min.css">
+        <script src="/build/js/random-generator.min.js"></script>
+        <script src="/build/js/lattice-lib.min.js"></script>
+        <script src="/demo/basic-plots-demo.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid" style="padding: 2.5rem;">
+            <h2>Available plot types in Lattice.js</h2>
+            <p></p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>area plot</h4>
+                    <div id="area-plot" style="padding: 2.5rem;"></div> 
+                </div>
+                <div class="col-md-4">
+                    <h4>barcode plot</h4>
+                    <div id="barcode-plot" style="padding: 2.5rem;"></div> 
+                </div>
+                <div class="col-md-4">
+                    <h4>bar plot</h4>
+                    <div id="bar-plot" style="padding: 2.5rem;"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>categorical heatmap</h4>
+                    <div id="cat-heatmap" style="padding: 2.5rem;"></div>
+                </div>
+                <div class="col-md-4">
+                    <h4>column plot</h4>
+                    <div id="column-plot" style="padding: 2.5rem;"></div>
+                </div>
+                <div class="col-md-4">
+                    <h4>heatmap</h4>
+                    <div id="heatmap" style="padding: 2.5rem;"></div> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>scatter plot</h4>
+                    <div id="scatter-plot" style="padding: 2.5rem;"></div> 
+                </div>
+                <div class="col-md-4">
+                    <h4>stacked bar plot</h4>
+                    <div id="stacked-bar" style="padding: 2.5rem;"></div> 
+                </div>
+                <div class="col-md-4">
+                    <h4>stacked column plot</h4>
+                    <div id="stacked-column" style="padding: 2.5rem;"></div> 
+                </div>
+            </div>
+            <hr>
+            <h3>available plot types</h3>
+            <div id="plot-types"></div>
+            <hr>
+
+            <h3>customizable config params for scatterplot</h3>
+            <div><pre id="plot-config-opt"></pre></div> 
+            <hr>
+        </div>
+    </body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // list all plot types in the Lattice Library
+        document.getElementById("plot-types").innerHTML = Object.values(LatticeLib.showAvailablePlotTypes()).join("<br>");
+        
+        // show plot config default settings
+        document.getElementById("plot-config-opt").innerHTML = LatticeLib.getPlotOptions();
+        
+        // demos
+        demoAreaPlot();
+        demoBarcodePlot();
+        demoBarPlot();
+
+        demoColumnPlot();
+        demoCategoricalHeatmap();
+        demoHeatmap();
+
+        demoScatterPlot();
+        demoStackedBarPlot();
+        demoStackedColumnPlot();
+    });
+   
+
+    
+</script>
