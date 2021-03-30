@@ -1,4 +1,4 @@
-function init(distri="randomNormal"){
+function demoScatterHistograms(distri="randomNormal"){
     // a lattice
     // TODO: need more contig options
     const data = RandomDataLib.createRandomNumericalData(5000, distri);
