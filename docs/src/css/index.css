@@ -31,18 +31,21 @@ footer {
         display: flex;
     }
 }
-.wrapper {
+.screen-wrap {
     margin: auto;
     max-width: 72rem;
 }
+.flex-wrap    { 
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  } 
 .flex-box {
     flex: 0 1 256px;
 }
+
 .content {
-    flex: 1;
     color: var(--text);
     margin-top: 2rem;
-    font-family: 'Raleway', sans-serif;
     font-size: 0.875rem;
 }
 h1.header{

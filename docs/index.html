@@ -30,18 +30,21 @@
         </h1>
         <small>A library for creating coordinated multivariate visualizations</small>
     </header>
-    <main class="flex-container wrapper">
-
-        <section class="content">
-            
-            <h3>Plot demos</h3>
-            <div>
-                <div>
+    <main class="wrapper">
+        <section class="flex-container">  
+            <aside class="flex-box">
+                <h3>available plot types</h3>
+                <div id="plot-types"></div>     
+            </aside> 
+           
+            <div class="content">
+                <h3>Plot demos</h3>
+                <div class="flex-container flex-wrap">
                     <div class="flex-box">
                         <h4>area plot</h4>
                         <div id="area-plot"></div> 
                     </div>
-                    <div>
+                    <div class="flex-box">
                         <h4>barcode plot</h4>
                         <div id="barcode-plot"></div> 
                     </div>
@@ -49,31 +52,27 @@
                         <h4>bar plot</h4>
                         <div id="bar-plot"></div>
                     </div>
-                </div>
-                <div class="row">
-                    <div>
+                    <div class="flex-box">
                         <h4>categorical heatmap</h4>
                         <div id="cat-heatmap"></div>
                     </div>
-                    <div>
+                    <div class="flex-box">
                         <h4>column plot</h4>
                         <div id="column-plot"></div>
                     </div>
-                    <div>
+                    <div class="flex-box">
                         <h4>heatmap</h4>
                         <div id="heatmap"></div> 
                     </div>
-                </div>
-                <div class="row">
-                    <div>
+                    <div class="flex-box">
                         <h4>scatter plot</h4>
                         <div id="scatter-plot"></div> 
                     </div>
-                    <div>
+                    <div class="flex-box">
                         <h4>stacked bar plot</h4>
                         <div id="stacked-bar"></div> 
                     </div>
-                    <div>
+                    <div class="flex-box">
                         <h4>stacked column plot</h4>
                         <div id="stacked-column"></div> 
                     </div>
@@ -81,15 +80,11 @@
                 
                 <hr>
     
-                <h3>available plot types</h3>
-                <div id="plot-types"></div>
-                <hr>
-    
                 <h3>customizable config params for scatterplot</h3>
                 <div><pre id="plot-config-opt"></pre></div> 
                 <hr>
             </div>
-    
+        </section>
             <h3>Lattice demo</h3>
             <div class="container">
                 <h4>Scatter plot with summary histograms</h4>
