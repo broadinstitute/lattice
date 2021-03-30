@@ -15,7 +15,6 @@ main, header, aside, section, footer {
     margin: 0;
     padding: 0.5rem;
     color: var(--broad-grey);
-    /* border: 1px solid #eeeeee; */
 }
 header {
     border-bottom:solid 1px var(--light-grey);
@@ -24,7 +23,6 @@ header {
 footer {
     border-top: solid 1px var(--light-grey);
     color: var(--text);
-    font-family: 'Raleway', sans-serif;
 }
 @media screen and (min-width: 512px){
     .flex-container {
