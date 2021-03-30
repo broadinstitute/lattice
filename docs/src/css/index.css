@@ -31,21 +31,19 @@ footer {
         display: flex;
     }
 }
-.screen-wrap {
+/* .screen-wrap {
     margin: auto;
     max-width: 72rem;
-}
+} */
 .flex-wrap    { 
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
   } 
 .flex-box {
-    flex: 0 1 256px;
+    flex: 0 1 400px;
 }
-
 .content {
     color: var(--text);
-    margin-top: 2rem;
     font-size: 0.875rem;
 }
 h1.header{
