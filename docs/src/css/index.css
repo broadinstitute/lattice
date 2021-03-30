@@ -1,12 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+:root {
+    --logo-blue: #96d0cb;
+    --broad-grey: #63666a;
+    --light-grey: #eeeeee;
+    --text: #2c3e50;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     font-size: 14px;
 }
 
-.container {
-    width: 100%;
+main, header, aside, section, footer {
+    margin: 0;
+    padding: 0.5rem;
+    color: var(--broad-grey);
+    /* border: 1px solid #eeeeee; */
 }
-
-.row {
-    display: flex;
+header {
+    border-bottom:solid 1px var(--light-grey);
+    min-height: 20px;
+}
+footer {
+    border-top: solid 1px var(--light-grey);
+    color: var(--text);
+    font-family: 'Raleway', sans-serif;
+}
+@media screen and (min-width: 512px){
+    .flex-container {
+        display: flex;
+    }
+}
+.wrapper {
+    margin: auto;
+    max-width: 72rem;
+}
+.flex-box {
+    flex: 0 1 256px;
+}
+.content {
+    flex: 1;
+    color: var(--text);
+    margin-top: 2rem;
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.875rem;
+}
+h1.header{
+    color: var(--logo-blue);
+    margin: 0px;
 }
