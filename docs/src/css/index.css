@@ -3,7 +3,7 @@
     --logo-blue: #96d0cb;
     --broad-grey: #63666a;
     --light-grey: #eeeeee;
-    --text: #2c3e50;
+    --text: rgb(44, 46, 47);
 }
 
 body {
