@@ -28,17 +28,19 @@
         <h1 class="header"><a href="/">
             <img src="img/lattice-logo.png" width="40"></a>Lattice.js
         </h1>
-        <small>A library for creating coordinated multivariate visualizations</small>
+        <small>A JavaScript library for creating coordinated multivariate visualizations for sciences</small>
     </header>
     <main class="center">
+        <section class="content">
+            <p>Lattice.js is a JavaScript library for creating novel visual narratives and data explorers specifically for high-dimensional data. At its core, Lattice champions a 2D grid-based design approach, which offers an intuitive yet powerful visual solution for rendering multivariate data.</p>
+ 
+        </section>
+
         <section class="flex-container">  
-            <aside class="sidebar">
-                <h3>available plot types</h3>
-                <div id="plot-types"></div>     
-            </aside> 
-           
             <div class="content">
-                <h3>Plot demos</h3>
+                <h3>Basic chart types</h3>
+                <p>Lattice offers many basic chart types that can be directly used without a lattice, just like one would with any other charting libraries. Here is a list of currently available chart types with data randomly generated. 
+                </p>
                 <div class="flex-container flex-wrap">
                     <div class="flex-box">
                         <h4>area plot</h4>
@@ -77,11 +79,6 @@
                         <div id="stacked-column"></div> 
                     </div>
                 </div>
-                
-                <hr>
-    
-                <h3>customizable config params for scatterplot</h3>
-                <div><pre id="plot-config-opt"></pre></div> 
             </div>
         </section>
         <hr>
@@ -92,9 +89,9 @@
                 <h4>Scatter plot with summary histograms</h4>
                 <div>
                     Change distribution 
-                    <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoLattice('randomNormal')">Normal</button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomInt')">Random Integer</button>
-                    <button class="btn btn-outline-secondary btn-sm" onclick="demoLattice('randomExponential')">Exponential</button>    
+                    <button class="btn btn-outline-secondary btn-sm clicked" onclick="demoScatterHistograms('randomNormal')">Normal</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="demoScatterHistograms('randomInt')">Random Integer</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="demoScatterHistograms('randomExponential')">Exponential</button>    
                 </div>
                         
                 <div id="lattice"></div>
