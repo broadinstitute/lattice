@@ -1,7 +1,11 @@
+
 function demoScatterHistograms(distri="randomNormal"){
     // a lattice
     // TODO: need more contig options
-    const data = RandomDataLib.createRandomNumericalData(5000, distri);
+    const latticeBlue = "#96d0cb";
+    const latticeColorScheme10 = [latticeBlue, "#666666", "#c28b9a", "#cdaf70", "#7092a5", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
+
+    const data = RandomDataLib.createRandomNumericalData(5000, distri, latticeColorScheme10[1]);
     const xbins = getBins(data.map((d)=>d.x), 30);
     const ybins = getBins(data.map((d)=>d.y), 30);
     const latticeMap = [
@@ -18,7 +22,7 @@ function demoScatterHistograms(distri="randomNormal"){
                 return {
                     x: d.count,
                     y: d.bin,
-                    c: "rgba(70, 130, 180, 0.6)"
+                    c: latticeColorScheme10[2]
                 };
             }).reverse(),
             type: "barplot"
@@ -30,7 +34,7 @@ function demoScatterHistograms(distri="randomNormal"){
                 return {
                     x: d.bin,
                     y: d.count,
-                    c: "rgba(70, 130, 180, 0.6)"
+                    c: latticeColorScheme10[3]
                 }
             }),
             type: "columnplot",
