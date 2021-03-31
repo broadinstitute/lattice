@@ -65,7 +65,7 @@ export default class Axis {
 
         switch(this.orientation) {
         case(axisOrientations.BOTTOM):
-            label.attr("x", plot.innerWidth/2).attr("y", plot.innerHeight + plot.padding.bottom).attr("text-anchor", "middle");
+            label.attr("x", plot.innerWidth/2).attr("y", plot.height - plot.padding.bottom/2).attr("text-anchor", "middle");
             break;
         case(axisOrientations.TOP):
             label.attr("x", plot.innerWidth/2).attr("text-anchor", "middle");
