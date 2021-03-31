@@ -19,13 +19,13 @@ function generateRandomInt(min, max) {
 }
 
 
-function createRandomNumericalData(n, distribution="randomNormal") {
+function createRandomNumericalData(n, color="rgba(70, 130, 180, 0.4)", distribution="randomNormal") {
     let points = d3.range(0, n).map(()=>{
         return {
             x: undefined,
             y: undefined,
             r: 1,
-            c: "rgba(70, 130, 180, 0.4)"
+            c: color
         };
     });
 
@@ -95,7 +95,7 @@ function createRandomPoints(n, verbose=false, x={mu:20, sigma:5}, y={mu:50, sigm
     return points;
 }
 
-function createRandomCategoricalData(n, axis="vertical", labelLength=10, verbose=false, value={mu: 0, sigma: 2}) {
+function createRandomCategoricalData(n, axis="vertical", color=color="rgba(70, 130, 180, 0.4)", labelLength=10, verbose=false, value={mu: 0, sigma: 2}) {
     let data = d3.range(0, n).map(() => {
         let category = generateRandomString(labelLength);
         let val = Math.floor(Math.random() * 101);
@@ -103,13 +103,13 @@ function createRandomCategoricalData(n, axis="vertical", labelLength=10, verbose
             return {
                 x: category,
                 y: val,
-                c: "rgba(70, 130, 180, 0.6)"
+                c: color
             };
         } else {
             return {
                 x: val,
                 y: category,
-                c: "rgba(70, 130, 180, 0.6)"
+                c: color
             };
         }
     });
@@ -142,10 +142,11 @@ function createRandomHeatmapData(rows=5, cols=5, n=5) {
  * @param {Integer} n - specifies the number of colors to generate for categorical heatmaps,
  *                      and the max value for continuous heatmaps.
  * @param {String} type - color scale type. expected: "discrete" | "continuous"
+ * @param {Array} colorRange - an array of colors (optional);
  */
-function createHeatmapColors(n, type) {
+function createHeatmapColors(n, type, colorRange = d3.schemeCategory10) {
     if (type == "discrete") {
-        const colorScale = d3.scaleOrdinal().domain(n).range(d3.schemeCategory10);
+        const colorScale = d3.scaleOrdinal().domain(n).range(colorRange);
         const colors = d3.range(0, n).map((d) => colorScale(d));
         return {
             domain: [...Array(colors.length).keys()],
@@ -157,6 +158,14 @@ function createHeatmapColors(n, type) {
             interpolator: d3.interpolateBlues
         };
     }
+}
+
+function createContinuousColors(n, interpolator){
+    console.log(d3.interpolateBlues)
+    return {
+        domain: [0, n],
+        interpolator: d3.interpolateBlues
+    };
 }
 
 /**
@@ -218,6 +227,7 @@ export {
     createRandomStackedCategoricalData,
     createRandomNumericalData,
     createHeatmapColors,
+    createContinuousColors,
     createRandomHeatmapData,
     createSeriesColorInfo
 };

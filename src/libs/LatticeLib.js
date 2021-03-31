@@ -47,8 +47,8 @@ export function showAvailablePlotTypes(){
     return plots;
 }
 
-export function getPlotOptions(){
-    let plot = new Plot([], "scatterplot", "foo");
+export function getPlotOptions(plot=undefined){
+    if (plot===undefined) plot = new Plot([], "scatterplot", "foo");
     const replace = (k, v)=> v === undefined ? null : v;
     return JSON.stringify(plot.getCustomizable(), replace, 2);
 }

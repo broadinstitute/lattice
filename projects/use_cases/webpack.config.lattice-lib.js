@@ -36,7 +36,7 @@ module.exports = {
     },
     output: {
         filename: `js/${filename}.min.js`,
-        path: path.resolve(__dirname, "build/js"),
+        path: path.resolve(__dirname, "build"),
         libraryTarget: "var",
         library: library,
     },

@@ -1,3 +1,5 @@
+const latticeBlue = "#96d0cb";
+const latticeColorScheme10 = [latticeBlue, "#666666", "#c28b9a", "#cdaf70", "#7092a5", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"];
 function demoAreaPlot(){
     const id = "area-plot";
     const distri = "randomInt";
@@ -13,7 +15,8 @@ function demoAreaPlot(){
             x: {scaleType: "linear"}
         }
     };
-    LatticeLib.plot(data, "areaplot", id, config); // todo: more plot options demos
+    let plot = LatticeLib.plot(data, "areaplot", id, config); // todo: more plot options demos
+    
     return data;
 }
 
@@ -22,9 +25,12 @@ function demoBarcodePlot(){
     const distri = "randomInt";
     const data = RandomDataLib.createRandomNumericalData(20, distri);
     const config = {
-        padding: {top: 20}
+        padding: {top: 20},
+        axis: {
+            y: {display: false}
+        }
     }
-    LatticeLib.plot(data, "barcodeplot", id, config); // todo: more plot options demos
+    let plot = LatticeLib.plot(data, "barcodeplot", id, config); // todo: more plot options demos
     return data;
 }
 
@@ -32,7 +38,7 @@ function demoScatterPlot(){
     // scatterplot
     const id = "scatter-plot";
     const distri = "randomExponential";
-    const data = RandomDataLib.createRandomNumericalData(20, distri);
+    const data = RandomDataLib.createRandomNumericalData(20, latticeBlue, distri);
     
     const plotConfig = {
         axis: {
@@ -47,9 +53,11 @@ function demoScatterPlot(){
 function demoBarPlot(){
     // bar plot
     const id = "bar-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal");
+    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", latticeBlue, 5);
     const plotConfig = {padding: {top: 0}, xAxis: {title: "value"}}; // todo: how to change the plot height
-    LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
+    let plot = LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
+    console.log(LatticeLib.getPlotOptions(plot));
+
 }
 
 function demoCategoricalHeatmap(){
@@ -57,7 +65,7 @@ function demoCategoricalHeatmap(){
     const nCategories = 15;
     const nCols = 15;
     const nRows = 15;
-    const colorsObj = RandomDataLib.createHeatmapColors(nCategories, "discrete");
+    const colorsObj = RandomDataLib.createHeatmapColors(nCategories, "discrete", range=latticeColorScheme10);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, nCategories);
     const plotConfig = {
         padding: { top: 0 },
@@ -71,7 +79,7 @@ function demoCategoricalHeatmap(){
 function demoColumnPlot(){
     // column plot
     const id = "column-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "vertical"); // todo: how to rotate cateogy text labels
+    const data = RandomDataLib.createRandomCategoricalData(20, "vertical", latticeBlue, 5); // todo: how to rotate cateogy text labels
     const plotConfig = {
         padding: {top: 0}, 
         axis:{
@@ -87,7 +95,7 @@ function demoHeatmap(){
     const maxValue = 15;
     const nCols = 20;
     const nRows = 20;
-    const colorsObj = RandomDataLib.createHeatmapColors(maxValue, "continuous");
+    const colorsObj = RandomDataLib.createContinuousColors(maxValue);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, maxValue);
     const plotConfig = {
         padding: { top: 0 },
