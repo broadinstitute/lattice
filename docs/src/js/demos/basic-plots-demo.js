@@ -136,14 +136,17 @@ function demoStackedColumnPlot() {
 
 function demoStackedBarPlot() {
     const id = "stacked-bar";
-    const nBars = 10;
+    const nBars = 20;
     const nSeries = 5;
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal");
     const plotConfig = {
         padding: { top: 0 },
         series: seriesInfo,
-        orientation: -1
+        orientation: 1,
+        axis: {
+            x: {title: "value", ticks: 5},
+        }
     };
     LatticeLib.plot(data, "stackedbarplot", id, plotConfig);
 }
