@@ -11,8 +11,15 @@ function demoAreaPlot(){
         else return 0;
     });
     const config = {
+        padding: {top: 20},
         axis: {
-            x: {scaleType: "linear"}
+            x: {
+                title: "x value",
+                scaleType: "linear"
+            },
+            y: {
+                title: "y value"
+            },
         }
     };
     let plot = LatticeLib.plot(data, "areaplot", id, config); // todo: more plot options demos
@@ -23,10 +30,14 @@ function demoAreaPlot(){
 function demoBarcodePlot(){
     const id="barcode-plot";
     const distri = "randomInt";
-    const data = RandomDataLib.createRandomNumericalData(20, distri);
+    const data = RandomDataLib.createRandomNumericalData(50, distri);
     const config = {
-        padding: {top: 20},
+        height: 100,
+        padding: {top: 20, bottom: 50},
         axis: {
+            x: {
+                title: "x value"
+            },
             y: {display: false}
         }
     }
@@ -41,9 +52,15 @@ function demoScatterPlot(){
     const data = RandomDataLib.createRandomNumericalData(200, distri, latticeBlue);
     
     const plotConfig = {
+        padding: {
+            top: 20
+        },
         axis: {
-            y: {title: distri, ticks: 10}, 
-            x: {title: distri}
+            y: {title: "y value", ticks: 5}, 
+            x: {
+                title: "x value",
+                ticks: 5
+            }
         }
     }; // todo: Y axis title isn't showing
     LatticeLib.plot(data, "scatterplot", id, plotConfig); // todo: more plot options demos
@@ -54,10 +71,21 @@ function demoBarPlot(){
     // bar plot
     const id = "bar-plot";
     const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", 5, latticeBlue);
-    const plotConfig = {padding: {top: 0}, xAxis: {title: "value"}}; // todo: how to change the plot height
+    const plotConfig = {
+        padding: {top: 20, bottom: 50}, 
+        axis: {
+            x: {
+                title: "value",
+                ticks: 5
+            },
+            y: {
+                title: ""
+            }
+        }
+        
+    }; // todo: how to change the plot height
     let plot = LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
-    console.log(LatticeLib.getPlotOptions(plot));
-
+    console.log(LatticeLib.getPlotOptions(plot))
 }
 
 function demoCategoricalHeatmap(){
@@ -68,12 +96,22 @@ function demoCategoricalHeatmap(){
     const colorsObj = RandomDataLib.createHeatmapColors(nCategories, "discrete", range=latticeColorScheme10);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, nCategories);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: { top: 20 },
         axis: {
+            x: {
+                orientation: "bottom",
+                angle: 90,
+                title: "",
+                "text-anchor": "start"
+            },
+            y: {
+                title: ""
+            },
             c: { domain: colorsObj.domain, range: colorsObj.range }
         }
     };
-    LatticeLib.plot(data, "categoricalheatmap", id, plotConfig);
+    let plot = LatticeLib.plot(data, "categoricalheatmap", id, plotConfig);
+    console.log(LatticeLib.getPlotOptions(plot));
 }
 
 function demoColumnPlot(){
@@ -81,10 +119,10 @@ function demoColumnPlot(){
     const id = "column-plot";
     const data = RandomDataLib.createRandomCategoricalData(20, "vertical", 5, latticeBlue); // todo: how to rotate cateogy text labels
     const plotConfig = {
-        padding: {top: 0}, 
+        padding: {top: 20, bottom: 50}, 
         axis:{
-            x: {angle: 60, "text-anchor": "start"},
-            y: {title: "value"}
+            x: {title: "", angle: 90, "text-anchor": "start"},
+            y: {title: "value", ticks: 5}
         }
     }; // todo: yAxis title not showing
     LatticeLib.plot(data, "columnplot", id, plotConfig); // todo: more plot options demos  
@@ -99,8 +137,17 @@ function demoHeatmap(){
     const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Lattice");
     console.info(colorsObj.interpolator);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: { top: 20 },
         axis: {
+            x: {
+                title: "",
+                orientation: "bottom",
+                angle: 90,
+                "text-anchor": "start"
+            },
+            y: {
+                title: ""
+            },
             c: { domain: colorsObj.domain, interpolator: colorsObj.interpolator }
         }
     };
@@ -109,18 +156,23 @@ function demoHeatmap(){
 
 function demoStackedColumnPlot() {
     const id = "stacked-column";
-    const nBars = 10;
+    const nBars = 20;
     const nSeries = 5;
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
-    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical");
+    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical", 5);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: {top: 20, bottom: 50}, 
         series: seriesInfo,
         axis: {
             x: {
-                angle: 60,
-                "text-anchor": "start"
-            }
+                angle: 90,
+                "text-anchor": "start",
+                title: ""
+            },
+            y: {
+                title: "value",
+                ticks: 5
+            },
         }
     };
     LatticeLib.plot(data, "stackedcolumnplot", id, plotConfig);
@@ -128,14 +180,20 @@ function demoStackedColumnPlot() {
 
 function demoStackedBarPlot() {
     const id = "stacked-bar";
-    const nBars = 10;
+    const nBars = 20;
     const nSeries = 5;
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
-    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal");
+    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal", 5);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: {top: 20, bottom: 50}, 
         series: seriesInfo,
-        orientation: -1
+        orientation: 1,
+        axis: {
+            x: {title: "value", ticks: 5},
+            y: {
+                title: ""
+            },
+        }
     };
     LatticeLib.plot(data, "stackedbarplot", id, plotConfig);
 }

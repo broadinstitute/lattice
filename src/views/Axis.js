@@ -65,13 +65,13 @@ export default class Axis {
 
         switch(this.orientation) {
         case(axisOrientations.BOTTOM):
-            label.attr("x", plot.innerWidth/2).attr("y", plot.innerHeight + plot.padding.bottom).attr("text-anchor", "middle");
+            label.attr("x", plot.innerWidth/2).attr("y", plot.height - plot.padding.bottom/2).attr("text-anchor", "middle");
             break;
         case(axisOrientations.TOP):
             label.attr("x", plot.innerWidth/2).attr("text-anchor", "middle");
             break;
         case(axisOrientations.LEFT):
-            label.attr("x", -plot.padding.left).attr("text-anchor", "end");
+            label.attr("x", -plot.padding.left/2).attr("y", -plot.padding.top/2).attr("text-anchor", "middle");
             break;
         case(defaultAxisOrientation.RIGHT):
             label.attr("x", `${plot.innerWidth}`).attr("text-anchor", "start");
@@ -115,7 +115,7 @@ export default class Axis {
 
         if (this.angle != 0){
             axis.selectAll("text")
-                .attr("dy", "-1em")
+                .attr("dy", "-0.8em")
                 .attr("transform", `translate(0, 7) rotate(${this.angle})`); 
         }
         if (this["text-anchor"]){
