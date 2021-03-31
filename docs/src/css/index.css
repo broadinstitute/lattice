@@ -59,9 +59,15 @@ footer {
     font-size: 0.875rem;
 }
 
-h1.header{
-    color: var(--logo-blue);
+.logo{
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--logo-blue-dark);
     margin: 0px;
+}
+
+small.header {
+    color: var(--broad-grey);
 }
 
 /* button */
@@ -98,15 +104,15 @@ a:link {
   
   /* visited link */
   a:visited {
-    color: var(--broad-green);
+    color: var(--broad-grey);
   }
   
   /* mouse over link */
   a:hover {
-    color: var(--logo-blue);
+    color: var(--logo-blue-dark);
   }
   
   /* selected link */
   a:active {
-    color: var(--logo-blue-dark);
+    color: var(--logo-blue);
   }
