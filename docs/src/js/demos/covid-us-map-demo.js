@@ -61,35 +61,22 @@ function createPlotData(data) {
             // data based configs
             row: data.coordinates[d.key].x,
             column: data.coordinates[d.key].y,
-            title: d.key,
+            // title: d.key,
             data: stateData,
-            // configs required by scatterplot type
-            // type: "scatterplot",
-            // padding: {top: 25, right: 20, bottom:25, left:20},
-            // xAxis: { scaleType: "temporal", ticks: new Date().getMonth() - new Date("March 2020").getMonth() }, // show tick mark for every month since COVID tracking roughly started
-            // yAxis: { ticks: 4 }
-            
-            // configs required by columnplot type
-            // type: "columnplot",
-            // padding: {top: 20, right: 20, bottom:20, left:20},
-            // xAxis: { display: false },
-            // yAxis: { ticks: 4 }
-            
-            // configs required by columnplot type
             type: "areaplot",
-            // type: "lineplot",
-            padding: {top: 25, right: 20, bottom:25, left:20},
+            padding: {top: 25, right: 20, bottom:50, left:20},
             axis: {
                 x:{
                     title: "",
                     scaleType: "temporal", 
                     ticks: 5,
-                    angle: 30,
+                    angle: 90,
                     "text-anchor": "start"
                 },
                 y: {
-                    title: "",
-                    ticks: 4
+                    title: d.key,
+                    ticks: 1,
+                    max: 5000
                 }
                 
             }, // show tick mark for every month since COVID tracking roughly started

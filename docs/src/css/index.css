@@ -7,6 +7,8 @@
 :root {
     --lattice-blue: #96d0cb;
     --lattice-blue-dark: #6bafa9;
+    --lattice-blue-transparent: rgb(107, 175, 169, 0.5);
+
     --broad-grey: #63666a;
     --broad-green: #80bc42;
     --light-grey: #eeeeee;
@@ -136,9 +138,18 @@ hr {
 /* custom Lattice override */
 .ljs--areaplot-path {
     fill:var(--lattice-blue-dark);
-    stroke:#B2B2B2;
+    stroke:var(--lattice-blue);
     fill-opacity: .5;
     stroke-width: .75;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+#covid-plot .ljs--areaplot-path {
+    fill:var(--lattice-blue-dark);
+    fill-opacity: .4;
+    stroke:#eeeeee;
+    stroke-width: .1;
     stroke-linejoin: round;
     stroke-linecap: round;
 }
