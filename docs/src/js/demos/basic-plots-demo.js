@@ -37,8 +37,8 @@ function demoBarcodePlot(){
 function demoScatterPlot(){
     // scatterplot
     const id = "scatter-plot";
-    const distri = "randomExponential";
-    const data = RandomDataLib.createRandomNumericalData(20, distri, latticeBlue);
+    const distri = "randomNormal";
+    const data = RandomDataLib.createRandomNumericalData(200, distri, latticeBlue);
     
     const plotConfig = {
         axis: {
@@ -95,8 +95,8 @@ function demoHeatmap(){
     const maxValue = 15;
     const nCols = 20;
     const nRows = 20;
-    const colorsObj = RandomDataLib.createContinuousColors(maxValue);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, maxValue);
+    const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Greys");
     const plotConfig = {
         padding: { top: 0 },
         axis: {
