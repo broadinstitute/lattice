@@ -89,7 +89,7 @@ function demoColumnPlot(){
     const id = "column-plot";
     const data = RandomDataLib.createRandomCategoricalData(20, "vertical", 5, latticeBlue); // todo: how to rotate cateogy text labels
     const plotConfig = {
-        padding: {top: 0}, 
+        padding: {top: 20, bottom: 50}, 
         axis:{
             x: {title: "", angle: 90, "text-anchor": "start"},
             y: {title: "value", ticks: 5}
@@ -122,7 +122,7 @@ function demoStackedColumnPlot() {
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical", 5);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: {top: 20, bottom: 50}, 
         series: seriesInfo,
         axis: {
             x: {
@@ -142,7 +142,7 @@ function demoStackedBarPlot() {
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal", 5);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: {top: 20, bottom: 50}, 
         series: seriesInfo,
         orientation: 1,
         axis: {
