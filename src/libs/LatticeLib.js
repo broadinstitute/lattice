@@ -53,8 +53,8 @@ export function getPlotOptions(plot=undefined){
     return JSON.stringify(plot.getCustomizable(), replace, 2);
 }
 
-export function getLatticeOptions(){
-    let lattice = new Lattice([],"foo", "foo");
+export function getLatticeOptions(lattice=undefined){
+    if (lattice===undefined) lattice = new Lattice([],"foo", "foo");
     const replace = (k, v)=> v === undefined ? null : v;
     return JSON.stringify(lattice.getCustomizable(), replace, 2);
 }
