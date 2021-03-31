@@ -179,7 +179,11 @@ function createContinuousColors(n, color="Purples"){
         RdGy: d3.interpolateRdGy,
         PiYG: d3.interpolatePiYG,
         PuOr: d3.interpolatePuOr,
-        RdYlBu: d3.interpolateRdYlBu
+        RdYlBu: d3.interpolateRdYlBu,
+
+        // lattice
+        Lattice: d3.interpolateRgb("#6bafa9", "white")
+ 
     };
     return {
         domain: [0, n],
