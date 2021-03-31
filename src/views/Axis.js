@@ -71,7 +71,7 @@ export default class Axis {
             label.attr("x", plot.innerWidth/2).attr("text-anchor", "middle");
             break;
         case(axisOrientations.LEFT):
-            label.attr("x", -plot.padding.left).attr("text-anchor", "end");
+            label.attr("x", -plot.padding.left/2).attr("text-anchor", "end");
             break;
         case(defaultAxisOrientation.RIGHT):
             label.attr("x", `${plot.innerWidth}`).attr("text-anchor", "start");
