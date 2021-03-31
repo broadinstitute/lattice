@@ -38,7 +38,7 @@ function demoScatterPlot(){
     // scatterplot
     const id = "scatter-plot";
     const distri = "randomExponential";
-    const data = RandomDataLib.createRandomNumericalData(20, latticeBlue, distri);
+    const data = RandomDataLib.createRandomNumericalData(20, distri, latticeBlue);
     
     const plotConfig = {
         axis: {
@@ -53,7 +53,7 @@ function demoScatterPlot(){
 function demoBarPlot(){
     // bar plot
     const id = "bar-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", latticeBlue, 5);
+    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", 5, latticeBlue);
     const plotConfig = {padding: {top: 0}, xAxis: {title: "value"}}; // todo: how to change the plot height
     let plot = LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
     console.log(LatticeLib.getPlotOptions(plot));
@@ -79,7 +79,7 @@ function demoCategoricalHeatmap(){
 function demoColumnPlot(){
     // column plot
     const id = "column-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "vertical", latticeBlue, 5); // todo: how to rotate cateogy text labels
+    const data = RandomDataLib.createRandomCategoricalData(20, "vertical", 5, latticeBlue); // todo: how to rotate cateogy text labels
     const plotConfig = {
         padding: {top: 0}, 
         axis:{

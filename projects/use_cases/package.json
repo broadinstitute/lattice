@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production --config webpack.config.lattice-lib.js",
     "serve": "webpack-dev-server --config webpack.config.lattice-lib.js",
-    "buildRandomGenerator": "webpack --mode production --config webpack.config.random-generator.js",
+    "random-prod": "webpack --mode production --config webpack.config.random-generator.js",
+    "random-dev": "webpack-dev-server --config webpack.config.random-generator.js",
     "eslint": "eslint --fix ../../src"
   },
   "keywords": [],

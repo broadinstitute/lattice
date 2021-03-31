@@ -15,5 +15,14 @@ module.exports = {
         libraryTarget: "umd",
         library: library,
     },
-    devtool: "inline-source-map"
+    devtool: "inline-source-map",
+    devServer: {
+        port: 3002,
+        publicPath: "/build", // keep in mind that when using webpack-dev-server, this path is only virtual
+        contentBase: path.resolve(__dirname, "./"),
+        watchContentBase: true,
+        stats: {
+            children: false
+        }
+    }
 };

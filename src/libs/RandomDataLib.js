@@ -19,7 +19,7 @@ function generateRandomInt(min, max) {
 }
 
 
-function createRandomNumericalData(n, color="rgba(70, 130, 180, 0.4)", distribution="randomNormal") {
+function createRandomNumericalData(n, distribution="randomNormal", color="rgba(70, 130, 180, 0.4)") {
     let points = d3.range(0, n).map(()=>{
         return {
             x: undefined,
@@ -95,7 +95,7 @@ function createRandomPoints(n, verbose=false, x={mu:20, sigma:5}, y={mu:50, sigm
     return points;
 }
 
-function createRandomCategoricalData(n, axis="vertical", color=color="rgba(70, 130, 180, 0.4)", labelLength=10, verbose=false, value={mu: 0, sigma: 2}) {
+function createRandomCategoricalData(n, axis="vertical", labelLength=10, color="rgba(70, 130, 180, 0.4)", verbose=false) {
     let data = d3.range(0, n).map(() => {
         let category = generateRandomString(labelLength);
         let val = Math.floor(Math.random() * 101);
