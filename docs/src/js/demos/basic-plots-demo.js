@@ -91,8 +91,8 @@ function demoColumnPlot(){
     const plotConfig = {
         padding: {top: 0}, 
         axis:{
-            x: {angle: 60, "text-anchor": "start"},
-            y: {title: "value"}
+            x: {title: "", angle: 60, "text-anchor": "start"},
+            y: {title: "value", ticks: 5}
         }
     }; // todo: yAxis title not showing
     LatticeLib.plot(data, "columnplot", id, plotConfig); // todo: more plot options demos  
