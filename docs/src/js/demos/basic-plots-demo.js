@@ -111,7 +111,7 @@ function demoStackedColumnPlot() {
     const id = "stacked-column";
     const nBars = 10;
     const nSeries = 5;
-    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries);
+    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical");
     const plotConfig = {
         padding: { top: 0 },
@@ -130,7 +130,7 @@ function demoStackedBarPlot() {
     const id = "stacked-bar";
     const nBars = 10;
     const nSeries = 5;
-    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries);
+    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal");
     const plotConfig = {
         padding: { top: 0 },
