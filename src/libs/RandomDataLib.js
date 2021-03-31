@@ -160,11 +160,30 @@ function createHeatmapColors(n, type, colorRange = d3.schemeCategory10) {
     }
 }
 
-function createContinuousColors(n, interpolator){
-    console.log(d3.interpolateBlues)
+function createContinuousColors(n, color="Purples"){
+    const interpolators = {
+        BuGn: d3.interpolateBuGn,
+        OrRd: d3.interpolateOrRd,
+        PuBu: d3.interpolatePuBu,
+        YlGnBu: d3.interpolateYlGnBu,
+        Blues: d3.interpolateBlues,
+        Oranges: d3.interpolateOranges,
+        Greens: d3.interpolateGreens,
+        Purples: d3.interpolatePurples,
+        Reds: d3.interpolateReds,
+        Greys: d3.interpolateGreys,
+        Grays: d3.interpolateGreys,
+
+        // diverging color schemes
+        RdBu: d3.interpolateRdBu,
+        RdGy: d3.interpolateRdGy,
+        PiYG: d3.interpolatePiYG,
+        PuOr: d3.interpolatePuOr,
+        RdYlBu: d3.interpolateRdYlBu
+    };
     return {
         domain: [0, n],
-        interpolator: d3.interpolateBlues
+        interpolator: interpolators[color]
     };
 }
 
