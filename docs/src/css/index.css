@@ -6,6 +6,7 @@
 }
 :root {
     --logo-blue: #96d0cb;
+    --logo-blue-dark: #6bafa9;
     --broad-grey: #63666a;
     --broad-green: #80bc42;
     --light-grey: #eeeeee;
@@ -31,6 +32,7 @@ header {
 footer {
     border-top: solid 1px var(--light-grey);
     color: var(--text);
+    min-height: 100px;
 }
 
 /* layout controls */
@@ -38,6 +40,10 @@ footer {
     margin: auto;
     max-width: 72rem;
 }
+.push {
+    margin-left: auto;
+}
+
 .flex-wrap    { 
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
@@ -74,7 +80,7 @@ button:hover {
     background-color: var(--broad-grey); 
     color: white;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 6px 0 rgba(0,0,0,0.19);
-
+    cursor: pointer;
 }
 button:focus {
     outline: 0px;
@@ -83,3 +89,24 @@ button:focus {
 button:active {
     transform: scale(0.95);
 }
+
+/* link */
+/* unvisited link */
+a:link {
+    color: var(--text);
+  }
+  
+  /* visited link */
+  a:visited {
+    color: var(--broad-green);
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: var(--logo-blue);
+  }
+  
+  /* selected link */
+  a:active {
+    color: var(--logo-blue-dark);
+  }
