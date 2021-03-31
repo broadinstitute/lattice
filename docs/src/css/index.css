@@ -5,8 +5,8 @@
     }
 }
 :root {
-    --logo-blue: #96d0cb;
-    --logo-blue-dark: #6bafa9;
+    --lattice-blue: #96d0cb;
+    --lattice-blue-dark: #6bafa9;
     --broad-grey: #63666a;
     --broad-green: #80bc42;
     --light-grey: #eeeeee;
@@ -62,7 +62,7 @@ footer {
 .logo{
     font-size: 2.5rem;
     font-weight: 300;
-    color: var(--logo-blue-dark);
+    color: var(--lattice-blue-dark);
     margin: 0px;
 }
 
@@ -72,7 +72,7 @@ small.header {
 
 /* button */
 button {
-    background-color: var(--logo-blue); 
+    background-color: var(--lattice-blue); 
     border: none;
     border-radius: 5px;
     color: white;
@@ -100,19 +100,34 @@ button:active {
 /* unvisited link */
 a:link {
     color: var(--text);
-  }
-  
-  /* visited link */
-  a:visited {
+}
+
+/* visited link */
+a:visited {
     color: var(--broad-grey);
-  }
-  
-  /* mouse over link */
-  a:hover {
-    color: var(--logo-blue-dark);
-  }
-  
-  /* selected link */
-  a:active {
-    color: var(--logo-blue);
-  }
+}
+
+/* mouse over link */
+a:hover {
+    color: var(--lattice-blue-dark);
+}
+
+/* selected link */
+a:active {
+    color: var(--lattice-blue);
+}
+
+/* custom Lattice override */
+.ljs--areaplot-path {
+    fill:var(--lattice-blue-dark);
+    stroke:#B2B2B2;
+    fill-opacity: .5;
+    stroke-width: .75;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.ljs--barcode-line {
+    stroke: var(--lattice-blue-dark);
+    stroke-width: 1px;
+}
