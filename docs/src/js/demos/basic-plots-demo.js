@@ -96,7 +96,8 @@ function demoHeatmap(){
     const nCols = 20;
     const nRows = 20;
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, maxValue);
-    const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Greys");
+    const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Lattice");
+    console.info(colorsObj.interpolator);
     const plotConfig = {
         padding: { top: 0 },
         axis: {
