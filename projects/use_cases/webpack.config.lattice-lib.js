@@ -9,9 +9,7 @@ module.exports = {
     entry: {
         app: "../../src/libs/LatticeLib.js"
     },
-    plugins: [
-        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` })
-    ],
+   
 
     module: {
         rules: [
@@ -49,5 +47,8 @@ module.exports = {
         stats: {
             children: false
         }
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` })
+    ]
 };

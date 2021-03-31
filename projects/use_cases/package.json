@@ -4,11 +4,12 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production --config webpack.config.lattice-lib.js",
+    "build": "webpack --mode production --config webpack.config.lattice-lib.js; bash copy.sh",
     "serve": "webpack-dev-server --config webpack.config.lattice-lib.js",
-    "random-prod": "webpack --mode production --config webpack.config.random-generator.js",
+    "random-prod": "webpack --mode production --config webpack.config.random-generator.js; bash copy.sh",
     "random-dev": "webpack-dev-server --config webpack.config.random-generator.js",
-    "eslint": "eslint --fix ../../src"
+    "eslint": "eslint --fix ../../src",
+    "copy": "bash copy.sh"
   },
   "keywords": [],
   "author": {
@@ -17,6 +18,7 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "copy-webpack-plugin": "^6.4.1",
     "css-loader": "^4.3.0",
     "eslint-loader": "^4.0.2",
     "mini-css-extract-plugin": "^0.11.2",
