@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
 import * as constants from "../utils/constants";
 import Tooltip  from "../views/Tooltip";
-import XYEntry  from "../models/Entry";
+import XYEntry  from "../models/XYEntry";
 import Axis  from "../views/Axis";
 
 export class Plot {
