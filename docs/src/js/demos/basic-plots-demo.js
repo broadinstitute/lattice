@@ -54,10 +54,18 @@ function demoBarPlot(){
     // bar plot
     const id = "bar-plot";
     const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", 5, latticeBlue);
-    const plotConfig = {padding: {top: 0}, xAxis: {title: "value"}}; // todo: how to change the plot height
+    const plotConfig = {
+        padding: {top: 0}, 
+        axis: {
+            x: {
+                title: "value",
+                ticks: 5
+            }
+        }
+        
+    }; // todo: how to change the plot height
     let plot = LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
-    console.log(LatticeLib.getPlotOptions(plot));
-
+    console.log(LatticeLib.getPlotOptions(plot))
 }
 
 function demoCategoricalHeatmap(){

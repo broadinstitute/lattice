@@ -82,7 +82,7 @@ small.header {
 
 /* button */
 button {
-    background-color: var(--lattice-blue); 
+    background-color: var(--lattice-blue-dark); 
     border: none;
     border-radius: 5px;
     color: white;
