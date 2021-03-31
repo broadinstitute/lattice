@@ -91,7 +91,7 @@ function demoColumnPlot(){
     const plotConfig = {
         padding: {top: 0}, 
         axis:{
-            x: {title: "", angle: 60, "text-anchor": "start"},
+            x: {title: "", angle: 90, "text-anchor": "start"},
             y: {title: "value", ticks: 5}
         }
     }; // todo: yAxis title not showing
@@ -117,17 +117,18 @@ function demoHeatmap(){
 
 function demoStackedColumnPlot() {
     const id = "stacked-column";
-    const nBars = 10;
+    const nBars = 20;
     const nSeries = 5;
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
-    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical");
+    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical", 5);
     const plotConfig = {
         padding: { top: 0 },
         series: seriesInfo,
         axis: {
             x: {
-                angle: 60,
-                "text-anchor": "start"
+                angle: 90,
+                "text-anchor": "start",
+                title: ""
             }
         }
     };
@@ -139,7 +140,7 @@ function demoStackedBarPlot() {
     const nBars = 20;
     const nSeries = 5;
     const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
-    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal");
+    const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal", 5);
     const plotConfig = {
         padding: { top: 0 },
         series: seriesInfo,
