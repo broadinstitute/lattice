@@ -38,7 +38,7 @@ footer {
 /* layout controls */
 .center {
     margin: auto;
-    max-width: 100rem;
+    max-width: 80rem;
 }
 .push {
     margin-left: auto;
