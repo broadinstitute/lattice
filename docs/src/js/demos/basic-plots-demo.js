@@ -60,6 +60,9 @@ function demoBarPlot(){
             x: {
                 title: "value",
                 ticks: 5
+            },
+            y: {
+                title: ""
             }
         }
         
@@ -76,12 +79,22 @@ function demoCategoricalHeatmap(){
     const colorsObj = RandomDataLib.createHeatmapColors(nCategories, "discrete", range=latticeColorScheme10);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, nCategories);
     const plotConfig = {
-        padding: { top: 50 },
+        padding: { top: 20 },
         axis: {
+            x: {
+                orientation: "bottom",
+                angle: 90,
+                title: "",
+                "text-anchor": "start"
+            },
+            y: {
+                title: ""
+            },
             c: { domain: colorsObj.domain, range: colorsObj.range }
         }
     };
-    LatticeLib.plot(data, "categoricalheatmap", id, plotConfig);
+    let plot = LatticeLib.plot(data, "categoricalheatmap", id, plotConfig);
+    console.log(LatticeLib.getPlotOptions(plot));
 }
 
 function demoColumnPlot(){
@@ -107,8 +120,17 @@ function demoHeatmap(){
     const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Lattice");
     console.info(colorsObj.interpolator);
     const plotConfig = {
-        padding: { top: 50 },
+        padding: { top: 20 },
         axis: {
+            x: {
+                title: "",
+                orientation: "bottom",
+                angle: 90,
+                "text-anchor": "start"
+            },
+            y: {
+                title: ""
+            },
             c: { domain: colorsObj.domain, interpolator: colorsObj.interpolator }
         }
     };
@@ -129,7 +151,10 @@ function demoStackedColumnPlot() {
                 angle: 90,
                 "text-anchor": "start",
                 title: ""
-            }
+            },
+            y: {
+                title: "y label"
+            },
         }
     };
     LatticeLib.plot(data, "stackedcolumnplot", id, plotConfig);
@@ -147,6 +172,9 @@ function demoStackedBarPlot() {
         orientation: 1,
         axis: {
             x: {title: "value", ticks: 5},
+            y: {
+                title: ""
+            },
         }
     };
     LatticeLib.plot(data, "stackedbarplot", id, plotConfig);
