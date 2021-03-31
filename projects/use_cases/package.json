@@ -4,11 +4,12 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production --config webpack.config.lattice-lib.js",
+    "build": "webpack --mode production --config webpack.config.lattice-lib.js; bash copy.sh",
     "serve": "webpack-dev-server --config webpack.config.lattice-lib.js",
-    "random-prod": "webpack --mode production --config webpack.config.random-generator.js",
+    "random-prod": "webpack --mode production --config webpack.config.random-generator.js; bash copy.sh",
     "random-dev": "webpack-dev-server --config webpack.config.random-generator.js",
-    "eslint": "eslint --fix ../../src"
+    "eslint": "eslint --fix ../../src",
+    "copy": "bash copy.sh"
   },
   "keywords": [],
   "author": {

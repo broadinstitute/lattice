@@ -11,17 +11,11 @@ module.exports = {
     entry: {
         app: "../../src/libs/LatticeLib.js"
     },
+
     plugins: [
-        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, "build/js"),  
-                    to: path.resolve(__dirname, "../../docs/dist/js/lib") 
-                }
-            ]
-        })
+        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` })
     ],
+
 
     module: {
         rules: [
@@ -59,5 +53,8 @@ module.exports = {
         stats: {
             children: false
         }
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` })
+    ]
 };
