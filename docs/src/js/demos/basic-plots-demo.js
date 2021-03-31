@@ -55,7 +55,7 @@ function demoBarPlot(){
     const id = "bar-plot";
     const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", 5, latticeBlue);
     const plotConfig = {
-        padding: {top: 0}, 
+        padding: {top: 20, bottom: 50}, 
         axis: {
             x: {
                 title: "value",
@@ -76,7 +76,7 @@ function demoCategoricalHeatmap(){
     const colorsObj = RandomDataLib.createHeatmapColors(nCategories, "discrete", range=latticeColorScheme10);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, nCategories);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: { top: 50 },
         axis: {
             c: { domain: colorsObj.domain, range: colorsObj.range }
         }
@@ -107,7 +107,7 @@ function demoHeatmap(){
     const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Lattice");
     console.info(colorsObj.interpolator);
     const plotConfig = {
-        padding: { top: 0 },
+        padding: { top: 50 },
         axis: {
             c: { domain: colorsObj.domain, interpolator: colorsObj.interpolator }
         }
