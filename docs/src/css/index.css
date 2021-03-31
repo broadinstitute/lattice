@@ -25,8 +25,17 @@ main, header, aside, section, footer {
 }
 
 header {
-    border-bottom:solid 1px var(--light-grey);
+    top: 0;
+    box-shadow: 0px 0px 7px 2px rgba(0,0,0,0.05);
     min-height: 20px;
+    width: 100%;
+    position: fixed;
+    background-color: white;
+
+}
+
+main {
+    margin-top: 100px;
 }
 
 footer {
@@ -37,8 +46,9 @@ footer {
 
 /* layout controls */
 .center {
-    margin: auto;
-    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80rem;
 }
 .push {
     margin-left: auto;
@@ -60,7 +70,7 @@ footer {
 }
 
 .logo{
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 300;
     color: var(--lattice-blue-dark);
     margin: 0px;
@@ -115,6 +125,12 @@ a:hover {
 /* selected link */
 a:active {
     color: var(--lattice-blue);
+}
+
+/* hr */
+hr {
+    border-bottom: 1px solid var(--lattice-blue);
+    border-top: 0;
 }
 
 /* custom Lattice override */
