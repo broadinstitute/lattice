@@ -67,8 +67,8 @@ function demoScatterHistograms(distri="randomNormal"){
             }
         ]
     };
-    document.getElementById("lattice").innerHTML = "";
-    LatticeLib.lattice(latticeMap, "lattice", {grid:grid});
+    document.getElementById("scatter-hist").innerHTML = "";
+    LatticeLib.lattice(latticeMap, "scatter-hist", {grid:grid});
 }
 
 /**

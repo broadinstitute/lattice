@@ -28,7 +28,7 @@ const plotTypeDemo = () => {
 
 const coordinatedScatterDemo = () => {
     // show lattice config default settings
-    document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
+    // document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
 
     // demos
     demoScatterHistograms();
