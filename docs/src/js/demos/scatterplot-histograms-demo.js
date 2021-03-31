@@ -12,24 +12,6 @@ function demoScatterHistograms(distri="randomNormal"){
         {
             row: 0,
             column: 0,
-            data: data,
-            type: "scatterplot"
-        },
-        {
-            row: 0,
-            column: 1,
-            data: ybins.map((d)=>{
-                return {
-                    x: d.count,
-                    y: d.bin,
-                    c: latticeColorScheme10[2]
-                };
-            }).reverse(),
-            type: "barplot"
-        },
-        {
-            row: 1,
-            column: 0,
             data: xbins.map((d)=>{
                 return {
                     x: d.bin,
@@ -39,13 +21,42 @@ function demoScatterHistograms(distri="randomNormal"){
             }),
             type: "columnplot",
             axis: {
-                x: {
-                    angle: 90,
-                    "text-anchor": "start",
-                    title: ""
-                }
+                x: {display: false},
+                y: {ticks: 5, title: ""}
+            },
+            padding: {bottom: 0}
+        },
+        {
+            row: 1,
+            column: 0,
+            data: data,
+            type: "scatterplot",
+            axis: {
+                x: {title: ""},
+                y: {title: ""}
+            },
+            padding: {top: 30, right: 30}
+        },
+        {
+            row: 1,
+            column: 1,
+            data: ybins.map((d)=>{
+                return {
+                    x: d.count,
+                    y: d.bin,
+                    c: latticeColorScheme10[2]
+                };
+            }).reverse(),
+            type: "barplot",
+            axis: {
+                y: {display: false},
+                x: {title: "", ticks: 5}
+            },
+            padding: {
+                left: 0
             }
-        }
+        },
+       
     ];
     const grid = {
         rows: 2,
@@ -53,26 +64,27 @@ function demoScatterHistograms(distri="randomNormal"){
         rowSizes: [
             {
                 row: 0,
-                size: 0.7
+                size: 0.2
             },
             {
                 row: 1,
-                size: 0.3
+                size: 0.8
             }
         ],
         columnSizes: [
             {
                 column: 0,
-                size: 0.7
+                size: 0.8
             },
             {
                 column: 1,
-                size: 0.3
+                size: 0.2
             }
         ]
     };
     document.getElementById("scatter-hist").innerHTML = "";
-    LatticeLib.lattice(latticeMap, "scatter-hist", {grid:grid});
+    let lattice = LatticeLib.lattice(latticeMap, "scatter-hist", {grid:grid});
+    console.log(LatticeLib.getPlotOptions(lattice.plots[1]));
 }
 
 /**
