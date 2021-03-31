@@ -11,8 +11,15 @@ function demoAreaPlot(){
         else return 0;
     });
     const config = {
+        padding: {top: 20},
         axis: {
-            x: {scaleType: "linear"}
+            x: {
+                title: "x value",
+                scaleType: "linear"
+            },
+            y: {
+                title: "y value"
+            },
         }
     };
     let plot = LatticeLib.plot(data, "areaplot", id, config); // todo: more plot options demos
@@ -23,10 +30,14 @@ function demoAreaPlot(){
 function demoBarcodePlot(){
     const id="barcode-plot";
     const distri = "randomInt";
-    const data = RandomDataLib.createRandomNumericalData(20, distri);
+    const data = RandomDataLib.createRandomNumericalData(50, distri);
     const config = {
-        padding: {top: 20},
+        height: 100,
+        padding: {top: 20, bottom: 50},
         axis: {
+            x: {
+                title: "x value"
+            },
             y: {display: false}
         }
     }
@@ -41,9 +52,15 @@ function demoScatterPlot(){
     const data = RandomDataLib.createRandomNumericalData(200, distri, latticeBlue);
     
     const plotConfig = {
+        padding: {
+            top: 20
+        },
         axis: {
-            y: {title: distri, ticks: 10}, 
-            x: {title: distri}
+            y: {title: "y value", ticks: 5}, 
+            x: {
+                title: "x value",
+                ticks: 5
+            }
         }
     }; // todo: Y axis title isn't showing
     LatticeLib.plot(data, "scatterplot", id, plotConfig); // todo: more plot options demos
@@ -153,7 +170,8 @@ function demoStackedColumnPlot() {
                 title: ""
             },
             y: {
-                title: "y label"
+                title: "value",
+                ticks: 5
             },
         }
     };
