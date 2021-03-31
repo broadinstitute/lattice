@@ -1,4 +1,6 @@
 const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const filename = "lattice-lib"; // need to export multiple 
@@ -9,7 +11,11 @@ module.exports = {
     entry: {
         app: "../../src/libs/LatticeLib.js"
     },
-   
+
+    plugins: [
+        new MiniCssExtractPlugin({ filename: `css/${filename}.min.css` })
+    ],
+
 
     module: {
         rules: [

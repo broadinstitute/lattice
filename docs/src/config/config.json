@@ -11,7 +11,7 @@
             "colors": ["#376770", "#9bcad3"],
             "plots": [
                 {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "stackedcolumnplot",
                     "plotOptions": {
                         "axis": {
@@ -32,7 +32,7 @@
             "colors": ["#C72C43", "#F67F55", "#FCD97F", "#E2F590", "#8BCD84"],
             "plots": [
                 {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "stackedcolumnplot",
                     "plotOptions": {
                         "axis": {
@@ -53,7 +53,7 @@
             "colors": ["#800040", "#535353"],
             "plots": [
                 {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "stripplot",
                     "plotOptions": {
                         "axis": {
@@ -74,7 +74,7 @@
             "colors": ["#BDF7FD", "#FEBF85", "#B87DB2", "#388885", "#C1EFAE", "#845930", "#1F4951", "#376770", "#AD5B56", "#E6A561", "#333333", "#3A4B4D", "#6F9196", "#D1D1D1"],
             "plots": [
                 {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "stripplot",
                     "plotOptions": {
                         "axis": {
@@ -108,7 +108,7 @@
             "colors": ["#FFF", "#59D0F4", "#376770", "#639D4B", "#004080", "#0080ff", "#A6DA8F", "#EA89DA"],
             "plots": [
                 {
-                    "column": 1,
+                    "column": 0,
                     "plotType": "stackedbarplot",
                     "plotOptions": {
                         "axis": {
@@ -118,7 +118,7 @@
                         "padding": { "top": 10, "bottom": 10, "right": 10 }
                     }
                 }, {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "categoricalheatmap",
                     "plotOptions": {
                         "axis": {
@@ -128,7 +128,7 @@
                         "padding": { "top": 10, "bottom": 10, "right": 10 }
                     }
                 }, {
-                    "column": 3,
+                    "column": 2,
                     "plotType": "heatmap",
                     "plotOptions": {
                         "axis": {
@@ -160,7 +160,7 @@
             "colors": ["#FFF", "#2B69CA", "#68AEFF", "#FF5468", "#FF0825", "#EEE"],
             "plots": [
                 {
-                    "column": 1,
+                    "column": 0,
                     "plotType": "stackedbarplot",
                     "plotOptions": {
                         "axis": {
@@ -170,7 +170,7 @@
                         "padding": { "top": 10, "bottom": 10, "right": 10 }
                     }
                 }, {
-                    "column": 2,
+                    "column": 1,
                     "plotType": "categoricalheatmap",
                     "plotOptions": {
                         "axis": {
@@ -180,7 +180,7 @@
                         "padding": { "top": 10, "bottom": 10, "right": 10 }
                     }
                 }, {
-                    "column": 3,
+                    "column": 2,
                     "plotType": "heatmap",
                     "plotOptions": {
                         "axis": {
@@ -193,27 +193,24 @@
             ]
         }
     ],
-    "sampleBasedColumn": 2,
+    "sampleBasedColumn": 1,
     "initialSort": [
         { "panel": "Histology", "order": 0 },
         { "panel": "GeneMutation", "order": 1 }
     ],
     "grid": {
-        "columns": 4,
+        "columns": 3,
         "rows": 4,
         "columnSizes": [
             {
                 "column": 0,
                 "size": 0.16
-            }, {
+            },{
                 "column": 1,
-                "size": 0.16
+                "size": 0.80
             }, {
                 "column": 2,
-                "size": 0.64
-            }, {
-                "column": 3,
-                "size": 0.05
+                "size": 0.04
             }
         ],
         "rowSizes": [
