@@ -16,11 +16,9 @@ const plotTypeDemo = () => {
     demoAreaPlot();
     demoBarcodePlot();
     demoBarPlot();
-
     demoColumnPlot();
     demoCategoricalHeatmap();
     demoHeatmap();
-
     demoScatterPlot();
     demoStackedBarPlot();
     demoStackedColumnPlot();
