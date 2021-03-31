@@ -37,8 +37,8 @@ function demoBarcodePlot(){
 function demoScatterPlot(){
     // scatterplot
     const id = "scatter-plot";
-    const distri = "randomExponential";
-    const data = RandomDataLib.createRandomNumericalData(20, latticeBlue, distri);
+    const distri = "randomNormal";
+    const data = RandomDataLib.createRandomNumericalData(200, distri, latticeBlue);
     
     const plotConfig = {
         axis: {
@@ -53,7 +53,7 @@ function demoScatterPlot(){
 function demoBarPlot(){
     // bar plot
     const id = "bar-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", latticeBlue, 5);
+    const data = RandomDataLib.createRandomCategoricalData(20, "horizontal", 5, latticeBlue);
     const plotConfig = {padding: {top: 0}, xAxis: {title: "value"}}; // todo: how to change the plot height
     let plot = LatticeLib.plot(data, "barplot", id, plotConfig); // todo: more plot options demos
     console.log(LatticeLib.getPlotOptions(plot));
@@ -79,7 +79,7 @@ function demoCategoricalHeatmap(){
 function demoColumnPlot(){
     // column plot
     const id = "column-plot";
-    const data = RandomDataLib.createRandomCategoricalData(20, "vertical", latticeBlue, 5); // todo: how to rotate cateogy text labels
+    const data = RandomDataLib.createRandomCategoricalData(20, "vertical", 5, latticeBlue); // todo: how to rotate cateogy text labels
     const plotConfig = {
         padding: {top: 0}, 
         axis:{
@@ -95,8 +95,9 @@ function demoHeatmap(){
     const maxValue = 15;
     const nCols = 20;
     const nRows = 20;
-    const colorsObj = RandomDataLib.createContinuousColors(maxValue);
     const data = RandomDataLib.createRandomHeatmapData(nRows, nCols, maxValue);
+    const colorsObj = RandomDataLib.createContinuousColors(maxValue, "Lattice");
+    console.info(colorsObj.interpolator);
     const plotConfig = {
         padding: { top: 0 },
         axis: {
@@ -110,7 +111,7 @@ function demoStackedColumnPlot() {
     const id = "stacked-column";
     const nBars = 10;
     const nSeries = 5;
-    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries);
+    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "vertical");
     const plotConfig = {
         padding: { top: 0 },
@@ -129,7 +130,7 @@ function demoStackedBarPlot() {
     const id = "stacked-bar";
     const nBars = 10;
     const nSeries = 5;
-    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries);
+    const seriesInfo = RandomDataLib.createSeriesColorInfo(nSeries, latticeColorScheme10);
     const data = RandomDataLib.createRandomStackedCategoricalData(nBars, nSeries, "horizontal");
     const plotConfig = {
         padding: { top: 0 },

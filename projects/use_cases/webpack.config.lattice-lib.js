@@ -52,7 +52,7 @@ module.exports = {
     },
     devtool: "inline-source-map",
     devServer: {
-        port: 3001,
+        port: 8002,
         publicPath: "/build", // keep in mind that when using webpack-dev-server, this path is only virtual
         contentBase: path.resolve(__dirname, "./"),
         watchContentBase: true,

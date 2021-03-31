@@ -19,7 +19,7 @@ function generateRandomInt(min, max) {
 }
 
 
-function createRandomNumericalData(n, color="rgba(70, 130, 180, 0.4)", distribution="randomNormal") {
+function createRandomNumericalData(n, distribution="randomNormal", color="rgba(70, 130, 180, 0.4)") {
     let points = d3.range(0, n).map(()=>{
         return {
             x: undefined,
@@ -95,7 +95,7 @@ function createRandomPoints(n, verbose=false, x={mu:20, sigma:5}, y={mu:50, sigm
     return points;
 }
 
-function createRandomCategoricalData(n, axis="vertical", color=color="rgba(70, 130, 180, 0.4)", labelLength=10, verbose=false, value={mu: 0, sigma: 2}) {
+function createRandomCategoricalData(n, axis="vertical", labelLength=10, color="rgba(70, 130, 180, 0.4)", verbose=false) {
     let data = d3.range(0, n).map(() => {
         let category = generateRandomString(labelLength);
         let val = Math.floor(Math.random() * 101);
@@ -160,11 +160,34 @@ function createHeatmapColors(n, type, colorRange = d3.schemeCategory10) {
     }
 }
 
-function createContinuousColors(n, interpolator){
-    console.log(d3.interpolateBlues)
+function createContinuousColors(n, color="Purples"){
+    const interpolators = {
+        BuGn: d3.interpolateBuGn,
+        OrRd: d3.interpolateOrRd,
+        PuBu: d3.interpolatePuBu,
+        YlGnBu: d3.interpolateYlGnBu,
+        Blues: d3.interpolateBlues,
+        Oranges: d3.interpolateOranges,
+        Greens: d3.interpolateGreens,
+        Purples: d3.interpolatePurples,
+        Reds: d3.interpolateReds,
+        Greys: d3.interpolateGreys,
+        Grays: d3.interpolateGreys,
+
+        // diverging color schemes
+        RdBu: d3.interpolateRdBu,
+        RdGy: d3.interpolateRdGy,
+        PiYG: d3.interpolatePiYG,
+        PuOr: d3.interpolatePuOr,
+        RdYlBu: d3.interpolateRdYlBu,
+
+        // lattice
+        Lattice: d3.interpolateRgb("#6bafa9", "white")
+ 
+    };
     return {
         domain: [0, n],
-        interpolator: d3.interpolateBlues
+        interpolator: interpolators[color]
     };
 }
 
@@ -205,9 +228,9 @@ function createRandomStackedCategoricalData(nBars, nSeries, axis="vertical", lab
     return data;
 }
 
-function createSeriesColorInfo(nSeries, verbose=false) {
+function createSeriesColorInfo(nSeries, colors=d3.schemeCategory10, verbose=false) {
     const series = createSeries(nSeries);
-    const colorScale = d3.scaleOrdinal().domain(nSeries).range(d3.schemeCategory10);
+    const colorScale = d3.scaleOrdinal().domain(nSeries).range(colors);
     const seriesInfo = series.map((d, i) => {
         return {
             name: d,
