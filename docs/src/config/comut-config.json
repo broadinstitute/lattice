@@ -16,7 +16,7 @@
                     "plotOptions": {
                         "axis": {
                             "x": { "display": false, "title": "" },
-                            "y": { "display": true, "title": "Mutations per Mb" } 
+                            "y": { "display": true, "title": "Mutations per Mb", "ticks": 5} 
                         },
                         "padding": { "top": 10, "bottom": 10, "right": 0 }
                     }
@@ -37,7 +37,7 @@
                     "plotOptions": {
                         "axis": {
                             "x": { "display": false, "title": "" },
-                            "y": { "display": true, "title": "Mutation" }
+                            "y": { "display": true, "title": "Mutation", "ticks": 5 }
                         },
                         "padding": { "top": 10, "bottom": 10, "right": 0 }
                     }
@@ -112,7 +112,7 @@
                     "plotType": "stackedbarplot",
                     "plotOptions": {
                         "axis": {
-                            "x": { "display": true, "title": "" },
+                            "x": { "display": true, "title": "", "ticks": 5 },
                             "y": { "display": false, "title": "" }
                         },
                         "padding": { "top": 10, "bottom": 10, "right": 10 }
@@ -164,7 +164,7 @@
                     "plotType": "stackedbarplot",
                     "plotOptions": {
                         "axis": {
-                            "x": { "display": true, "title": "" },
+                            "x": { "display": true, "title": "", "ticks": 5 },
                             "y": { "display": false, "title": "" }
                         },
                         "padding": { "top": 10, "bottom": 10, "right": 10 }

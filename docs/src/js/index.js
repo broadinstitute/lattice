@@ -35,7 +35,7 @@ const coordinatedScatterDemo = () => {
 const comutDemo = () => {
     const rootId = "comut-plot";
     const dataFiles = {
-        config: "/src/config/comut-plot.config.json",
+        config: "/src/config/comut-config.json",
         data: "/src/data/ACC-TP.coMut_table.json"
     }
 
