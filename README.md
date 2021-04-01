@@ -19,3 +19,8 @@ npm run serve # will serve it at port 8000 locally, according to webpack.config.
 ```
 npm install        # run this at root of repository i.e. lattice
 ```
+
+## To generate jsdocs
+```
+npm run docs
+```
