@@ -1,37 +1,45 @@
-import { Plot } from "./Plot";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Lattice.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Lattice.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Plot } from "./Plot";
 import { LATTICE_DEFAULT_PADDING } from "../utils/constants";
 import { createGroup, createSvg } from "../utils/plot-utils";
 import * as d3 from "d3";
 
-/**
- * @description Lattice class for creating a lattice visualization object
- */
 export class Lattice {
     /**
      * Constructor for Lattice controller. This is one of two entry points for a user using this library.
-     * @constructor
-     * @param {Object[]} plots - Specifies the configuration for each individual plot. Expected attributes are:
-     *                              - row
-     *                              - column
-     *                              - Plot object attributes (excluding rootId and parentId)
-     * @param {String} rootId - div ID that the SVG should be created in
-     * @param {Object} userInput - optional, available options are described 
-     */ 
-     
-    constructor(plots, rootId, userInput) {
-    /* @param {Object} UNNAMED - contains all optional parameters
-     *          {String} parentId - div ID that the plot should be created in, if the SVG already exists
-     *          {Number} width - outer width of lattice plot
-     *          {Number} height - outer height of lattice plot
-     *          {Object} grid - attrs: {Int} rows, {Int} columns -- can be used to specify the number of rows and columns
-     *                                {Array[Object]} rowSizes -- can be used to customize size of each row
-     *                                                            attr: {Int} row, zero-based
-     *                                                                  {Float} size - Decimal between [0, 1]
-     *                                {Array[Object]} columnSizes -- can be used to customize size of each column
-     *                                                               attr: {Int} column, zero-based
-     *                                                                    {Float} size - Decimal between [0, 1]
-     *          {Object} padding - attr: top, right, bottom, left; padding to apply around the chart
+     * @param {Array[Object]} plots Specifies the configuration for each individual plot. Expected attributes are: row, column, plot object attributes (excluding rootId and parentId)
+     * @param {String} rootId div ID that the SVG should be created in
+     * @param {Object} userInput optional, available options are described 
      */
+      
+    constructor(plots, rootId, userInput) {
         this.rootId = rootId;
         this._userInput = userInput;
 
@@ -58,7 +66,7 @@ export class Lattice {
             left:LATTICE_DEFAULT_PADDING
         };
 
-        this._changeSettings(userInput);
+        this.changeSettings(userInput);
 
         // computed values
         this.innerWidth = this.width - this.padding.left - this.padding.right;
@@ -81,11 +89,27 @@ export class Lattice {
         this.yScale = d3.scaleLinear().domain([0, 1]).range([0, this.innerHeight]);
     }
 
-    
+    changeSettings(userInput){
+        let lattice = this;
+        Object.keys(userInput).forEach((prop)=>{
+            switch(prop){
+            case "padding":
+                lattice.padding = Object.assign({}, lattice.padding, userInput.padding);
+                break;
+            case "grid":
+                lattice.grid = Object.assign({}, lattice.grid, userInput.grid);
+                break;
+            default:
+                lattice[prop] = userInput[prop];
+            }
+        });
+        lattice._validateGridInfo();
+        lattice._updateGridInfo();
+       
+    }
 
     /**
-     * @public
-     * @description reports what properties of Lattice object are customizable
+     * This method allows users to see what properties of the lattice object are customizable
      */
     getCustomizable(){
         let config = {};
@@ -96,8 +120,9 @@ export class Lattice {
     }
 
     /**
-     * @public
-     * @description rendering function of a Lattice object. It creates an SVG/group element as needed for the initial Lattice, generates a group for each individual plot
+     * rendering function for the lattice plot
+     * creates an SVG/group element as needed for the initial lattice, generates a group for each individual plot
+     * loops through to call each plot's render function after adding a parentId 
      */
     render() {
         let svg;
@@ -130,37 +155,12 @@ export class Lattice {
     }
 
     /**
-     * @description changes the Lattice's default settings based on user input
-     * @param {Object} userInput 
-     * @private
-     */
-    _changeSettings(userInput){
-        let lattice = this;
-        Object.keys(userInput).forEach((prop)=>{
-            switch(prop){
-            case "padding":
-                lattice.padding = Object.assign({}, lattice.padding, userInput.padding);
-                break;
-            case "grid":
-                lattice.grid = Object.assign({}, lattice.grid, userInput.grid);
-                break;
-            default:
-                lattice[prop] = userInput[prop];
-            }
-        });
-        lattice._validateGridInfo();
-        lattice._updateGridInfo();
-       
-    }
-
-    /**
      * Private function.
      * Called by the constructor to validate that:
-     * - ALL rows are customized if passed in by user
-     * - ALL columns are customized if passed in by user
-     * - that the customized percentages add up to 1 (100%)
+     * ALL rows are customized if passed in by user
+     * ALL columns are customized if passed in by user
+     * that the customized percentages add up to 1 (100%)
      * If no customizations were made, calculates the needed grid information for generating lattice grid
-     * @private
      */
     _validateGridInfo() {
         if (this.grid.rowSizes !== undefined) {
@@ -172,7 +172,7 @@ export class Lattice {
             }
         } else {
             this.grid.rowSizes = [];
-            for (let i = 0; i < this.grid.rows; i++) {
+            for (let i = 0; i &lt; this.grid.rows; i++) {
                 this.grid.rowSizes.push({ row: i, size: 1/this.grid.rows });
             }
         }
@@ -186,7 +186,7 @@ export class Lattice {
             }
         } else {
             this.grid.columnSizes = [];
-            for (let i = 0; i < this.grid.columns; i++) {
+            for (let i = 0; i &lt; this.grid.columns; i++) {
                 this.grid.columnSizes.push({ column: i, size: 1/this.grid.columns });
             }
         }
@@ -195,7 +195,6 @@ export class Lattice {
     /**
      * Private function.
      * Calculates where each plot in the grid should start, as well as the relative height/width of each plot within the grid
-     * @private
      */
     _updateGridInfo() {
         this.grid.rowSizes.sort((a, b) => a.row - b.row);
@@ -229,3 +228,26 @@ export class Lattice {
         });
     }
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Lattice_Lattice.html">Lattice</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 01 2021 16:11:49 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
