@@ -50,9 +50,11 @@ footer {
 }
 
 /* layout controls */
-.center {
+.centered {
     margin-left: auto;
     margin-right: auto;
+}
+.max-width {
     max-width: 80rem;
 }
 .push {
@@ -68,6 +70,8 @@ footer {
 }
 .flex-box {
     flex: 0 1 200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .content {
     color: var(--text);
