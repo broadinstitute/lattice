@@ -76,6 +76,7 @@ function createPlotData(data) {
                 y: {
                     title: d.key,
                     ticks: 1,
+                    max: 25000
                 }
                 
             }, // show tick mark for every month since COVID tracking roughly started
