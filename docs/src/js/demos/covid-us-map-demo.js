@@ -52,7 +52,9 @@ function createPlotData(data) {
         const stateData = values.map(d => {
             const date = String(d.date);
             return {
-                x: new Date(`${date.substring(0, 4)}.${date.substring(4,6)}.${date.substring(6)}`),
+                // NOTE: important to check all browsers if you change this.
+                // Date parsing that's valid in one browser is not always valid in other ones.
+                x: new Date(`${date.substring(0, 4)}-${date.substring(4,6)}-${date.substring(6)}`),
                 y: d.positiveIncrease
             };
         });
@@ -78,8 +80,7 @@ function createPlotData(data) {
                     ticks: 1,
                     max: 10000
                 }
-                
-            }, // show tick mark for every month since COVID tracking roughly started
+            },
         };
     });
     return allStatesData;
