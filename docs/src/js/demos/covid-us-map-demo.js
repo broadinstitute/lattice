@@ -16,8 +16,8 @@ function initCovidMap(){
 
             const latticeConfig = {
                 width: 1200,
-                height: 875,
-                padding: {top: 5, right: 20, bottom:20, left:20},
+                height: 800,
+                padding: {top: 5, right: 20, bottom:10, left:20},
             };
             const lattice = LatticeLib.lattice(plotData, rootId, latticeConfig);
             lattice.render();
@@ -77,8 +77,8 @@ function createPlotData(data) {
                 },
                 y: {
                     title: d.key,
-                    ticks: 1,
-                    max: 10000
+                    ticks: 2,
+                    max: 8000
                 }
             },
         };

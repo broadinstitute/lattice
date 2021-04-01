@@ -153,15 +153,6 @@ hr {
     stroke-linecap: round;
 }
 
-/* #covid-plot .ljs--areaplot-path {
-    fill:var(--lattice-blue-dark);
-    fill-opacity: .4;
-    stroke:var(--lattice-blue-transparent);
-    stroke-width: .1;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-} */
-
 .ljs--barcode-line {
     stroke: var(--lattice-blue-dark);
     stroke-width: 1px;
