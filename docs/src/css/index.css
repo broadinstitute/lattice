@@ -87,10 +87,9 @@ footer {
     margin: 0px;
 }
 
-small.header {
-    color: var(--broad-grey);
+small.light-grey {
+    color: var(--lattice-grey);
 }
-
 /* button */
 button {
     background-color: var(--lattice-blue-dark); 
