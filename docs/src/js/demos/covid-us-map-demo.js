@@ -64,19 +64,18 @@ function createPlotData(data) {
             // title: d.key,
             data: stateData,
             type: "areaplot",
-            padding: {top: 25, right: 20, bottom:50, left:20},
+            padding: {top: 25, right: 20, bottom:20, left:20},
             axis: {
                 x:{
                     title: "",
                     scaleType: "temporal", 
                     ticks: 5,
-                    angle: 90,
+                    angle: 30,
                     "text-anchor": "start"
                 },
                 y: {
                     title: d.key,
                     ticks: 1,
-                    max: 5000
                 }
                 
             }, // show tick mark for every month since COVID tracking roughly started
