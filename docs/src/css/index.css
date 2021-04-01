@@ -33,7 +33,10 @@ header {
     width: 100%;
     position: fixed;
     background-color: white;
+}
 
+.hscroll {
+    overflow: auto;
 }
 
 main {

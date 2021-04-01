@@ -15,7 +15,7 @@ function initCovidMap(){
             const plotData = createPlotData(promiseData);
 
             const latticeConfig = {
-                width: 1400,
+                width: 1200,
                 height: 875,
                 padding: {top: 5, right: 20, bottom:20, left:20},
             };
