@@ -38,6 +38,44 @@
  
         </section>
 
+
+        <section class="content">
+            <h2>Use case: A scatter plot with histograms</h2>
+            <div class="container">
+                <p>When viewing a scatter plot with a lot of data points, it is often not as easy to get a true sense of the marginal distributions. Using Lattice, we can easily render a scatter plot and the marginal distributions as histograms along both axes. </p>
+                <div>
+                      
+                    <button onclick="demoScatterHistograms('randomNormal')">Random Normal</button>
+                    <button onclick="demoScatterHistograms('randomInt')">Random Integers</button>
+                    <button onclick="demoScatterHistograms('randomExponential')">Random Exponential</button>  
+                    (Click to see a different data set)  
+                </div>
+                        
+                <div id="scatter-hist" class="hscroll"></div>
+            </div>
+        </section>
+        <hr>
+        <section class="content">
+            <h2>Use case: Daily new positive COVID cases in the US</h2>
+            <p>
+                A small multiple is a special kind of grid-based visualization design, where a series of similar charts are rendered and organized in a grid structure. A small multiple makes it easy to compare across many similar datasets. Here, we use Lattice to render the daily positive COVID cases in the 50 states over time as a series of bar graphs, arranged in a less conventional grid that loosely resembles the US map. The daily positive COVID data are obtained from the <a href="https://covidtracking.com/" target="_blank">COVID Tracking Project <i class="fas fa-external-link-alt"></i></a>.
+            </p>
+            <div class="container">
+                <div id="covid-plot" class="hscroll"></div> 
+            </div>
+        </section>
+        <hr>
+        <section class="content">
+            <h2>Use case: iCoMut——a visualization for cancer genomes</h2>
+            <p>
+                CoMut plot, introduced by <a href="https://www.broadinstitute.org/blog/visualizing-cancer-genome" target="_blank">Nicolas Stransky <i class="fas fa-external-link-alt"></i></a> , is often seen in cancer research publications as a visual summary of genetic variations/mutations in cancer cohorts. The plot itself is essentially a lattice of varous chart types aligned and interconnected via a common variable (X or Y axis). The central panel of a CoMut plot render mutation analyses and metadata of the patients in various charts vertically aligned with a shared X axis (i.e. patients). iCoMut, in production on <a href="http://www.tumorportal.org/tumor_types?ttype=BRCA" target="_blank">TumorPortal <i class="fas fa-external-link-alt"></i></a> and <a href="http://firebrowse.org/iCoMut/?cohort=CESC" target="_blank">FireBrowse <i class="fas fa-external-link-alt"></i></a>, aims to further transform the static image into an interactive data exporer providing greater access to the research community. Here is a demo of a mock cohort using iCoMut.
+            </p>
+            <div class="container">
+                <div id="comut-plot" class="hscroll"></div> 
+            </div>
+        </section>
+        <hr>
+
         <section class="flex-container">  
             <div class="content">
                 <h2>Basic chart types</h2>
@@ -85,48 +123,6 @@
                 </div>
             </div>
         </section>
-        <hr>
-
-        <section class="content">
-            <h2>A scatter plot with histograms</h2>
-            <div class="container">
-                <p>When viewing a scatter plot with a lot of data points, it is often not as easy to get a true sense of the marginal distributions. Using Lattice, we can easily render a scatter plot and the marginal distributions as histograms along both axes. </p>
-                <div>
-                      
-                    <button onclick="demoScatterHistograms('randomNormal')">Random Normal</button>
-                    <button onclick="demoScatterHistograms('randomInt')">Random Integers</button>
-                    <button onclick="demoScatterHistograms('randomExponential')">Random Exponential</button>  
-                    (Click to see a different data set)  
-                </div>
-                        
-                <div id="scatter-hist" class="hscroll"></div>
-            </div>
-        </section>
-        <hr>
-        <section class="content">
-            <h2>Daily new positive COVID cases in the US</h2>
-            <p>
-                A small multiple is a special kind of grid-based visualization design, where a series of similar charts are rendered and organized in a grid structure. A small multiple makes it easy to compare across many similar datasets. Here, we use Lattice to render the daily positive COVID cases in the 50 states over time as a series of bar graphs, arranged in a less conventional grid that loosely resembles the US map. The daily positive COVID data are obtained from the <a href="https://covidtracking.com/" target="_blank">COVID Tracking Project <i class="fas fa-external-link-alt"></i></a>.
-            </p>
-            <div class="container">
-                <div id="covid-plot" class="hscroll"></div> 
-            </div>
-        </section>
-        <hr>
-        <section class="content">
-            <h2>iCoMut</h2>
-            <p>
-
-                CoMut plot, introduced by <a href="https://www.broadinstitute.org/blog/visualizing-cancer-genome" target="_blank">Nicolas Stransky <i class="fas fa-external-link-alt"></i></a> , is often seen in cancer research publications as a visual summary of genetic variations/mutations in cancer cohorts. The plot itself is essentially a lattice of varous chart types aligned and interconnected via a common variable (X or Y axis). The central panel of a CoMut plot render mutation analyses and metadata of the patients in various charts vertically aligned with a shared X axis (i.e. patients). iCoMut, in production on <a href="http://www.tumorportal.org/tumor_types?ttype=BRCA" target="_blank">TumorPortal <i class="fas fa-external-link-alt"></i></a> and <a href="http://firebrowse.org/iCoMut/?cohort=CESC" target="_blank">FireBrowse <i class="fas fa-external-link-alt"></i></a>, aims to further transform the static image into an interactive data exporer providing greater access to the research community. Here is a demo of a mock cohort using iCoMut.
-
-
-            </p>
-            <div class="container">
-                <div id="comut-plot" class="hscroll"></div> 
-            </div>
-        </section>
-
-
 
     </main>
 
