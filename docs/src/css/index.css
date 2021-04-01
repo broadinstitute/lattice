@@ -148,7 +148,7 @@ hr {
 #covid-plot .ljs--areaplot-path {
     fill:var(--lattice-blue-dark);
     fill-opacity: .4;
-    stroke:#eeeeee;
+    stroke:var(--lattice-blue-transparent);
     stroke-width: .1;
     stroke-linejoin: round;
     stroke-linecap: round;
