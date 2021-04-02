@@ -1,26 +1,26 @@
 {
-  "name": "pattern-viz",
-  "version": "1.0.0",
-  "description": "Visualizations developed by the Pattern team",
-  "main": "index.js",
+  "name": "lattice-viz",
+  "version": "0.1.0",
+  "description": "A JavaScript library for creating coordinated multivariate visualizations for scientific data",
+  "main": "src/libs/LatticeLib.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "jsdoc -d docs/jsdocs src/controllers/*.js src/libs/LatticeLib.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/broadinstitute/pattern-viz.git"
+    "url": "git+https://github.com/broadinstitute/lattice.git"
   },
-  "keywords": [],
+  "keywords": ["visualization", "dataviz", "data", "lattice", "plot"],
   "author": {
-    "name": "Pattern Development Team",
+    "name": "Pattern Development Team at Broad",
     "email": "pattern-dev@broadinstitute.org"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/broadinstitute/pattern-viz/issues"
+    "url": "https://github.com/broadinstitute/lattice/issues"
   },
-  "homepage": "https://github.com/broadinstitute/pattern-viz#readme",
+  "homepage": "https://github.com/broadinstitute/lattice#readme",
   "dependencies": {
     "d3": "^5.15.0"
   },
