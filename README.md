@@ -1,26 +1,34 @@
 # lattice.js
 
-## lattice.js homepage
-URL: https://lattice.broadinstitute.org
+Lattice.js is a JavaScript library for creating coordinated multivariate visualizations for sciences. At its core, Lattice champions a 2D grid-based design approach, which offers an intuitive yet powerful visual solution for rendering multivariate data.
 
-### Running the homepage locally
-Contents of the homepage are stored in the `docs` directory and are served from the `main` branch.
-NPM and webpack have been setup so that while you are running it locally using a webpack server and edit the page, the page will hot reload.
 
-Changes should automatically pull to production once it has been merged into `main`.
-To run a local server:
+## Demos
+To see demos of our sample use cases and basic plot types, visit https://lattice.broadinstitute.org.
+
+## Installing and using lattice.js
+Use `npm` to install the package in your project.
 ```
-cd docs
-npm install
-npm run serve # will serve it at port 8000 locally, according to webpack.config.dev.js
+npm install lattice-viz
 ```
 
-## Getting Started
+`import` the library to use lattice. There are 3 different imports you can use that will depend on your specific use case.
 ```
-npm install        # run this at root of repository i.e. lattice
+import { LatticeLib, Plot, Lattice } from "lattice-viz";
 ```
+1. `LatticeLib` - This exposes basic usage of Lattice.js as a charting library, allowing someone to call `LatticeLib.plot(...)` or `LatticeLib.lattice(...)` to generate a lattice or a plot.
+2. `Plot` - This allows someone to build their own visualization tool and instantiate a `Plot` object within it.
+3. `Lattice` - Similarly to 2, this allows someone to build their own visualization tool and instantiate a `Lattice` object within it.
 
-## To generate jsdocs
+Data visualization developers who may want to layer additional interactive pieces on top of the base visualization are able to do so using options 2 and 3 in conjuction with [D3.js](https://www.npmjs.com/package/d3).
+
+
+
+## Developing the lattice.js library
+### Getting started
+After cloning the respository from GitHub, run `npm install` at the root of the repository.
+
+### To generate jsdocs
 ```
 npm run docs
 ```
