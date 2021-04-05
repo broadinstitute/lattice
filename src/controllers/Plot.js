@@ -1,4 +1,3 @@
-import "../css/interactive.css";
 import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
 import * as constants from "../utils/constants";

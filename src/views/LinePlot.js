@@ -1,4 +1,3 @@
-import "../css/LinePlot.css"
 import * as plotUtils from "../utils/plot-utils";
 import * as d3 from "d3";
 
