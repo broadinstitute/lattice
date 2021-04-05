@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/broadinstitute/lattice/issues"
   },
-  "homepage": "https://github.com/broadinstitute/lattice#readme",
+  "homepage": "https://lattice.broadinstitute.org/",
   "dependencies": {
     "d3": "^5.15.0"
   },
