@@ -22,7 +22,27 @@ import { LatticeLib, Plot, Lattice } from "lattice-viz";
 
 Data visualization developers who may want to layer additional interactive pieces on top of the base visualization are able to do so using options 2 and 3 in conjuction with [D3.js](https://www.npmjs.com/package/d3).
 
+## Styling
+Out-of-the-box CSS styling has been provided for easy usage of the lattice.js library and can be imported into your app at its entrypoint.
+```
+import "lattice-viz/src/css/LatticeLib.css";
+```
 
+You will need to install [style-loader](https://github.com/webpack-contrib/style-loader) and [css-loader](https://github.com/webpack-contrib/css-loader) and add a basic rule for css to your webpack config.
+```
+...
+module: {
+    rules: [
+        {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
+        }
+    ]
+}
+...
+```
+
+---
 
 ## Developing the lattice.js library
 ### Getting started
