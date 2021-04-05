@@ -60,4 +60,9 @@ export function getLatticeOptions(lattice=undefined){
     return JSON.stringify(lattice.getCustomizable(), replace, 2);
 }
 
-export default class LatticeLib{}
+export {
+    Plot,
+    Lattice
+};
+
+export default class LatticeLib {}
