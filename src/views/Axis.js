@@ -1,4 +1,3 @@
-import "../css/Axis.css";
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
 
