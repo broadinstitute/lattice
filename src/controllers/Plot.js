@@ -46,23 +46,31 @@ export class Plot {
                 scaleType: undefined, // auto-detect if undefined
                 title: "x axis", 
                 ticks: undefined, // number of ticks to display
-                display: true, 
                 min: undefined, // applicable for numerical scales
-                max: undefined, // aaplicable for numerical scales
+                max: undefined, // applicable for numerical scales
                 orientation: "bottom", // top, bottom, left, right
                 padding: 0.15, // applicable for categorical scales
-                angle: 0
+                angle: 0,
+                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
+                hideAxis: false, // will hide the axis (ticks + tick labels)
+                hideTicks: false, // will hide the axis ticks
+                hideLabels: false, // will hide the axis tick labels
+                hideTitle: false // will hide the axis title
             },
             y: {
                 scaleType: undefined, // auto-detect if undefined
                 title: "y axis", 
                 ticks: undefined, // number of ticks to display
-                display: true, 
                 min: undefined, // applicable for numerical scales
-                max: undefined, // aaplicable for numerical scales
+                max: undefined, // applicable for numerical scales
                 orientation: "left", // top, bottom, left, right
                 padding: 0.15, // applicable for categorical scales
-                angle: 0
+                angle: 0,
+                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
+                hideAxis: false, // will hide the axis (ticks + tick labels)
+                hideTicks: false, // will hide the axis ticks
+                hideLabels: false, // will hide the axis tick labels
+                hideTitle: false // will hide the axis title
             },
             c: {
                 scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
@@ -79,7 +87,7 @@ export class Plot {
             formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
         };
         this.series = [];
-        this._changeSettings(userInput);     
+        this._changeSettings(userInput);
         
         // additional computed properties
         this.innerWidth = this.width - this.padding.left - this.padding.right;
