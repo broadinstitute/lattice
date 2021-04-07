@@ -90,7 +90,7 @@ export default class Axis {
 
         let axis;
         const axisId = `${this.axisType}-axis`;
-        let axisFn = this._getAxisFn(this.orientation).scale(this._scale);
+        let axisFn = this._getAxisFn(this.orientation).scale(this._scale).tickSizeOuter(0);
 
         if (!plot.hasRendered) {
             axis = svg.append("g").attr("class", `ljs--${axisId}`);
