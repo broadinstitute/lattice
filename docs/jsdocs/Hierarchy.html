@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: exports</title>
+    <title>JSDoc: Class: Hierarchy</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: exports</h1>
+    <h1 class="page-title">Class: Hierarchy</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>exports<span class="signature">(x, y, c, r, series)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Hierarchy<span class="signature">(name, value, color, label, series)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">(x, y, c, r, series)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Hierarchy"><span class="type-signature"></span>new Hierarchy<span class="signature">(name, value, color, label, series)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Represents one unit data point/entry in a Plot object
+    Hierarchy class is a data model. This is still a WIP.
 </div>
 
 
@@ -75,8 +75,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -87,7 +85,7 @@
 
         <tr>
             
-                <td class="name"><code>x</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -101,10 +99,6 @@
 
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"></td>
@@ -114,7 +108,7 @@
 
         <tr>
             
-                <td class="name"><code>y</code></td>
+                <td class="name"><code>value</code></td>
             
 
             <td class="type">
@@ -128,10 +122,6 @@
 
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"></td>
@@ -141,7 +131,7 @@
 
         <tr>
             
-                <td class="name"><code>c</code></td>
+                <td class="name"><code>color</code></td>
             
 
             <td class="type">
@@ -155,10 +145,6 @@
 
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last">color</td>
@@ -168,7 +154,7 @@
 
         <tr>
             
-                <td class="name"><code>r</code></td>
+                <td class="name"><code>label</code></td>
             
 
             <td class="type">
@@ -182,12 +168,6 @@
 
             
 
-            
-                <td class="default">
-                
-                    1
-                
-                </td>
             
 
             <td class="description last">radius; only used in scatterplot</td>
@@ -211,10 +191,6 @@
 
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last">the group a data point belongs to</td>
@@ -258,7 +234,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Point2D.js.html">models/Point2D.js</a>, <a href="models_Point2D.js.html#line13">line 13</a>
+        <a href="models_Hierarchy.js.html">models/Hierarchy.js</a>, <a href="models_Hierarchy.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -296,6 +272,13 @@
     
 
     
+        <h3 class="subsection-title">Classes</h3>
+
+        <dl>
+            <dt><a href="Hierarchy.html">Hierarchy</a></dt>
+            <dd></dd>
+        </dl>
+    
 
     
 
@@ -320,13 +303,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Hierarchy_Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="module.exports.html">exports</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Plot.html">Plot</a></li></ul><h3>Global</h3><ul><li><a href="global.html#validateScaleType">validateScaleType</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 16:28:36 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 16:37:56 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

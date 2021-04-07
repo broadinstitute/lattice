@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>exports<span class="signature">(x, y, c, r, series)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>exports<span class="signature">(label, data, c, series)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">(x, y, c, r, series)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">(label, data, c, series)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Represents one unit data point/entry in a Plot object
+    Distribution class is a data model that stores data and metadata of a distribution
 </div>
 
 
@@ -75,8 +75,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -87,13 +85,13 @@
 
         <tr>
             
-                <td class="name"><code>x</code></td>
+                <td class="name"><code>label</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Any</span>
+<span class="param-type">String</span>
 
 
             
@@ -102,25 +100,21 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"></td>
+            <td class="description last">lable of the distribution</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>y</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Any</span>
+<span class="param-type">Array.&lt;Number></span>
 
 
             
@@ -129,12 +123,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"></td>
+            <td class="description last">a list of numerical values</td>
         </tr>
 
     
@@ -147,7 +137,7 @@
             <td class="type">
             
                 
-<span class="param-type">Any</span>
+<span class="param-type">String</span>
 
 
             
@@ -156,41 +146,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">color</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>r</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Integer</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
-
-            <td class="description last">radius; only used in scatterplot</td>
+            <td class="description last">color in rgb or hexadecimal code</td>
         </tr>
 
     
@@ -211,10 +168,6 @@
 
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last">the group a data point belongs to</td>
@@ -258,7 +211,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Point2D.js.html">models/Point2D.js</a>, <a href="models_Point2D.js.html#line13">line 13</a>
+        <a href="models_Distribution.js.html">models/Distribution.js</a>, <a href="models_Distribution.js.html#line7">line 7</a>
     </li></ul></dd>
     
 
