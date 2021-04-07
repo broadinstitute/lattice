@@ -3,25 +3,76 @@ import * as constants from "../utils/constants";
 
 import {axisOrientations, axisTypes, defaultAxisOrientation} from "../utils/constants";
 import {isNumericalScale} from "../utils/plot-utils";
+
+
 /**
  * TODO: document the customizable config the same way as in Plot.js
+ * @description Axis class
  */
-export default class Axis {
+export class Axis {
     /**
-     * Constructor for Axis object
-     * config properties include: scaleType, title, ticks, display, min, max, orientation, padding, angle, textAnchor, hideAxis, hideTicks, hideLabels, hideTitle
-    */
+     * 
+     * @param {AxisType} axisType axis type
+     * @param {Object} [config] config object to override customizable properties 
+     * @property [scaleType] scale type auto-detected if undefined
+     * @property {String} [title=undefined] axis title
+     * @property {Number} [min] applicable for a numerical scale
+     * @property {Number} [max] applicable for a numerical scale
+
+     */
     constructor(axisType, config={}) {
         this.axisType = axisType;
+
+        this.scaleType = undefined;
+        this.title = undefined;
+        this.orientation = undefined;
+        this.padding = 0.15
+        this.textAngle = 0;
+        this.textAnchor = undefined;
+        this.display = true;
+        this.hideAxis = false;
+        this.hideTicks = false;
+        this.hideLabels = false;
+        this.hideTitle = false;
+        this.min = undefined;
+        this.max = undefined;
         Object.keys(config).forEach((attr)=>{
             this[attr] = config[attr];
         });
         this._scale = undefined;
         this._validate();
+        this.customizableProp = [
+            "scaleType", 
+            "title", 
+            "orientation",
+            "padding",
+            "textAngle",
+            "textAnchor",
+            "display",
+            "hideAxis",
+            "hideTicks",
+            "hideLabels",
+            "hideTitle",
+            "min",
+            "max"
+        ];
+    }
+
+    /**
+     * @description reports what properties of the Axis object are customizable
+     * @public
+     */
+    getCustomizable(){
+        let config = {};
+        this.customizableProp.forEach((prop)=>{
+            config[prop] = this[prop];
+        });
+        return config;
     }
 
     /**
      * Verifies that the orientation makes sense for the axis
+     * @private
      */
     _validate() {
         if (this.axisType == axisTypes.X && !([axisOrientations.TOP, axisOrientations.BOTTOM].includes(this.orientation))) {
@@ -35,6 +86,7 @@ export default class Axis {
 
     /** 
      * Determines the correct axis generator function to use based off Axis orientation
+     * @private
      */
     _getAxisFn(orientation) {
         switch(orientation) {
@@ -53,8 +105,9 @@ export default class Axis {
 
     /**
      * Renders the label
-     * @param {d3 Selection} svg - plot d3 selection group
+     * @param {Object} svg - plot d3 selection group
      * @param {Plot} plot
+     * @private
      */
     _renderTitle(svg, plot) {
         if (plot.hasRendered || !this.display || this.title === undefined || this.hideTitle) return;
@@ -80,8 +133,9 @@ export default class Axis {
 
     /**
      * Renders the axis
-     * @param {d3 Selection} svg - plot d3 selection group
+     * @param {Object} svg - plot d3 selection group
      * @param {Plot} a Plot object
+     * @public
      */
     render(svg, plot) {
         if (!this.display) return;
@@ -112,10 +166,10 @@ export default class Axis {
             axis.transition().duration(1000).call(axisFn);
         }
 
-        if (this.angle != 0){
+        if (this.textAngle != 0){
             axis.selectAll("text")
                 .attr("dy", "-0.8em")
-                .attr("transform", `translate(0, 7) rotate(${this.angle})`); 
+                .attr("transform", `translate(0, 7) rotate(${this.textAngle})`); 
         }
         if (this.textAnchor){
             axis.selectAll("text")
@@ -131,8 +185,9 @@ export default class Axis {
 
     /**
      * Creates a scale for the axis
-     * @param {[min, max]} domain 
-     * @param {[low, high]} range 
+     * @param {Number[]} domain [min, max]
+     * @param {Number[]} range [low, high]
+     * @public
      */
     createScale(domain, range){ 
         if (this.min !== undefined) domain[0] = this.min;
