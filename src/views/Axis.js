@@ -57,7 +57,7 @@ export default class Axis {
      * @param {Plot} plot
      */
     _renderTitle(svg, plot) {
-        if (!this.display || this.title === undefined || this.hideTitle) return;
+        if (plot.hasRendered || this.display || this.title === undefined || this.hideTitle) return;
         const label = svg.append("text")
             .attr("class", `ljs--${this.axisType}-axis-title`)
             .html(this.title);
@@ -85,6 +85,8 @@ export default class Axis {
      */
     render(svg, plot) {
         if (!this.display) return;
+        this._renderTitle(svg, plot);
+        if (this.hideAxis) return;
 
         let axis;
         const axisId = `${this.axisType}-axis`;
@@ -92,11 +94,9 @@ export default class Axis {
 
         if (!plot.hasRendered) {
             axis = svg.append("g").attr("class", `ljs--${axisId}`);
-            this._renderTitle(svg, plot);
             if (isNumericalScale(this.scaleType)) {
                 axisFn = axisFn.ticks(this.ticks);
             }
-
             // translating axis to the appropriate location if necessary
             if (this.orientation == axisOrientations.BOTTOM) {
                 axis.attr("transform", `translate(0,${plot.innerHeight})`);
@@ -104,7 +104,7 @@ export default class Axis {
             } else if (this.orientation == axisOrientations.RIGHT) {
                 axis.attr("transform", `translate(${plot.innerWidth}, 0)`);
             }
-            if (!this.hideAxis) axis.call(axisFn);
+            axis.call(axisFn);
             
         } else {
             // TODO: need to test if text transformation remains in effect.
@@ -120,6 +120,12 @@ export default class Axis {
         if (this["text-anchor"]){
             axis.selectAll("text")
                 .style("text-anchor", this["text-anchor"]);
+        }
+        if (this.hideLabels) {
+            axis.selectAll(".tick > text").remove();
+        }
+        if (this.hideTicks) {
+            axis.selectAll(".tick > line").remove();
         }
     }
 
