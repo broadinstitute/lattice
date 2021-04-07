@@ -8,9 +8,13 @@ import * as Lineplot from "../views/Lineplot";
 import * as ScatterPlot from "../views/ScatterPlot";
 import * as StackedBarPlot from "../views/StackedBarPlot";
 import * as StackedColumnPlot from "../views/StackedColumnPlot";
-export const LATTICE_DEFAULT_PADDING = 20;
-export const PLOT_DEFAULT_PADDING = 50;
 
+
+/**
+ * Review and reorganize code in this script
+ */
+ export const LATTICE_DEFAULT_PADDING = 20; // review: constants that are only ever used in a single script shouldn't be a global constant...
+ export const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 /**
  * @typedef {String} PlotType
  * @enum {PlotType}
@@ -27,21 +31,49 @@ export const PlotType = Object.freeze({
     STACKEDBAR: "stackedbarplot",
     STACKEDCOLUMN: "stackedcolumnplot"
 });
+
+// keep old constant names valid
 export const plotTypes = PlotType; // do not like the word plots
 export const plots = PlotType;
+
+// plots requiring data to be stacked
 
 /**
  * @typedef {String} PlotOrientation
  * @enum {Orientation}
  */
- export const PlotOrientation = {
+export const PlotOrientation = Object.freeze({
     POSITIVE: 1,
     NEGATIVE: -1
-};
+});
 export const orientations = PlotOrientation;
 
-// plots requiring data to be stacked
-export const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
+/**
+ * @typedef {String} ScaleType
+ * @enum {ScaleType}
+ */
+// valid scale type enums
+export const ScaleType = {
+    CATEGORICAL: "categorical",
+    LINEAR: "linear",
+    ORDINAL: "ordinal",
+    SEQUENTIAL: "sequential",
+    SQRT: "sqrt",
+    TEMPORAL: "temporal"
+};
+
+export const scales = ScaleType
+
+/**
+ * @typedef {String} AxisType
+ * @enum {AxisType}
+ */
+ export const AxisType = {
+    X: "x",
+    Y: "y"
+};
+export const axisTypes = AxisType
+
 
 // plot render functions
 export const plotRenderFunction = {
@@ -57,27 +89,7 @@ export const plotRenderFunction = {
     [PlotType.STACKEDCOLUMN]: StackedColumnPlot.render
 };
 
-// valid scale type enums
-export const scales = {
-    CATEGORICAL: "categorical",
-    LINEAR: "linear",
-    ORDINAL: "ordinal",
-    SEQUENTIAL: "sequential",
-    SQRT: "sqrt",
-    TEMPORAL: "temporal"
-};
-
 export const NUMERICAL_SCALES = [scales.LINEAR, scales.SEQUENTIAL, scales.SQRT, scales.TEMPORAL];
-
-/**
- * @typedef {String} AxisType
- * @enum {AxisType}
- */
-export const AxisType = {
-    X: "x",
-    Y: "y"
-};
-export const axisTypes = AxisType
 
 export const sortDirections = {
     ASC: "asc",
@@ -129,8 +141,6 @@ export const defaultScales = {
         y: scales.LINEAR
     }
 };
-
-
 
 export const axisOrientations = {
     TOP: "top",

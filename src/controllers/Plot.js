@@ -5,6 +5,8 @@ import Tooltip  from "../views/Tooltip";
 import {Point2D}  from "../models/Point2D";
 import {Axis}  from "../views/Axis";
 
+const stackedPlotTypes = [constants.PlotType.STACKEDBAR, constants.PlotType.STACKEDCOLUMN];
+
 /**
  * @description Plot class for creating a generic 2D plot object
  */
@@ -76,7 +78,7 @@ export class Plot {
         this.innerHeight = this.height - this.padding.top - this.padding.bottom;
         this.tooltipObj = new Tooltip(this.tooltip.id);
 
-        if (constants.stackedPlotTypes.includes(this.type)) {
+        if (stackedPlotTypes.includes(this.type)) {
             this.dataStack = this.createDataStack();
         }
         this.scale = this.setScales();
@@ -326,7 +328,7 @@ export class Plot {
         this.axisInternal.x.render(g, this);
         this.axisInternal.y.render(g, this);
         // TODO: stacked charts are passing something different for "data" than other plot types. is this an issue?
-        const data = constants.stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
+        const data = stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
         // TODO: update all plots to accept "orientation" parameter
         let dataDomElements = constants.plotRenderFunction[this.type](g, data, this.scale, this.orientation);
         this.hasRendered = true;

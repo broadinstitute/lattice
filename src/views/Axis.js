@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
 
-import {axisOrientations, axisTypes, defaultAxisOrientation} from "../utils/constants";
+import {axisOrientations, AxisType, defaultAxisOrientation} from "../utils/constants";
 import {isNumericalScale} from "../utils/plot-utils";
 
 
@@ -14,7 +14,7 @@ export class Axis {
      * 
      * @param {AxisType} axisType axis type
      * @param {Object} [config] config object to override customizable properties 
-     * @property [scaleType] scale type auto-detected if undefined
+     * @property {ScaleType} [scaleType] scale type auto-detected if undefined
      * @property {String} [title=undefined] axis title
      * @property {Number} [min] applicable for a numerical scale
      * @property {Number} [max] applicable for a numerical scale
@@ -75,11 +75,11 @@ export class Axis {
      * @private
      */
     _validate() {
-        if (this.axisType == axisTypes.X && !([axisOrientations.TOP, axisOrientations.BOTTOM].includes(this.orientation))) {
+        if (this.axisType == AxisType.X && !([axisOrientations.TOP, axisOrientations.BOTTOM].includes(this.orientation))) {
             throw `Invalid orientation ${this.orientation} found for ${this.axisType} axis`;
         }
 
-        if (this.axisType == axisTypes.Y && ![axisOrientations.LEFT, axisOrientations.RIGHT].includes(this.orientation)) {
+        if (this.axisType == AxisType.Y && ![axisOrientations.LEFT, axisOrientations.RIGHT].includes(this.orientation)) {
             throw `Invalid orientation ${this.orientation} found for ${this.axisType} axis`;
         }
     }
