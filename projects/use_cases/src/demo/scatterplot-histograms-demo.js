@@ -36,7 +36,7 @@ function init(distri="randomNormal"){
             type: "columnplot",
             axis: {
                 x: {
-                    angle: 90,
+                    textAngle: 90,
                     textAnchor: "start",
                     title: ""
                 }
