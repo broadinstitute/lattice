@@ -9,7 +9,7 @@ import {isNumericalScale} from "../utils/plot-utils";
 export default class Axis {
     /**
      * Constructor for Axis object
-     * config properties include: scaleType, title, ticks, display, min, max, orientation, padding, angle, text-anchor
+     * config properties include: scaleType, title, ticks, display, min, max, orientation, padding, angle, textAnchor, hideAxis, hideTicks, hideLabels, hideTitle
     */
     constructor(axisType, config={}) {
         this.axisType = axisType;
@@ -117,9 +117,9 @@ export default class Axis {
                 .attr("dy", "-0.8em")
                 .attr("transform", `translate(0, 7) rotate(${this.angle})`); 
         }
-        if (this["text-anchor"]){
+        if (this.textAnchor){
             axis.selectAll("text")
-                .style("text-anchor", this["text-anchor"]);
+                .style("text-anchor", this.textAnchor);
         }
         if (this.hideLabels) {
             axis.selectAll(".tick > text").remove();
