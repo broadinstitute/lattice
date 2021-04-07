@@ -15,7 +15,7 @@ export const PLOT_DEFAULT_PADDING = 50;
  * @typedef {String} PlotType
  * @enum {PlotType}
  */
-export const PlotType = {
+export const PlotType = Object.freeze({
     AREAPLOT: "areaplot",
     BARCODEPLOT: "barcodeplot",
     BARPLOT: "barplot",
@@ -26,7 +26,7 @@ export const PlotType = {
     SCATTERPLOT: "scatterplot",
     STACKEDBAR: "stackedbarplot",
     STACKEDCOLUMN: "stackedcolumnplot"
-};
+});
 export const plotTypes = PlotType; // do not like the word plots
 export const plots = PlotType;
 
@@ -41,20 +41,20 @@ export const plots = PlotType;
 export const orientations = PlotOrientation;
 
 // plots requiring data to be stacked
-export const stackedPlotTypes = [plots.STACKEDBAR, plots.STACKEDCOLUMN];
+export const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
 
 // plot render functions
 export const plotRenderFunction = {
-    [plots.AREAPLOT]: AreaPlot.render,
-    [plots.BARCODEPLOT]: BarcodePlot.render,
-    [plots.BARPLOT]: BarPlot.render,
-    [plots.CATEGORICAL_HEATMAP]: Heatmap.render,
-    [plots.COLUMNPLOT]: ColumnPlot.render,
-    [plots.HEATMAP]: Heatmap.render,
-    [plots.LINEPLOT]: Lineplot.render,
-    [plots.SCATTERPLOT]: ScatterPlot.render,
-    [plots.STACKEDBAR]: StackedBarPlot.render,
-    [plots.STACKEDCOLUMN]: StackedColumnPlot.render
+    [PlotType.AREAPLOT]: AreaPlot.render,
+    [PlotType.BARCODEPLOT]: BarcodePlot.render,
+    [PlotType.BARPLOT]: BarPlot.render,
+    [PlotType.CATEGORICAL_HEATMAP]: Heatmap.render,
+    [PlotType.COLUMNPLOT]: ColumnPlot.render,
+    [PlotType.HEATMAP]: Heatmap.render,
+    [PlotType.LINEPLOT]: Lineplot.render,
+    [PlotType.SCATTERPLOT]: ScatterPlot.render,
+    [PlotType.STACKEDBAR]: StackedBarPlot.render,
+    [PlotType.STACKEDCOLUMN]: StackedColumnPlot.render
 };
 
 // valid scale type enums
@@ -86,45 +86,45 @@ export const sortDirections = {
 
 // enum for default scales for each plot type
 export const defaultScales = {
-    [plots.AREAPLOT]: {
+    [PlotType.AREAPLOT]: {
         x: scales.TEMPORAL, // why? it could be linear
         y: scales.LINEAR
     },
-    [plots.BARPLOT]: {
+    [PlotType.BARPLOT]: {
         x: scales.LINEAR,
         y: scales.CATEGORICAL
     },
-    [plots.BARCODEPLOT]: {
+    [PlotType.BARCODEPLOT]: {
         x: scales.LINEAR,
         y: scales.LINEAR
     },
-    [plots.CATEGORICAL_HEATMAP]: {
+    [PlotType.CATEGORICAL_HEATMAP]: {
         x: scales.CATEGORICAL,
         y: scales.CATEGORICAL,
         c: scales.ORDINAL
     },
-    [plots.COLUMNPLOT]: {
+    [PlotType.COLUMNPLOT]: {
         x: scales.CATEGORICAL,
         y: scales.LINEAR
     },
-    [plots.HEATMAP]: {
+    [PlotType.HEATMAP]: {
         x: scales.CATEGORICAL,
         y: scales.CATEGORICAL,
         c: scales.SEQUENTIAL
     },
-    [plots.LINEPLOT]: {
+    [PlotType.LINEPLOT]: {
         x: scales.TEMPORAL,
         y: scales.LINEAR
     },
-    [plots.SCATTERPLOT]: {
+    [PlotType.SCATTERPLOT]: {
         x: scales.LINEAR,
         y: scales.LINEAR
     },
-    [plots.STACKEDBAR]: {
+    [PlotType.STACKEDBAR]: {
         x: scales.LINEAR,
         y: scales.CATEGORICAL
     },
-    [plots.STACKEDCOLUMN]: {
+    [PlotType.STACKEDCOLUMN]: {
         x: scales.CATEGORICAL,
         y: scales.LINEAR
     }
@@ -140,7 +140,7 @@ export const axisOrientations = {
 };
 
 export const defaultAxisOrientation = {
-    [plots.AREAPLOT]: {
+    [PlotType.AREAPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -150,7 +150,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.BARCODEPLOT]: {
+    [PlotType.BARCODEPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -160,7 +160,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.BARPLOT]: {
+    [PlotType.BARPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -170,7 +170,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.CATEGORICAL_HEATMAP]: {
+    [PlotType.CATEGORICAL_HEATMAP]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.TOP,
             [orientations.NEGATIVE]: axisOrientations.TOP
@@ -180,7 +180,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.COLUMNPLOT]: {
+    [PlotType.COLUMNPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.TOP
@@ -190,7 +190,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.LEFT
         }
     },
-    [plots.HEATMAP]: {
+    [PlotType.HEATMAP]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.TOP,
             [orientations.NEGATIVE]: axisOrientations.TOP
@@ -200,7 +200,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.LINEPLOT]: {
+    [PlotType.LINEPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -210,7 +210,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.SCATTERPLOT]: {
+    [PlotType.SCATTERPLOT]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -220,7 +220,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.STACKEDBAR]: {
+    [PlotType.STACKEDBAR]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.BOTTOM
@@ -230,7 +230,7 @@ export const defaultAxisOrientation = {
             [orientations.NEGATIVE]: axisOrientations.RIGHT
         }
     },
-    [plots.STACKEDCOLUMN]: {
+    [PlotType.STACKEDCOLUMN]: {
         x: {
             [orientations.POSITIVE]: axisOrientations.BOTTOM,
             [orientations.NEGATIVE]: axisOrientations.TOP
@@ -263,14 +263,14 @@ const yAsSeriesTooltipFormatter = (d) => {
             val: ${d.data[d.series]}`;
 };
 export const tooltipFormatters = {
-    [plots.AREAPLOT]: xyTooltipFormatter,
-    [plots.BARPLOT]: xyTooltipFormatter,
-    [plots.BARCODEPLOT]: xTooltipFormatter,
-    [plots.CATEGORICAL_HEATMAP]: xycTooltipFormatter,
-    [plots.COLUMNPLOT]: xyTooltipFormatter,
-    [plots.HEATMAP]: xycTooltipFormatter,
-    [plots.LINEPLOT]: xyTooltipFormatter,
-    [plots.SCATTERPLOT]: xyTooltipFormatter,
-    [plots.STACKEDBAR]: xAsSeriesTooltipFormatter,
-    [plots.STACKEDCOLUMN]: yAsSeriesTooltipFormatter
+    [PlotType.AREAPLOT]: xyTooltipFormatter,
+    [PlotType.BARPLOT]: xyTooltipFormatter,
+    [PlotType.BARCODEPLOT]: xTooltipFormatter,
+    [PlotType.CATEGORICAL_HEATMAP]: xycTooltipFormatter,
+    [PlotType.COLUMNPLOT]: xyTooltipFormatter,
+    [PlotType.HEATMAP]: xycTooltipFormatter,
+    [PlotType.LINEPLOT]: xyTooltipFormatter,
+    [PlotType.SCATTERPLOT]: xyTooltipFormatter,
+    [PlotType.STACKEDBAR]: xAsSeriesTooltipFormatter,
+    [PlotType.STACKEDCOLUMN]: yAsSeriesTooltipFormatter
 };
