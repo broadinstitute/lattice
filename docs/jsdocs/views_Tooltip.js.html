@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/Tooltip.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/Tooltip.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as d3 from "d3";
+
+export default class Tooltip {
+    /**
+     * Tooltip object constructor.
+     * This tooltip will hold a reference to an HTML element that will serve as the tooltip.
+     * @param {String} id - id for the tooltip;
+     * @param {Boolean} verbose - for debugging; set to true for console logging
+     * @param {Integer} offsetX - number of pixels to offset the tooltip from the mouse cursor horizontally
+     * @param {Integer} offsetY - number of pixels to offset the tooltip from the mouse cursor vertically
+     * @param {Integer} duration - amount of time (in milliseconds) when transitioning tooltip states
+     * @param {d3 Selection} tooltip - Selection containing the tooltip HTML element
+     */
+    constructor(id, verbose=false, offsetX=10, offsetY=12, duration=100){
+        this.id = id;
+        this.verbose = verbose;
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+        this.duration = duration;
+        this.tooltip = undefined;
+
+        this._createTooltip();
+    }
+
+    /**
+     * Creates a tooltip HTML div element if needed, and stores the selection in the object's tooltip attribute
+     */
+    _createTooltip() {
+        if (d3.select(`#${this.id}`).empty()) {
+            this.tooltip = d3.select("body").append("div")
+                .attr("class", "ljs--tooltip")
+                .attr("id", this.id);
+        } else {
+            this.tooltip = d3.select(`#${this.id}`);
+        }
+    }
+
+    /**
+     * Calculates new positioning for the tooltip based off the last event (mouseover) that happened.
+     * If the calculated tooltip height/width will go off the screen or overlaps with the cursor location, an adjustment occurs.
+     */
+    _move() {
+        const EDGE_ADJUSTMENT = 10;
+        const body = d3.select("body").node();
+        const tooltip = this.tooltip.node();
+        let x = d3.event.pageX;
+        let y = d3.event.pageY;
+
+        if (this.verbose) {
+            console.log(x);
+            console.log(y);
+        }
+
+        x = (x + this.offsetX) &lt; 0 ? EDGE_ADJUSTMENT : x + this.offsetX; // left edge of screen check
+        y = (y + this.offsetY) &lt; 0 ? EDGE_ADJUSTMENT : y + this.offsetY; // top edge check
+
+        // right edge check
+        if (x + tooltip.scrollWidth > body.scrollWidth) {
+            const xEdgeAdjustment = (x + tooltip.scrollWidth + EDGE_ADJUSTMENT) - body.scrollWidth;
+            x -= xEdgeAdjustment;
+        }
+
+        // bottom edge check
+        if (y + tooltip.scrollHeight > body.scrollHeight) {
+            const yEdgeAdjustment = (y + tooltip.scrollHeight + EDGE_ADJUSTMENT) - body.scrollHeight;
+            y -= yEdgeAdjustment;
+        }
+
+        // mouse event + tooltip display collision check
+        if (x &lt;= d3.event.pageX &amp;&amp; d3.event.pageX &lt;= x + tooltip.scrollWidth &amp;&amp; y &lt;= d3.event.pageY &amp;&amp; d3.event.pageY &lt;= y + tooltip.scrollHeight) {
+            x = d3.event.pageX - tooltip.scrollWidth - EDGE_ADJUSTMENT;
+        }
+
+        this.tooltip
+            .style("left", `${x}px`)
+            .style("top", `${y}px`);
+    }
+
+    show(info) {
+        if (this.verbose) console.log(info);
+        this.tooltip.html(info);
+        this._move();
+        this.tooltip.style("display", "inline")
+            .transition()
+            .duration(this.duration)
+            .style("opacity", 1.0);
+    }
+
+    hide() {
+        this.tooltip.transition()
+            .duration(this.duration)
+            .style("opacity", 0.0);
+        this.tooltip.html("");
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="module.exports.html">exports</a></li><li><a href="module.exports_module.exports.html">exports</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_createTooltip">_createTooltip</a></li><li><a href="global.html#_getAxisFn">_getAxisFn</a></li><li><a href="global.html#_move">_move</a></li><li><a href="global.html#_renderTitle">_renderTitle</a></li><li><a href="global.html#_validate">_validate</a></li><li><a href="global.html#createScale">createScale</a></li><li><a href="global.html#render">render</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 17:33:42 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

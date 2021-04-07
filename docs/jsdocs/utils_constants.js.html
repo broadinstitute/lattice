@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/constants.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/constants.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+import * as AreaPlot from "../views/AreaPlot";
+import * as BarPlot from "../views/BarPlot";
+import * as BarcodePlot from "../views/BarcodePlot";
+import * as ColumnPlot from "../views/ColumnPlot";
+import * as Heatmap from "../views/Heatmap";
+import * as Lineplot from "../views/Lineplot";
+import * as ScatterPlot from "../views/ScatterPlot";
+import * as StackedBarPlot from "../views/StackedBarPlot";
+import * as StackedColumnPlot from "../views/StackedColumnPlot";
+export const LATTICE_DEFAULT_PADDING = 20;
+export const PLOT_DEFAULT_PADDING = 50;
+
+/**
+ * @typedef {String} PlotType
+ * @enum {PlotType}
+ */
+export const PlotType = {
+    AREAPLOT: "areaplot",
+    BARCODEPLOT: "barcodeplot",
+    BARPLOT: "barplot",
+    CATEGORICAL_HEATMAP: "categoricalheatmap",
+    COLUMNPLOT: "columnplot",
+    HEATMAP: "heatmap",
+    LINEPLOT: "lineplot",
+    SCATTERPLOT: "scatterplot",
+    STACKEDBAR: "stackedbarplot",
+    STACKEDCOLUMN: "stackedcolumnplot"
+};
+export const plotTypes = PlotType; // do not like the word plots
+export const plots = PlotType;
+
+/**
+ * @typedef {String} PlotOrientation
+ * @enum {Orientation}
+ */
+ export const PlotOrientation = {
+    POSITIVE: 1,
+    NEGATIVE: -1
+};
+export const orientations = PlotOrientation;
+
+// plots requiring data to be stacked
+export const stackedPlotTypes = [plots.STACKEDBAR, plots.STACKEDCOLUMN];
+
+// plot render functions
+export const plotRenderFunction = {
+    [plots.AREAPLOT]: AreaPlot.render,
+    [plots.BARCODEPLOT]: BarcodePlot.render,
+    [plots.BARPLOT]: BarPlot.render,
+    [plots.CATEGORICAL_HEATMAP]: Heatmap.render,
+    [plots.COLUMNPLOT]: ColumnPlot.render,
+    [plots.HEATMAP]: Heatmap.render,
+    [plots.LINEPLOT]: Lineplot.render,
+    [plots.SCATTERPLOT]: ScatterPlot.render,
+    [plots.STACKEDBAR]: StackedBarPlot.render,
+    [plots.STACKEDCOLUMN]: StackedColumnPlot.render
+};
+
+// valid scale type enums
+export const scales = {
+    CATEGORICAL: "categorical",
+    LINEAR: "linear",
+    ORDINAL: "ordinal",
+    SEQUENTIAL: "sequential",
+    SQRT: "sqrt",
+    TEMPORAL: "temporal"
+};
+
+export const NUMERICAL_SCALES = [scales.LINEAR, scales.SEQUENTIAL, scales.SQRT, scales.TEMPORAL];
+
+/**
+ * @typedef {String} AxisType
+ * @enum {AxisType}
+ */
+export const AxisType = {
+    X: "x",
+    Y: "y"
+};
+export const axisTypes = AxisType
+
+export const sortDirections = {
+    ASC: "asc",
+    DESC: "desc"
+};
+
+// enum for default scales for each plot type
+export const defaultScales = {
+    [plots.AREAPLOT]: {
+        x: scales.TEMPORAL, // why? it could be linear
+        y: scales.LINEAR
+    },
+    [plots.BARPLOT]: {
+        x: scales.LINEAR,
+        y: scales.CATEGORICAL
+    },
+    [plots.BARCODEPLOT]: {
+        x: scales.LINEAR,
+        y: scales.LINEAR
+    },
+    [plots.CATEGORICAL_HEATMAP]: {
+        x: scales.CATEGORICAL,
+        y: scales.CATEGORICAL,
+        c: scales.ORDINAL
+    },
+    [plots.COLUMNPLOT]: {
+        x: scales.CATEGORICAL,
+        y: scales.LINEAR
+    },
+    [plots.HEATMAP]: {
+        x: scales.CATEGORICAL,
+        y: scales.CATEGORICAL,
+        c: scales.SEQUENTIAL
+    },
+    [plots.LINEPLOT]: {
+        x: scales.TEMPORAL,
+        y: scales.LINEAR
+    },
+    [plots.SCATTERPLOT]: {
+        x: scales.LINEAR,
+        y: scales.LINEAR
+    },
+    [plots.STACKEDBAR]: {
+        x: scales.LINEAR,
+        y: scales.CATEGORICAL
+    },
+    [plots.STACKEDCOLUMN]: {
+        x: scales.CATEGORICAL,
+        y: scales.LINEAR
+    }
+};
+
+
+
+export const axisOrientations = {
+    TOP: "top",
+    RIGHT: "right",
+    BOTTOM: "bottom",
+    LEFT: "left"
+};
+
+export const defaultAxisOrientation = {
+    [plots.AREAPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.BARCODEPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.BARPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.CATEGORICAL_HEATMAP]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.TOP,
+            [orientations.NEGATIVE]: axisOrientations.TOP
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.COLUMNPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.TOP
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.LEFT
+        }
+    },
+    [plots.HEATMAP]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.TOP,
+            [orientations.NEGATIVE]: axisOrientations.TOP
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.LINEPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.SCATTERPLOT]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.STACKEDBAR]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.BOTTOM
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.RIGHT
+        }
+    },
+    [plots.STACKEDCOLUMN]: {
+        x: {
+            [orientations.POSITIVE]: axisOrientations.BOTTOM,
+            [orientations.NEGATIVE]: axisOrientations.TOP
+        },
+        y: {
+            [orientations.POSITIVE]: axisOrientations.LEFT,
+            [orientations.NEGATIVE]: axisOrientations.LEFT
+        }
+    }
+};
+
+const xTooltipFormatter = (d) => { return `${d.x}`; };
+const xyTooltipFormatter = (d) => {
+    return `x: ${d.x}&lt;br/>
+            y: ${d.y}`;
+};
+const xycTooltipFormatter = (d) => {
+    return `x: ${d.x}&lt;br/>
+            y: ${d.y}&lt;br/>
+            c: ${d.c}`;
+};
+const xAsSeriesTooltipFormatter = (d) => {
+    return `y: ${d.data.y}&lt;br/>
+            series: ${d.series}&lt;br/>
+            val: ${d.data[d.series]}`;
+};
+const yAsSeriesTooltipFormatter = (d) => {
+    return `x: ${d.data.x}&lt;br/>
+            series: ${d.series}&lt;br/>
+            val: ${d.data[d.series]}`;
+};
+export const tooltipFormatters = {
+    [plots.AREAPLOT]: xyTooltipFormatter,
+    [plots.BARPLOT]: xyTooltipFormatter,
+    [plots.BARCODEPLOT]: xTooltipFormatter,
+    [plots.CATEGORICAL_HEATMAP]: xycTooltipFormatter,
+    [plots.COLUMNPLOT]: xyTooltipFormatter,
+    [plots.HEATMAP]: xycTooltipFormatter,
+    [plots.LINEPLOT]: xyTooltipFormatter,
+    [plots.SCATTERPLOT]: xyTooltipFormatter,
+    [plots.STACKEDBAR]: xAsSeriesTooltipFormatter,
+    [plots.STACKEDCOLUMN]: yAsSeriesTooltipFormatter
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 18:04:56 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

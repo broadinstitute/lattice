@@ -30,8 +30,8 @@
 import * as plotUtils from "../utils/plot-utils";
 import * as constants from "../utils/constants";
 import Tooltip  from "../views/Tooltip";
-import Point2D  from "../models/Point2D";
-import Axis  from "../views/Axis";
+import {Point2D}  from "../models/Point2D";
+import {Axis}  from "../views/Axis";
 
 /**
  * @description Plot class for creating a generic 2D plot object
@@ -39,17 +39,20 @@ import Axis  from "../views/Axis";
 export class Plot {
     /**
      * Constructor for Plot
-     * @param {Object[]} data - array of - array of data points to use for charting.
+     * @param {Object[]} data array of data objects to use for charting.
      *                              attributes include:
      *                                  - {Any} x - datapoint x-value
      *                                  - {Any} y - datapoint y-value
      *                                  - {String} c - color string
      *                                  - {Number} r - datapoint radius -- only used in scatterplot
      *                                  - {String} series - series the datapoint belongs to
-     * @param {String} type - the plot type; should be one of the enums listed in the plots var (in constants.js)
-     * @param {String} rootId - div that the SVG should be created in
-     * @param {Object} userInput - optional, available options are described in plotConfig.js
-     */
+     * @param {PlotType} type the plot type; should be one from enum PlotType
+     * @param {String} rootId div that the SVG should be created in
+     * @param {Object} [userInput] available options are described in plotConfig.js
+     * @property {Number} width=300 
+     * @property {Number} height=300
+     * @property {PlotOrientation} orientation 
+    */
     constructor(data, type, rootId, userInput={}) {
         this._validateInputs(data, type, rootId);
         this._userInput = userInput;
@@ -61,46 +64,23 @@ export class Plot {
         this.hasRendered = false; 
         
         // initiate default values for the following properties 
-       
         this.customizableProp = ["parentId",  "width", "height", "orientation", "title", "padding", "axis", "tooltip", "series"];
         this.parentId = undefined;
+        
         this.width = 300;
         this.height = 300;
+
         this.orientation = constants.orientations.POSITIVE;
         this.title = undefined;
         this.padding = {top: 50, left: 50, bottom: 50, right: 50};
         this.axis = {
             x: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "x axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "bottom", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             y: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "y axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "left", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             c: {
                 scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
@@ -465,13 +445,13 @@ export class Plot {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 16:37:56 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 18:04:56 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

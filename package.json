@@ -5,7 +5,7 @@
   "main": "src/libs/LatticeLib.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "jsdoc -d docs/jsdocs src/controllers/*.js src/libs/LatticeLib.js src/models/*.js"
+    "docs": "jsdoc -d docs/jsdocs src/controllers/*.js src/libs/LatticeLib.js src/models/*.js src/utils/constants.js src/views/Axis.js"
   },
   "repository": {
     "type": "git",
