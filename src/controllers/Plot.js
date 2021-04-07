@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
 import * as constants from "../utils/constants";
 import Tooltip  from "../views/Tooltip";
-import XYEntry  from "../models/XYEntry";
+import Point2D  from "../models/Point2D";
 import Axis  from "../views/Axis";
 
 /**
@@ -26,7 +26,7 @@ export class Plot {
         this._validateInputs(data, type, rootId);
         this._userInput = userInput;
         this.data = data.map(d => {
-            return new XYEntry(d.x, d.y, d.c, d.r, d.series); 
+            return new Point2D(d.x, d.y, d.c, d.r, d.series); 
         });
         this.type = type;
         this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
