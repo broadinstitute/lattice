@@ -11,8 +11,11 @@ import * as StackedColumnPlot from "../views/StackedColumnPlot";
 export const LATTICE_DEFAULT_PADDING = 20;
 export const PLOT_DEFAULT_PADDING = 50;
 
-// plot type enums
-export const plots = {
+/**
+ * @typedef {String} PlotType
+ * @enum {PlotType}
+ */
+export const PlotType = {
     AREAPLOT: "areaplot",
     BARCODEPLOT: "barcodeplot",
     BARPLOT: "barplot",
@@ -24,7 +27,18 @@ export const plots = {
     STACKEDBAR: "stackedbarplot",
     STACKEDCOLUMN: "stackedcolumnplot"
 };
-export const plotTypes = plots; // do not like the word plots
+export const plotTypes = PlotType; // do not like the word plots
+export const plots = PlotType;
+
+/**
+ * @typedef {String} PlotOrientation
+ * @enum {Orientation}
+ */
+ export const PlotOrientation = {
+    POSITIVE: 1,
+    NEGATIVE: -1
+};
+export const orientations = PlotOrientation;
 
 // plots requiring data to be stacked
 export const stackedPlotTypes = [plots.STACKEDBAR, plots.STACKEDCOLUMN];
@@ -55,10 +69,15 @@ export const scales = {
 
 export const NUMERICAL_SCALES = [scales.LINEAR, scales.SEQUENTIAL, scales.SQRT, scales.TEMPORAL];
 
-export const axisTypes = {
+/**
+ * @typedef {String} AxisType
+ * @enum {AxisType}
+ */
+export const AxisType = {
     X: "x",
     Y: "y"
 };
+export const axisTypes = AxisType
 
 export const sortDirections = {
     ASC: "asc",
@@ -111,11 +130,7 @@ export const defaultScales = {
     }
 };
 
-// plot orientation enums
-export const orientations = {
-    POSITIVE: 1,
-    NEGATIVE: -1
-};
+
 
 export const axisOrientations = {
     TOP: "top",
