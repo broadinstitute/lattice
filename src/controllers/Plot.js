@@ -178,14 +178,13 @@ export class Plot {
                 throw `Unknown series found in data: ${seriesCheck.join(", ")}`;
             }
         };
-        const types = constants.plotTypes;
 
         // error checking
         if (!this.series.length) {
             throw "'series' attribute was not provided; cannot create series data stacks";
         }
-        const stackAttr = this.type == types.STACKEDBAR ? "y" : "x";
-        const valAttr = this.type == types.STACKEDBAR ? "x" : "y";
+        const stackAttr = this.type == constants.PlotType.STACKEDBAR ? "y" : "x";
+        const valAttr = this.type == constants.PlotType.STACKEDBAR ? "x" : "y";
         const seriesInData = new Set(); // for error checking purposes
 
         // grouping data on dimension we're creating stacks for
@@ -245,36 +244,36 @@ export class Plot {
         let yRange = [this.innerHeight, 0];
         
         // adjust domain or range based on plot type and scale type
-        const types = constants.plotTypes;
+        const type = constants.PlotType;
         switch(this.type) {
-        case types.AREAPLOT:
-        case types.LINEPLOT:
-        case types.SCATTERPLOT:
+        case type.AREAPLOT:
+        case type.LINEPLOT:
+        case type.SCATTERPLOT:
             // no further changes needed
             break;
-        case types.BARCODEPLOT:
+        case type.BARCODEPLOT:
             yDomain = [0, 1];
             break;
-        case types.BARPLOT:
+        case type.BARPLOT:
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case types.CATEGORICAL_HEATMAP:
-        case types.HEATMAP:
+        case type.CATEGORICAL_HEATMAP:
+        case type.HEATMAP:
             xDomain = this.data.map(d => d.x);
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case types.COLUMNPLOT:
+        case type.COLUMNPLOT:
             xDomain = this.data.map(d => d.x);
             break;
-        case types.STACKEDBAR: 
+        case type.STACKEDBAR: 
             xDomain = [0, d3.max(this.dataStack, d=>d3.max(d, d => d[1]))];
             xRange = this.orientation == constants.orientations.POSITIVE ? xRange : [this.innerWidth, 0];
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case constants.plotTypes.STACKEDCOLUMN:
+        case type.STACKEDCOLUMN:
             xDomain = this.data.map(d => d.x);
             yDomain = [0, d3.max(this.dataStack, d=>d3.max(d, d => d[1]))];
             break;
@@ -362,7 +361,7 @@ export class Plot {
             console.error("Plot type required.");
             throw "Plot type required.";
         }
-        if (!Object.values(constants.plotTypes).includes(type)) {
+        if (!Object.values(constants.PlotType).includes(type)) {
             console.error(`Unrecognized plot type ${type}`);
             throw `Unrecognized plot type ${type}`;
         }
