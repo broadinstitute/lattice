@@ -2,8 +2,8 @@ import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
 import * as constants from "../utils/constants";
 import Tooltip  from "../views/Tooltip";
-import Point2D  from "../models/Point2D";
-import Axis  from "../views/Axis";
+import {Point2D}  from "../models/Point2D";
+import {Axis}  from "../views/Axis";
 
 /**
  * @description Plot class for creating a generic 2D plot object
@@ -11,17 +11,20 @@ import Axis  from "../views/Axis";
 export class Plot {
     /**
      * Constructor for Plot
-     * @param {Object[]} data - array of - array of data points to use for charting.
+     * @param {Object[]} data array of data objects to use for charting.
      *                              attributes include:
      *                                  - {Any} x - datapoint x-value
      *                                  - {Any} y - datapoint y-value
      *                                  - {String} c - color string
      *                                  - {Number} r - datapoint radius -- only used in scatterplot
      *                                  - {String} series - series the datapoint belongs to
-     * @param {String} type - the plot type; should be one of the enums listed in the plots var (in constants.js)
-     * @param {String} rootId - div that the SVG should be created in
-     * @param {Object} userInput - optional, available options are described in plotConfig.js
-     */
+     * @param {PlotType} type the plot type; should be one from enum PlotType
+     * @param {String} rootId div that the SVG should be created in
+     * @param {Object} [userInput] available options are described in plotConfig.js
+     * @property {Number} width=300 
+     * @property {Number} height=300
+     * @property {PlotOrientation} orientation 
+    */
     constructor(data, type, rootId, userInput={}) {
         this._validateInputs(data, type, rootId);
         this._userInput = userInput;
@@ -33,46 +36,23 @@ export class Plot {
         this.hasRendered = false; 
         
         // initiate default values for the following properties 
-       
         this.customizableProp = ["parentId",  "width", "height", "orientation", "title", "padding", "axis", "tooltip", "series"];
         this.parentId = undefined;
+        
         this.width = 300;
         this.height = 300;
+
         this.orientation = constants.orientations.POSITIVE;
         this.title = undefined;
         this.padding = {top: 50, left: 50, bottom: 50, right: 50};
         this.axis = {
             x: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "x axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "bottom", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             y: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "y axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "left", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             c: {
                 scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
@@ -109,7 +89,17 @@ export class Plot {
     getCustomizable(){
         let config = {};
         this.customizableProp.forEach((prop)=>{
-            config[prop] = this[prop];
+            if ("axis"==prop) {
+                config.axis = {};
+                Object.keys(this.axis).forEach((d)=>{
+                    if (d=='x'||d=='y'){
+                        config.axis[d] = this.axisInternal[d].getCustomizable();
+                    } else {
+                        config.axis[d] = this.axis[d];
+                    }
+                })
+            }
+            else {config[prop] = this[prop];}
         });
         return config;
     }
