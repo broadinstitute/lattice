@@ -102,7 +102,7 @@ function demoCategoricalHeatmap(){
                 orientation: "bottom",
                 angle: 90,
                 title: "",
-                "text-anchor": "start"
+                textAnchor: "start"
             },
             y: {
                 title: ""
@@ -121,7 +121,7 @@ function demoColumnPlot(){
     const plotConfig = {
         padding: {top: 20, bottom: 50}, 
         axis:{
-            x: {title: "", angle: 90, "text-anchor": "start"},
+            x: {title: "", angle: 90, textAnchor: "start"},
             y: {title: "value", ticks: 5}
         }
     }; // todo: yAxis title not showing
@@ -143,7 +143,7 @@ function demoHeatmap(){
                 title: "",
                 orientation: "bottom",
                 angle: 90,
-                "text-anchor": "start"
+                textAnchor: "start"
             },
             y: {
                 title: ""
@@ -166,7 +166,7 @@ function demoStackedColumnPlot() {
         axis: {
             x: {
                 angle: 90,
-                "text-anchor": "start",
+                textAnchor: "start",
                 title: ""
             },
             y: {
