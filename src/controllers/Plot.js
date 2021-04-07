@@ -51,6 +51,7 @@ export class Plot {
                 orientation: "bottom", // top, bottom, left, right
                 padding: 0.15, // applicable for categorical scales
                 angle: 0,
+                textAnchor: undefined,
                 display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
                 hideAxis: false, // will hide the axis (ticks + tick labels)
                 hideTicks: false, // will hide the axis ticks
@@ -66,6 +67,7 @@ export class Plot {
                 orientation: "left", // top, bottom, left, right
                 padding: 0.15, // applicable for categorical scales
                 angle: 0,
+                textAnchor: undefined,
                 display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
                 hideAxis: false, // will hide the axis (ticks + tick labels)
                 hideTicks: false, // will hide the axis ticks
