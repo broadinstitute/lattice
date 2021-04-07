@@ -57,7 +57,7 @@ export default class Axis {
      * @param {Plot} plot
      */
     _renderTitle(svg, plot) {
-        if (plot.hasRendered || this.display || this.title === undefined || this.hideTitle) return;
+        if (plot.hasRendered || !this.display || this.title === undefined || this.hideTitle) return;
         const label = svg.append("text")
             .attr("class", `ljs--${this.axisType}-axis-title`)
             .html(this.title);
