@@ -56,10 +56,10 @@ export default class Axis {
      * @param {d3 Selection} svg - plot d3 selection group
      * @param {Plot} plot
      */
-    _renderLabel(svg, plot) {
-        if (this.title === undefined) return;
+    _renderTitle(svg, plot) {
+        if (!this.display || this.title === undefined || this.hideTitle) return;
         const label = svg.append("text")
-            .attr("class", `ljs--${this.axisType}-axis-label`)
+            .attr("class", `ljs--${this.axisType}-axis-title`)
             .html(this.title);
 
         switch(this.orientation) {
@@ -92,7 +92,7 @@ export default class Axis {
 
         if (!plot.hasRendered) {
             axis = svg.append("g").attr("class", `ljs--${axisId}`);
-            this._renderLabel(svg, plot);
+            this._renderTitle(svg, plot);
             if (isNumericalScale(this.scaleType)) {
                 axisFn = axisFn.ticks(this.ticks);
             }
@@ -104,7 +104,7 @@ export default class Axis {
             } else if (this.orientation == axisOrientations.RIGHT) {
                 axis.attr("transform", `translate(${plot.innerWidth}, 0)`);
             }
-            axis.call(axisFn);
+            if (!this.hideAxis) axis.call(axisFn);
             
         } else {
             // TODO: need to test if text transformation remains in effect.
