@@ -37,7 +37,7 @@ function init(distri="randomNormal"){
             axis: {
                 x: {
                     angle: 90,
-                    "text-anchor": "start",
+                    textAnchor: "start",
                     title: ""
                 }
             }

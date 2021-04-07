@@ -73,7 +73,7 @@ function createPlotData(data) {
                     scaleType: "temporal", 
                     ticks: 5,
                     angle: 90,
-                    "text-anchor": "start"
+                    textAnchor: "start"
                 },
                 y: {
                     title: d.key,

@@ -1,4 +1,3 @@
-import "../css/Axis.css";
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
 
@@ -10,7 +9,7 @@ import {isNumericalScale} from "../utils/plot-utils";
 export default class Axis {
     /**
      * Constructor for Axis object
-     * config properties include: scaleType, title, ticks, display, min, max, orientation, padding, angle, text-anchor
+     * config properties include: scaleType, title, ticks, display, min, max, orientation, padding, angle, textAnchor, hideAxis, hideTicks, hideLabels, hideTitle
     */
     constructor(axisType, config={}) {
         this.axisType = axisType;
@@ -57,10 +56,10 @@ export default class Axis {
      * @param {d3 Selection} svg - plot d3 selection group
      * @param {Plot} plot
      */
-    _renderLabel(svg, plot) {
-        if (this.title === undefined) return;
+    _renderTitle(svg, plot) {
+        if (plot.hasRendered || !this.display || this.title === undefined || this.hideTitle) return;
         const label = svg.append("text")
-            .attr("class", `ljs--${this.axisType}-axis-label`)
+            .attr("class", `ljs--${this.axisType}-axis-title`)
             .html(this.title);
 
         switch(this.orientation) {
@@ -86,18 +85,18 @@ export default class Axis {
      */
     render(svg, plot) {
         if (!this.display) return;
+        this._renderTitle(svg, plot);
+        if (this.hideAxis) return;
 
         let axis;
         const axisId = `${this.axisType}-axis`;
-        let axisFn = this._getAxisFn(this.orientation).scale(this._scale);
+        let axisFn = this._getAxisFn(this.orientation).scale(this._scale).tickSizeOuter(0);
 
         if (!plot.hasRendered) {
             axis = svg.append("g").attr("class", `ljs--${axisId}`);
-            this._renderLabel(svg, plot);
             if (isNumericalScale(this.scaleType)) {
                 axisFn = axisFn.ticks(this.ticks);
             }
-
             // translating axis to the appropriate location if necessary
             if (this.orientation == axisOrientations.BOTTOM) {
                 axis.attr("transform", `translate(0,${plot.innerHeight})`);
@@ -118,9 +117,15 @@ export default class Axis {
                 .attr("dy", "-0.8em")
                 .attr("transform", `translate(0, 7) rotate(${this.angle})`); 
         }
-        if (this["text-anchor"]){
+        if (this.textAnchor){
             axis.selectAll("text")
-                .style("text-anchor", this["text-anchor"]);
+                .style("text-anchor", this.textAnchor);
+        }
+        if (this.hideLabels) {
+            axis.selectAll(".tick > text").remove();
+        }
+        if (this.hideTicks) {
+            axis.selectAll(".tick > line").remove();
         }
     }
 

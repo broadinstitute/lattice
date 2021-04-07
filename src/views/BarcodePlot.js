@@ -1,5 +1,3 @@
-import "../css/BarcodePlot.css";
-
 /**
  * renders a bar plot
  * @param {D3 selection} svg 
