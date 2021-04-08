@@ -29,7 +29,7 @@ export function plot(data, type, id, config={}){
 
 /**
  * renters a lattice of plots
- * @param {PlotInLattice[]|Object[]} plots: a list of plot objects
+ * @param {PlotInLattice[]|Object[]} plots: a list of plot objects with required attributes in PlotInLattice
  * @param {String} id: root DOM ID 
  * @param {LatticeKernel|Object} [config] a config object with any attribute from LatticeKernel
  * @public

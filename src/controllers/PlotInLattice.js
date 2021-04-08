@@ -6,16 +6,22 @@ import {Plot} from "./Plot";
 export class PlotInLattice extends Plot {
     /**
      * @constructor
-     * @param {Integer} row 
-     * @param {Integer} column 
+     * @param {Integer} row 0-based
+     * @param {Integer} column 0-based
      * @param {Point2D[]|Object[]} data 
      * @param {PlotType} type 
-     * @param {String} rootId 
+     * @param {String} [rootId]
      * @param {PlotKernel|Object} [config] customization 
-     */
+      * @property {Integer} row row position 
+      * @property {Integer} column column posiiotn
+      * @property {Point2D[]|Object[]} data
+      * @property {PlotType} type
+      * */
     constructor(row, column, data, type, rootId, config){
         super(data, type, rootId, config);
+       
         this.row = row;
+        /**@property {Integer} column column posiiotn*/
         this.column = column;
     }
 

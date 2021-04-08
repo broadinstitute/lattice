@@ -84,19 +84,23 @@ export class Plot extends PlotKernel {
 
         this._validateInputs(data, type, rootId);
         this._userInput = userInput;
+
+        /** @property {Point2D[]} data */
         this.data = data.map(d => {
             return new Point2D(d.x, d.y, d.c, d.r, d.series); 
         });
+
+        /** @property {PlotType} type */
         this.type = type;
         this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
         this.hasRendered = false; 
-        this.axisInternal = {};
+        this.axisInternal = {}; // do we still need this?
         this._changeSettings(userInput);
         
         // additional computed properties
         this.innerWidth = this.width - this.padding.left - this.padding.right;
         this.innerHeight = this.height - this.padding.top - this.padding.bottom;
-        this.tooltipObj = new Tooltip(this.tooltip.id);
+        this.tooltipObj = new Tooltip(this.tooltip.id); // get rid of this extra attribute
 
         if (stackedPlotTypes.includes(this.type)) {
             this.dataStack = this.createDataStack();
