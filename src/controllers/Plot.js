@@ -20,8 +20,6 @@ class PlotKernel {
      * @property {PlotAxis} axis axis object
      * @property {PlotTooltip} tooltip plot tooltip object
      * @property {String[]} series not sure what this does
-     * @property {Integer} [row] row position (0-based), required only if in a lattice
-     * @property {Integer} [column] column position (0-based), required only if in a lattice
      */
     constructor(){
         // initiate default values for the following properties 
