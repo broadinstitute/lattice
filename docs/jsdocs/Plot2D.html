@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Plot</title>
+    <title>JSDoc: Class: Plot2D</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Plot</h1>
+    <h1 class="page-title">Class: Plot2D</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Plot<span class="signature">(data, type, rootId, userInput<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Plot2D<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="Plot"><span class="type-signature"></span>new Plot<span class="signature">(data, type, rootId, userInput<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Plot2D"><span class="type-signature"></span>new Plot2D<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Plot class for creating a generic 2D plot object
+    Plot2D subclass is for rendering a plot for a list of data objects
 </div>
 
 
@@ -58,169 +58,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;<a href="Point2D.html">Point2D</a>></span>
-|
-
-<span class="param-type">Array.&lt;<a href="Distribution.html">Distribution</a>></span>
-|
-
-<span class="param-type">Array.&lt;Object></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">array of data objects (e.g. Point2D, Distribution) to use for charting</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>type</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#PlotType">PlotType</a></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">the plot type; should be one from enum PlotType</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>rootId</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">div that the SVG should be created in</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>userInput</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="PlotKernel.html">PlotKernel</a></span>
-|
-
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">custom config (i.e. any attribute in PlotKernel)</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -256,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line14">line 14</a>
+        <a href="controllers_Plot2D.js.html">controllers/Plot2D.js</a>, <a href="controllers_Plot2D.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -296,7 +133,7 @@
 
 
     <ul>
-        <li><a href="PlotKernel.html">PlotKernel</a></li>
+        <li><a href="Plot.html">Plot</a></li>
     </ul>
 
 
@@ -308,7 +145,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="Plot.html">Plot</a></dt>
+            <dt><a href="Plot2D.html">Plot2D</a></dt>
             <dd></dd>
         </dl>
     
@@ -361,6 +198,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#getCustomizable">Plot#getCustomizable</a>
+    </li></ul></dd>
     
 
     
@@ -507,6 +349,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#render">Plot#render</a>
+    </li></ul></dd>
+    
 
     
 
@@ -595,6 +442,11 @@
     
 
     
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#verbose">Plot#verbose</a>
+    </li></ul></dd>
+    
 
     
 
@@ -661,13 +513,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LATTICE_DEFAULT_PADDING">LATTICE_DEFAULT_PADDING</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Plot2D.html">Plot2D</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LATTICE_DEFAULT_PADDING">LATTICE_DEFAULT_PADDING</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 21:22:02 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 21:14:28 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

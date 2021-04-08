@@ -28,7 +28,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
-import * as constants from "../utils/constants";
+import * as constants from "../utils/constants"; // Note: constants are too generic, let's review what's in the script and organize the code better
 import Tooltip  from "../views/Tooltip";
 import {Point2D}  from "../models/Point2D";
 import {Axis}  from "../views/Axis";
@@ -37,25 +37,21 @@ const stackedPlotTypes = [constants.PlotType.STACKEDBAR, constants.PlotType.STAC
 
 /**
  * @description Plot class for creating a generic 2D plot object
+ * @augments PlotKernel
  */
-export class Plot {
+export class Plot extends PlotKernel {
     /**
      * Constructor for Plot
-     * @param {Object[]} data array of data objects to use for charting.
-     *                              attributes include:
-     *                                  - {Any} x - datapoint x-value
-     *                                  - {Any} y - datapoint y-value
-     *                                  - {String} c - color string
-     *                                  - {Number} r - datapoint radius -- only used in scatterplot
-     *                                  - {String} series - series the datapoint belongs to
+     * @param {Point2D[]|Distribution[]|Object[]} data array of data objects (e.g. Point2D, Distribution) to use for charting
      * @param {PlotType} type the plot type; should be one from enum PlotType
      * @param {String} rootId div that the SVG should be created in
-     * @param {Object} [userInput] available options are described in plotConfig.js
-     * @property {Number} width=300 
-     * @property {Number} height=300
-     * @property {PlotOrientation} orientation 
+     * @param {PlotKernel|Object} [userInput] custom config (i.e. any attribute in PlotKernel)
+    * @constructor
     */
     constructor(data, type, rootId, userInput={}) {
+        super();
+        this.customizableProp = Object.keys(this);
+
         this._validateInputs(data, type, rootId);
         this._userInput = userInput;
         this.data = data.map(d => {
@@ -64,41 +60,7 @@ export class Plot {
         this.type = type;
         this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
         this.hasRendered = false; 
-        
-        // initiate default values for the following properties 
-        this.customizableProp = ["parentId",  "width", "height", "orientation", "title", "padding", "axis", "tooltip", "series"];
-        this.parentId = undefined;
-        
-        this.width = 300;
-        this.height = 300;
-
-        this.orientation = constants.orientations.POSITIVE;
-        this.title = undefined;
-        this.padding = {top: 50, left: 50, bottom: 50, right: 50};
-        this.axis = {
-            x: {
-                title: "x axis", 
-                orientation: "bottom", // top, bottom, left, right
-            },
-            y: {
-                title: "y axis", 
-                orientation: "left", // top, bottom, left, right
-            },
-            c: {
-                scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
-                domain: ["TODO: how to best customize the color scale"], // values to be mapped to a color; can be an array of [min, max] if using sequential scale; all values should be listed for ordinal scale
-                range: ["TBA"], // colors to map the domain to; required for (and only used by) ordinal scale type
-                interpolator: undefined // required for (and only used by) sequential scale type
-            }
-            //r: rAxis?
-        },
         this.axisInternal = {};
-        this.tooltip = {
-            enabled: true, 
-            id: undefined,
-            formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
-        };
-        this.series = [];
         this._changeSettings(userInput);
         
         // additional computed properties
@@ -356,6 +318,7 @@ export class Plot {
         this.axisInternal.x.render(g, this);
         this.axisInternal.y.render(g, this);
         // TODO: stacked charts are passing something different for "data" than other plot types. is this an issue?
+        // Note: perhaps we should have subclass of Plot?
         const data = stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
         // TODO: update all plots to accept "orientation" parameter
         let dataDomElements = constants.plotRenderFunction[this.type](g, data, this.scale, this.orientation);
@@ -446,7 +409,64 @@ export class Plot {
     // }
 
 }
-</code></pre>
+
+class PlotKernel {
+    /**
+     * @constructor
+     * @property {String} parentId parent SVG ID
+     * @property {Number} width 
+     * @property {Number} height
+     * @property {PlotOrientation} orientation 
+     * @property {String} title plot title
+     * @property {Padding} padding plot padding object
+     * @property {PlotAxis} plot axis object
+     * @property {PlotTooltip} tooltip plot tooltip object
+     * @property {String[]} series not sure what this does
+     */
+    constructor(){
+        // initiate default values for the following properties 
+        this.parentId = undefined;
+        
+        this.width = 300;
+        this.height = 300;
+
+        this.orientation = PlotOrientation.POSITIVE;
+        this.title = undefined;
+
+        /** @typedef Padding */
+        let Padding = {top: 50, left: 50, bottom: 50, right: 50};
+          
+        this.padding = Padding;
+        /** @typedef PlotAxis */
+        let PlotAxis = {
+            x: {
+                title: "x axis", 
+                orientation: "bottom", // top, bottom, left, right
+            },
+            y: {
+                title: "y axis", 
+                orientation: "left", // top, bottom, left, right
+            },
+            c: {
+                scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
+                domain: ["TODO: how to best customize the color scale"], // values to be mapped to a color; can be an array of [min, max] if using sequential scale; all values should be listed for ordinal scale
+                range: ["TBA"], // colors to map the domain to; required for (and only used by) ordinal scale type
+                interpolator: undefined // required for (and only used by) sequential scale type
+            }
+        };
+        this.axis = PlotAxis;
+        
+        /** @typedef PlotTooltip */
+        let PlotTooltip = {
+            enabled: true, 
+            id: undefined,
+            formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
+        };
+        this.tooltip = PlotTooltip;
+        
+        this.series = [];
+    }
+}</code></pre>
         </article>
     </section>
 
@@ -456,13 +476,13 @@ export class Plot {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LATTICE_DEFAULT_PADDING">LATTICE_DEFAULT_PADDING</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 19:04:34 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 21:22:02 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

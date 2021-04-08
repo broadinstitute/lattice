@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Hierarchy</title>
+    <title>JSDoc: Class: AxisKernel</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Hierarchy</h1>
+    <h1 class="page-title">Class: AxisKernel</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Hierarchy<span class="signature">(name, value, color, label, series)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>AxisKernel<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="Hierarchy"><span class="type-signature"></span>new Hierarchy<span class="signature">(name, value, color, label, series)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AxisKernel"><span class="type-signature"></span>new AxisKernel<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Hierarchy class is a data model. This is still a WIP.
+    AxisKernel
 </div>
 
 
@@ -60,10 +60,15 @@
 
 
 
-    <h5>Parameters:</h5>
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
     
 
-<table class="params">
+<table class="props">
     <thead>
     <tr>
         
@@ -72,6 +77,8 @@
 
         <th>Type</th>
 
+        
+        <th>Attributes</th>
         
 
         
@@ -85,99 +92,36 @@
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>scaleType</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Any</span>
+<span class="param-type"><a href="global.html#ScaleType">ScaleType</a></span>
 
 
             
             </td>
 
             
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
+                <td class="attributes">
                 
-<span class="param-type">Any</span>
 
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>color</code></td>
-            
-
-            <td class="type">
-            
                 
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
+                </td>
             
 
             
 
-            <td class="description last">color</td>
+            <td class="description last">scale type auto-detected if undefined</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>label</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Integer</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">radius; only used in scatterplot</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>series</code></td>
+                <td class="name"><code>title</code></td>
             
 
             <td class="type">
@@ -190,17 +134,83 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">the group a data point belongs to</td>
+            <td class="description last">axis title</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>min</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">applicable for a numerical scale</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>max</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">applicable for a numerical scale</td>
         </tr>
 
     
     </tbody>
 </table>
-
-
 
 
 
@@ -234,7 +244,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Hierarchy.js.html">models/Hierarchy.js</a>, <a href="models_Hierarchy.js.html#line6">line 6</a>
+        <a href="views_Axis.js.html">views/Axis.js</a>, <a href="views_Axis.js.html#line183">line 183</a>
     </li></ul></dd>
     
 
@@ -271,13 +281,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="Hierarchy.html">Hierarchy</a></dt>
-            <dd></dd>
-        </dl>
     
 
     
