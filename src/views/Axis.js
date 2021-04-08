@@ -4,25 +4,19 @@ import * as constants from "../utils/constants";
 import {axisOrientations, AxisType, defaultAxisOrientation} from "../utils/constants";
 import {isNumericalScale} from "../utils/plot-utils";
 
-
 /**
- * TODO: document the customizable config the same way as in Plot.js
- * @description Axis class
+ * @description AxisKernel 
  */
-export class Axis {
+ class AxisKernel {
     /**
-     * 
-     * @param {AxisType} axisType axis type
-     * @param {Object} [config] config object to override customizable properties 
-     * @property {ScaleType} [scaleType] scale type auto-detected if undefined
-     * @property {String} [title=undefined] axis title
+     * @constructor
+     * @property {ScaleType} scaleType scale type auto-detected if undefined
+     * @property {String} title axis title
      * @property {Number} [min] applicable for a numerical scale
      * @property {Number} [max] applicable for a numerical scale
-
+     * 
      */
-    constructor(axisType, config={}) {
-        this.axisType = axisType;
-
+    constructor(){
         this.scaleType = undefined;
         this.title = undefined;
         this.orientation = undefined;
@@ -36,26 +30,27 @@ export class Axis {
         this.hideTitle = false;
         this.min = undefined;
         this.max = undefined;
+    }
+}
+
+/**
+ * @description Axis class
+ * @augments AxisKernel
+ */
+export class Axis extends AxisKernel {
+    /**
+     * 
+     * @param {AxisType} axisType axis type
+     * @param {AxisKernel|Object} [config] to customize the Axis object
+     */
+    constructor(axisType, config={}) {
+        super();
+        this.customizableProp = Object.keys(this);
+        this.axisType = axisType;
         Object.keys(config).forEach((attr)=>{
             this[attr] = config[attr];
         });
         this._scale = undefined;
-        this._validate();
-        this.customizableProp = [
-            "scaleType", 
-            "title", 
-            "orientation",
-            "padding",
-            "textAngle",
-            "textAnchor",
-            "display",
-            "hideAxis",
-            "hideTicks",
-            "hideLabels",
-            "hideTitle",
-            "min",
-            "max"
-        ];
     }
 
     /**
@@ -192,15 +187,15 @@ export class Axis {
     createScale(domain, range){ 
         if (this.min !== undefined) domain[0] = this.min;
         if (this.max !== undefined) domain[1] = this.max;
-        const types = constants.scales;
+        const type = constants.ScaleType;
         switch(this.scaleType){
-        case types.CATEGORICAL:
+        case type.CATEGORICAL:
             this._scale = d3.scaleBand().padding([this.padding]);
             break;
-        case types.LINEAR:
+        case type.LINEAR:
             this._scale = d3.scaleLinear();
             break;
-        case types.TEMPORAL:
+        case type.TEMPORAL:
             this._scale = d3.scaleTime();
             break;
         default:

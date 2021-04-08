@@ -7,32 +7,30 @@
 export class Distribution {
     /**
      * @constructor
-     * @param {String} label - lable of the distribution
-     * @param {Number[]} data - a list of numerical values
+     * @param {String} x - text label of the distribution
+     * @param {Number[]} y - a list of numerical values
      * @param {String} [c] - color in rgb or hexadecimal code
-     * @param {String} [series] - the group a data point belongs to
-     * @property {String} [foo] - testing jsdoc
+     * @param {String} [series] - the group this distribution belongs to
      */
-    constructor(label, data, color="#6bafa9", series="default") {
-        this.label = this._validateInput(label);
-        this.data = this._validateInput(data);
-        this.color = color;
+    constructor(x, y, color="#6bafa9", series="default") {
+        this.x = this._validateInput(label);
+        this.y = this._validateInput(data);
+        this.c = c;
         this.series = series;
-        this.foo = "foo";
     }
 
     /**
      * Validates a required input param
-     * @param {Any} label 
+     * @param {Any} d
      * @private
      */
-    _validateInput(x) {
-        if (x === undefined) {
+    _validateInput(d) {
+        if (d === undefined) {
             let message = "this param must be provided"
             console.error(message);
             throw message;
         }
-        return x;
+        return d;
     }
 }
 

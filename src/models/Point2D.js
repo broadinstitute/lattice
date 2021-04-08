@@ -11,7 +11,8 @@ export class Point2D {
      * @param {Any} y 
      * @param {Any} c - color
      * @param {Integer} r - radius; only used in scatterplot
-     * @param {String} series - the group a data point belongs to
+     * @param {String} series - the group this data point belongs to
+     * @constructor
      */
     constructor(x, y, c=undefined, r=1, series) {
         this._validateInputs(x, y);
@@ -38,6 +39,7 @@ export class Point2D {
      * Check attribute value based on scale type
      * @param {String} scaleType enum volcabulary
      * @param {string} attr: which attribute, x or y
+     * @public
      */
     validateScaleType(scaleType, attr) {
         let scales = constants.scales;

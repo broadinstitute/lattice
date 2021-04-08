@@ -1,5 +1,5 @@
 
-import { plots } from "../utils/constants";
+import { PlotType } from "../utils/constants";
 import { Plot } from "../controllers/Plot";
 import { Lattice } from "../controllers/Lattice";
 import * as d3 from "d3";
@@ -45,7 +45,7 @@ export function lattice(plots, id, config={}){
  * showing all available plot types in the Lattice library
  */
 export function showAvailablePlotTypes(){
-    return plots;
+    return PlotType;
 }
 
 export function getPlotOptions(plot=undefined){
