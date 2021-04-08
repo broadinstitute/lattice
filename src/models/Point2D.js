@@ -9,12 +9,12 @@ export class Point2D {
      * Represents one unit data point/entry in a Plot object
      * @param {Any} x 
      * @param {Any} y 
-     * @param {Any} c - color
-     * @param {Integer} r - radius; only used in scatterplot
-     * @param {String} series - the group this data point belongs to
+     * @param {Any} [c] - color: need more info
+     * @param {Integer} [r] - radius; only used in scatterplot
+     * @param {String} [series] - the group this data point belongs to
      * @constructor
      */
-    constructor(x, y, c=undefined, r=1, series) {
+    constructor(x, y, c=undefined, r=1, series=undefined) {
         this._validateInputs(x, y);
         this.x = x;
         this.y = y;

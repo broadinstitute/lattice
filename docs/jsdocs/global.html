@@ -94,72 +94,6 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="LATTICE_DEFAULT_PADDING"><span class="type-signature">(constant) </span>LATTICE_DEFAULT_PADDING<span class="type-signature"></span></h4>
-
-
-
-
-<div class="description">
-    Review and reorganize code in this script
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line16">line 16</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-    
 
     
 
@@ -218,7 +152,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line67">line 67</a>
+        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -236,13 +170,134 @@
 
             
                 
-<h4 class="name" id="Padding">Padding</h4>
+<h4 class="name" id="Grid">Grid</h4>
 
 
 
 
 
 
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rows</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>columns</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rowSizes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#GridSize">GridSize</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>colSizes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#GridSize">GridSize</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -276,7 +331,140 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line408">line 408</a>
+        <a href="controllers_Lattice.js.html">controllers/Lattice.js</a>, <a href="controllers_Lattice.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="GridSize">GridSize</h4>
+
+
+
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>row,</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Int</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">zero-based</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>size,</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Float</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Decimal between [0, 1]</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_Lattice.js.html">controllers/Lattice.js</a>, <a href="controllers_Lattice.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -334,7 +522,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line412">line 412</a>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line40">line 40</a>
     </li></ul></dd>
     
 
@@ -402,7 +590,65 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line41">line 41</a>
+        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="PlotPadding">PlotPadding</h4>
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -460,7 +706,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line431">line 431</a>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -528,7 +774,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line18">line 18</a>
+        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -596,7 +842,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line51">line 51</a>
+        <a href="utils_constants.js.html">utils/constants.js</a>, <a href="utils_constants.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -626,13 +872,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LATTICE_DEFAULT_PADDING">LATTICE_DEFAULT_PADDING</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="LatticeKernel.html">LatticeKernel</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotInLattice.html">PlotInLattice</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 21:22:02 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 23:02:54 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -9,12 +9,9 @@ import * as ScatterPlot from "../views/ScatterPlot";
 import * as StackedBarPlot from "../views/StackedBarPlot";
 import * as StackedColumnPlot from "../views/StackedColumnPlot";
 
-
 /**
  * Review and reorganize code in this script
  */
- export const LATTICE_DEFAULT_PADDING = 20; // review: constants that are only ever used in a single script shouldn't be a global constant...
- export const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 /**
  * @typedef {String} PlotType
  * @enum {PlotType}

@@ -6,6 +6,7 @@ import {Point2D}  from "../models/Point2D";
 import {Axis}  from "../views/Axis";
 
 const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
+const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 
 class PlotKernel {
     /**
@@ -15,10 +16,12 @@ class PlotKernel {
      * @property {Number} height
      * @property {PlotOrientation} orientation 
      * @property {String} title plot title
-     * @property {Padding} padding plot padding object
-     * @property {PlotAxis} plot axis object
+     * @property {PlotPadding} padding plot padding object
+     * @property {PlotAxis} axis axis object
      * @property {PlotTooltip} tooltip plot tooltip object
      * @property {String[]} series not sure what this does
+     * @property {Integer} [row] row position (0-based), required only if in a lattice
+     * @property {Integer} [column] column position (0-based), required only if in a lattice
      */
     constructor(){
         // initiate default values for the following properties 
@@ -30,10 +33,10 @@ class PlotKernel {
         this.orientation = PlotOrientation.POSITIVE;
         this.title = undefined;
 
-        /** @typedef Padding */
-        let Padding = {top: 50, left: 50, bottom: 50, right: 50};
-          
-        this.padding = Padding;
+        /** @typedef PlotPadding */
+        let PlotPadding = {top: PLOT_DEFAULT_PADDING, left: PLOT_DEFAULT_PADDING, bottom: PLOT_DEFAULT_PADDING, right: PLOT_DEFAULT_PADDING};
+        this.padding = PlotPadding;
+
         /** @typedef PlotAxis */
         let PlotAxis = {
             x: {

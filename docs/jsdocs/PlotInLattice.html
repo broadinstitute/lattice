@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Point2D</title>
+    <title>JSDoc: Class: PlotInLattice</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Point2D</h1>
+    <h1 class="page-title">Class: PlotInLattice</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Point2D<span class="signature">(x, y, c<span class="signature-attributes">opt</span>, r<span class="signature-attributes">opt</span>, series<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>PlotInLattice<span class="signature">(row, column, data, type, rootId, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="Point2D"><span class="type-signature"></span>new Point2D<span class="signature">(x, y, c<span class="signature-attributes">opt</span>, r<span class="signature-attributes">opt</span>, series<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PlotInLattice"><span class="type-signature"></span>new PlotInLattice<span class="signature">(row, column, data, type, rootId, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -49,7 +49,7 @@
 
 
 <div class="description">
-    Point2D class is a data model that stores data and metadata of a 2D data point.
+    PlotInLattice class is a plot in a lattice
 </div>
 
 
@@ -77,8 +77,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -89,114 +87,7 @@
 
         <tr>
             
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>c</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Any</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">color: need more info</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>r</code></td>
+                <td class="name"><code>row</code></td>
             
 
             <td class="type">
@@ -211,8 +102,6 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -221,27 +110,151 @@
             
 
             
-                <td class="default">
-                
-                    1
-                
-                </td>
-            
 
-            <td class="description last">radius; only used in scatterplot</td>
+            <td class="description last"></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>series</code></td>
+                <td class="name"><code>column</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Point2D.html">Point2D</a>></span>
+|
+
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PlotType">PlotType</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rootId</code></td>
             
 
             <td class="type">
             
                 
 <span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="PlotKernel.html">PlotKernel</a></span>
+|
+
+<span class="param-type">Object</span>
 
 
             
@@ -260,12 +273,8 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last">the group this data point belongs to</td>
+            <td class="description last">customization</td>
         </tr>
 
     
@@ -306,7 +315,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Point2D.js.html">models/Point2D.js</a>, <a href="models_Point2D.js.html#line7">line 7</a>
+        <a href="controllers_PlotInLattice.js.html">controllers/PlotInLattice.js</a>, <a href="controllers_PlotInLattice.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -340,6 +349,17 @@
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Plot.html">Plot</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -347,7 +367,7 @@
         <h3 class="subsection-title">Classes</h3>
 
         <dl>
-            <dt><a href="Point2D.html">Point2D</a></dt>
+            <dt><a href="PlotInLattice.html">PlotInLattice</a></dt>
             <dd></dd>
         </dl>
     
@@ -369,7 +389,7 @@
     
 
     
-    <h4 class="name" id="validateScaleType"><span class="type-signature"></span>validateScaleType<span class="signature">(scaleType, attr:)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getCustomizable"><span class="type-signature"></span>getCustomizable<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -377,7 +397,100 @@
 
 
 <div class="description">
-    Check attribute value based on scale type
+    reports what properties of the Plot object are customizable
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#getCustomizable">Plot#getCustomizable</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">(reset)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    rendering function
 </div>
 
 
@@ -403,6 +516,8 @@
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -413,13 +528,13 @@
 
         <tr>
             
-                <td class="name"><code>scaleType</code></td>
+                <td class="name"><code>reset</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Boolean</span>
 
 
             
@@ -428,31 +543,14 @@
             
 
             
-
-            <td class="description last">enum volcabulary</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>attr:</code></td>
-            
-
-            <td class="type">
-            
+                <td class="default">
                 
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
+                    false
+                
+                </td>
             
 
-            
-
-            <td class="description last">which attribute, x or y</td>
+            <td class="description last">flag specifying whether or not to destroy the plot</td>
         </tr>
 
     
@@ -472,6 +570,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#render">Plot#render</a>
+    </li></ul></dd>
     
 
     
@@ -493,7 +596,100 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="models_Point2D.js.html">models/Point2D.js</a>, <a href="models_Point2D.js.html#line44">line 44</a>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line334">line 334</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="verbose"><span class="type-signature"></span>verbose<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    prints out more information about the Plot object for debugging purposes
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Plot.html#verbose">Plot#verbose</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_Plot.js.html">controllers/Plot.js</a>, <a href="controllers_Plot.js.html#line404">line 404</a>
     </li></ul></dd>
     
 

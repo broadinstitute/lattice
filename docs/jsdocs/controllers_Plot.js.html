@@ -28,13 +28,73 @@
         <article>
             <pre class="prettyprint source linenums"><code>import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
-import * as constants from "../utils/constants"; // Note: constants are too generic, let's review what's in the script and organize the code better
+import {PlotType, PlotOrientation, tooltipFormatters, defaultScales, defaultAxisOrientation, ScaleType, plotRenderFunction} from "../utils/constants"; // Note: constants are too generic, let's review what's in the script and organize the code better
 import Tooltip  from "../views/Tooltip";
 import {Point2D}  from "../models/Point2D";
 import {Axis}  from "../views/Axis";
 
-const stackedPlotTypes = [constants.PlotType.STACKEDBAR, constants.PlotType.STACKEDCOLUMN];
+const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
+const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 
+class PlotKernel {
+    /**
+     * @constructor
+     * @property {String} parentId parent SVG ID
+     * @property {Number} width 
+     * @property {Number} height
+     * @property {PlotOrientation} orientation 
+     * @property {String} title plot title
+     * @property {PlotPadding} padding plot padding object
+     * @property {PlotAxis} axis axis object
+     * @property {PlotTooltip} tooltip plot tooltip object
+     * @property {String[]} series not sure what this does
+     * @property {Integer} [row] row position (0-based), required only if in a lattice
+     * @property {Integer} [column] column position (0-based), required only if in a lattice
+     */
+    constructor(){
+        // initiate default values for the following properties 
+        this.parentId = undefined;
+        
+        this.width = 300;
+        this.height = 300;
+
+        this.orientation = PlotOrientation.POSITIVE;
+        this.title = undefined;
+
+        /** @typedef PlotPadding */
+        let PlotPadding = {top: PLOT_DEFAULT_PADDING, left: PLOT_DEFAULT_PADDING, bottom: PLOT_DEFAULT_PADDING, right: PLOT_DEFAULT_PADDING};
+        this.padding = PlotPadding;
+
+        /** @typedef PlotAxis */
+        let PlotAxis = {
+            x: {
+                title: "x axis", 
+                orientation: "bottom", // top, bottom, left, right
+            },
+            y: {
+                title: "y axis", 
+                orientation: "left", // top, bottom, left, right
+            },
+            c: {
+                scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
+                domain: ["TODO: how to best customize the color scale"], // values to be mapped to a color; can be an array of [min, max] if using sequential scale; all values should be listed for ordinal scale
+                range: ["TBA"], // colors to map the domain to; required for (and only used by) ordinal scale type
+                interpolator: undefined // required for (and only used by) sequential scale type
+            }
+        };
+        this.axis = PlotAxis;
+        
+        /** @typedef PlotTooltip */
+        let PlotTooltip = {
+            enabled: true, 
+            id: undefined,
+            formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
+        };
+        this.tooltip = PlotTooltip;
+        
+        this.series = [];
+    }
+}
 /**
  * @description Plot class for creating a generic 2D plot object
  * @augments PlotKernel
@@ -42,7 +102,7 @@ const stackedPlotTypes = [constants.PlotType.STACKEDBAR, constants.PlotType.STAC
 export class Plot extends PlotKernel {
     /**
      * Constructor for Plot
-     * @param {Point2D[]|Distribution[]|Object[]} data array of data objects (e.g. Point2D, Distribution) to use for charting
+     * @param {Point2D[]|Distribution[]|Object[]} data array of appropriate data objects (e.g. Point2D, Distribution) to use for charting
      * @param {PlotType} type the plot type; should be one from enum PlotType
      * @param {String} rootId div that the SVG should be created in
      * @param {PlotKernel|Object} [userInput] custom config (i.e. any attribute in PlotKernel)
@@ -114,7 +174,7 @@ export class Plot extends PlotKernel {
                 break;
             case "tooltip":
                 // set tooltip config based on plot properties
-                plot.tooltip.formatter = constants.tooltipFormatters[plot.type];
+                plot.tooltip.formatter = tooltipFormatters[plot.type];
                 plot.tooltip.id = `${plot.rootId}-tooltip`;
                 // update based on user input
                 if (userInput.tooltip!==undefined) plot.tooltip = Object.assign({}, plot.tooltip, userInput.tooltip);
@@ -125,9 +185,9 @@ export class Plot extends PlotKernel {
                     if (["x", "y"].includes(which)){
                         // set scale type and axis orientation based on plot type and axis
                         
-                        axis.scaleType = constants.defaultScales[plot.type][which];
+                        axis.scaleType = defaultScales[plot.type][which];
                         
-                        axis.orientation = constants.defaultAxisOrientation[plot.type][which][plot.orientation];
+                        axis.orientation = defaultAxisOrientation[plot.type][which][plot.orientation];
 
                         // update axis settings based on user input
                         if (userInput.axis!==undefined &amp;&amp; userInput.axis[which] !== undefined) {
@@ -137,7 +197,7 @@ export class Plot extends PlotKernel {
                         // then finally creates an Axis object and assign it to plot.axisInternal[which] 
                         plot.axisInternal[which] = new Axis(which, axis);
                     } else if (which == "c") {
-                        axis.scaleType = constants.defaultScales[this.type].c;
+                        axis.scaleType = defaultScales[this.type].c;
                         if (userInput.axis!==undefined &amp;&amp; userInput.axis.c !== undefined) {
                             axis = Object.assign({}, axis, userInput.axis.c);
                             plot.axisInternal[which] = axis;
@@ -175,8 +235,8 @@ export class Plot extends PlotKernel {
         if (!this.series.length) {
             throw "'series' attribute was not provided; cannot create series data stacks";
         }
-        const stackAttr = this.type == constants.PlotType.STACKEDBAR ? "y" : "x";
-        const valAttr = this.type == constants.PlotType.STACKEDBAR ? "x" : "y";
+        const stackAttr = this.type == PlotType.STACKEDBAR ? "y" : "x";
+        const valAttr = this.type == PlotType.STACKEDBAR ? "x" : "y";
         const seriesInData = new Set(); // for error checking purposes
 
         // grouping data on dimension we're creating stacks for
@@ -236,7 +296,7 @@ export class Plot extends PlotKernel {
         let yRange = [this.innerHeight, 0];
         
         // adjust domain or range based on plot type and scale type
-        const type = constants.PlotType;
+        const type = PlotType;
         switch(this.type) {
         case type.AREAPLOT:
         case type.LINEPLOT:
@@ -261,7 +321,7 @@ export class Plot extends PlotKernel {
             break;
         case type.STACKEDBAR: 
             xDomain = [0, d3.max(this.dataStack, d=>d3.max(d, d => d[1]))];
-            xRange = this.orientation == constants.orientations.POSITIVE ? xRange : [this.innerWidth, 0];
+            xRange = this.orientation == PlotOrientation.POSITIVE ? xRange : [this.innerWidth, 0];
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
@@ -276,12 +336,12 @@ export class Plot extends PlotKernel {
             return d3.scaleSqrt().domain(d3.extent(this.data.map(d => d.r))).range([1, 3]); // todo: how to handle these axes better?
         };
         const createColorScale = ()=>{
-            if (this.axisInternal.c.scaleType == constants.scales.ORDINAL) {
+            if (this.axisInternal.c.scaleType == ScaleType.ORDINAL) {
                 let s = d3.scaleOrdinal();
                 s.unknown(undefined);
                 return s.domain(this.axisInternal.c.domain).range(this.axisInternal.c.range);
             }
-            else if (this.axisInternal.c.scaleType == constants.scales.SEQUENTIAL) {
+            else if (this.axisInternal.c.scaleType == ScaleType.SEQUENTIAL) {
                 let s = d3.scaleSequential(this.axisInternal.c.interpolator);
                 return s.domain(this.axisInternal.c.domain);
             }
@@ -321,7 +381,7 @@ export class Plot extends PlotKernel {
         // Note: perhaps we should have subclass of Plot?
         const data = stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
         // TODO: update all plots to accept "orientation" parameter
-        let dataDomElements = constants.plotRenderFunction[this.type](g, data, this.scale, this.orientation);
+        let dataDomElements = plotRenderFunction[this.type](g, data, this.scale, this.orientation);
         this.hasRendered = true;
     
         // setting the tooltip
@@ -354,7 +414,7 @@ export class Plot extends PlotKernel {
             console.error("Plot type required.");
             throw "Plot type required.";
         }
-        if (!Object.values(constants.PlotType).includes(type)) {
+        if (!Object.values(PlotType).includes(type)) {
             console.error(`Unrecognized plot type ${type}`);
             throw `Unrecognized plot type ${type}`;
         }
@@ -409,64 +469,7 @@ export class Plot extends PlotKernel {
     // }
 
 }
-
-class PlotKernel {
-    /**
-     * @constructor
-     * @property {String} parentId parent SVG ID
-     * @property {Number} width 
-     * @property {Number} height
-     * @property {PlotOrientation} orientation 
-     * @property {String} title plot title
-     * @property {Padding} padding plot padding object
-     * @property {PlotAxis} plot axis object
-     * @property {PlotTooltip} tooltip plot tooltip object
-     * @property {String[]} series not sure what this does
-     */
-    constructor(){
-        // initiate default values for the following properties 
-        this.parentId = undefined;
-        
-        this.width = 300;
-        this.height = 300;
-
-        this.orientation = PlotOrientation.POSITIVE;
-        this.title = undefined;
-
-        /** @typedef Padding */
-        let Padding = {top: 50, left: 50, bottom: 50, right: 50};
-          
-        this.padding = Padding;
-        /** @typedef PlotAxis */
-        let PlotAxis = {
-            x: {
-                title: "x axis", 
-                orientation: "bottom", // top, bottom, left, right
-            },
-            y: {
-                title: "y axis", 
-                orientation: "left", // top, bottom, left, right
-            },
-            c: {
-                scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
-                domain: ["TODO: how to best customize the color scale"], // values to be mapped to a color; can be an array of [min, max] if using sequential scale; all values should be listed for ordinal scale
-                range: ["TBA"], // colors to map the domain to; required for (and only used by) ordinal scale type
-                interpolator: undefined // required for (and only used by) sequential scale type
-            }
-        };
-        this.axis = PlotAxis;
-        
-        /** @typedef PlotTooltip */
-        let PlotTooltip = {
-            enabled: true, 
-            id: undefined,
-            formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
-        };
-        this.tooltip = PlotTooltip;
-        
-        this.series = [];
-    }
-}</code></pre>
+</code></pre>
         </article>
     </section>
 
@@ -476,13 +479,13 @@ class PlotKernel {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3>Global</h3><ul><li><a href="global.html#LATTICE_DEFAULT_PADDING">LATTICE_DEFAULT_PADDING</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="LatticeKernel.html">LatticeKernel</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotInLattice.html">PlotInLattice</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 21:22:02 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Wed Apr 07 2021 23:02:54 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: models/Distribution.js</title>
+    <title>JSDoc: Source: controllers/PlotInLattice.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: models/Distribution.js</h1>
+    <h1 class="page-title">Source: controllers/PlotInLattice.js</h1>
 
     
 
@@ -26,43 +26,35 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>"use strict";
-// import * as constants from "../utils/constants";
-
+            <pre class="prettyprint source linenums"><code>import {Plot} from "./Plot";
 /**
- * @description Distribution class is a data model that stores data and metadata of a distribution
+ * @description PlotInLattice class is a plot in a lattice
+ * @augments Plot
  */
-export class Distribution {
+export class PlotInLattice extends Plot {
     /**
      * @constructor
-     * @param {String} x - text label of the distribution
-     * @param {Number[]} y - a list of numerical values
-     * @param {String} [c] - color in rgb or hexadecimal code
-     * @param {String} [series] - the group this distribution belongs to
+     * @param {Integer} row 
+     * @param {Integer} column 
+     * @param {Point2D[]|Object[]} data 
+     * @param {PlotType} type 
+     * @param {String} rootId 
+     * @param {PlotKernel|Object} [config] customization 
      */
-    constructor(x, y, color="#6bafa9", series="default") {
-        this.x = this._validateInput(label);
-        this.y = this._validateInput(data);
-        this.c = c;
-        this.series = series;
+    constructor(row, column, data, type, rootId, config){
+        super(data, type, rootId, config);
+        this.row = row;
+        this.column = column;
     }
 
-    /**
-     * Validates a required input param
-     * @param {Any} d
-     * @private
-     */
-    _validateInput(d) {
-        if (d === undefined) {
-            let message = "this param must be provided"
-            console.error(message);
-            throw message;
-        }
-        return d;
+    rowStart(grids){
+        return grids[this.row][this.column].rowStart;
     }
-}
 
-</code></pre>
+    colStart(grids){
+        return grids[this.row][this.column].colStart;
+    }
+}</code></pre>
         </article>
     </section>
 
