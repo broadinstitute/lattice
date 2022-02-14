@@ -21,7 +21,6 @@ export class PlotInLattice extends Plot {
         super(data, type, rootId, config);
        
         this.row = row;
-        /**@property {Integer} column column posiiotn*/
         this.column = column;
     }
 
