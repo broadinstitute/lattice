@@ -75,7 +75,7 @@ function demoColumnPlot(){
     const plotConfig = {
         padding: {top: 0}, 
         axis:{
-            x: {angle: 60, textAnchor: "start"},
+            x: {textAngle: 60, textAnchor: "start"},
             y: {title: "value"}
         }
     }; // todo: yAxis title not showing
@@ -109,7 +109,7 @@ function demoStackedColumnPlot() {
         series: seriesInfo,
         axis: {
             x: {
-                angle: 60,
+                textAngle: 60,
                 textAnchor: "start"
             }
         }
