@@ -1,78 +1,49 @@
 import * as d3 from "d3";
 import * as plotUtils from "../utils/plot-utils";
-import * as constants from "../utils/constants";
+import {PlotType, PlotOrientation, tooltipFormatters, defaultScales, defaultAxisOrientation, ScaleType, plotRenderFunction} from "../utils/constants"; // Note: constants are too generic, let's review what's in the script and organize the code better
 import Tooltip  from "../views/Tooltip";
-import XYEntry  from "../models/XYEntry";
-import Axis  from "../views/Axis";
+import {Point2D}  from "../models/Point2D";
+import {Axis}  from "../views/Axis";
 
-/**
- * @description Plot class for creating a generic 2D plot object
- */
-export class Plot {
+const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
+const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
+
+class PlotKernel {
     /**
-     * Constructor for Plot
-     * @param {Object[]} data - array of - array of data points to use for charting.
-     *                              attributes include:
-     *                                  - {Any} x - datapoint x-value
-     *                                  - {Any} y - datapoint y-value
-     *                                  - {String} c - color string
-     *                                  - {Number} r - datapoint radius -- only used in scatterplot
-     *                                  - {String} series - series the datapoint belongs to
-     * @param {String} type - the plot type; should be one of the enums listed in the plots var (in constants.js)
-     * @param {String} rootId - div that the SVG should be created in
-     * @param {Object} userInput - optional, available options are described in plotConfig.js
+     * @constructor
+     * @property {String} parentId parent SVG ID
+     * @property {Number} width 
+     * @property {Number} height
+     * @property {PlotOrientation} orientation 
+     * @property {String} title plot title
+     * @property {PlotPadding} padding plot padding object
+     * @property {PlotAxis} axis axis object
+     * @property {PlotTooltip} tooltip plot tooltip object
+     * @property {String[]} series not sure what this does
      */
-    constructor(data, type, rootId, userInput={}) {
-        this._validateInputs(data, type, rootId);
-        this._userInput = userInput;
-        this.data = data.map(d => {
-            return new XYEntry(d.x, d.y, d.c, d.r, d.series); 
-        });
-        this.type = type;
-        this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
-        this.hasRendered = false; 
-        
+    constructor(){
         // initiate default values for the following properties 
-       
-        this.customizableProp = ["parentId",  "width", "height", "orientation", "title", "padding", "axis", "tooltip", "series"];
         this.parentId = undefined;
+        
         this.width = 300;
         this.height = 300;
-        this.orientation = constants.orientations.POSITIVE;
+
+        this.orientation = PlotOrientation.POSITIVE;
         this.title = undefined;
-        this.padding = {top: 50, left: 50, bottom: 50, right: 50};
-        this.axis = {
+
+        /** @typedef PlotPadding */
+        let PlotPadding = {top: PLOT_DEFAULT_PADDING, left: PLOT_DEFAULT_PADDING, bottom: PLOT_DEFAULT_PADDING, right: PLOT_DEFAULT_PADDING};
+        this.padding = PlotPadding;
+
+        /** @typedef PlotAxis */
+        let PlotAxis = {
             x: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "x axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "bottom", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             y: {
-                scaleType: undefined, // auto-detect if undefined
                 title: "y axis", 
-                ticks: undefined, // number of ticks to display
-                min: undefined, // applicable for numerical scales
-                max: undefined, // applicable for numerical scales
                 orientation: "left", // top, bottom, left, right
-                padding: 0.15, // applicable for categorical scales
-                angle: 0,
-                textAnchor: undefined,
-                display: true, // setting this to false will hide the title, ticks, tick labels, and title. leave as true to fine-tune axis display settings
-                hideAxis: false, // will hide the axis (ticks + tick labels)
-                hideTicks: false, // will hide the axis ticks
-                hideLabels: false, // will hide the axis tick labels
-                hideTitle: false // will hide the axis title
             },
             c: {
                 scaleType: undefined, // enum: ordinal, sequential. todo: add divergent
@@ -80,23 +51,58 @@ export class Plot {
                 range: ["TBA"], // colors to map the domain to; required for (and only used by) ordinal scale type
                 interpolator: undefined // required for (and only used by) sequential scale type
             }
-            //r: rAxis?
-        },
-        this.axisInternal = {};
-        this.tooltip = {
+        };
+        this.axis = PlotAxis;
+        
+        /** @typedef PlotTooltip */
+        let PlotTooltip = {
             enabled: true, 
             id: undefined,
             formatter:undefined // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
         };
+        this.tooltip = PlotTooltip;
+        
         this.series = [];
+    }
+}
+/**
+ * @description Plot class for creating a generic 2D plot object
+ * @augments PlotKernel
+ */
+export class Plot extends PlotKernel {
+    /**
+     * Constructor for Plot
+     * @param {Point2D[]|Distribution[]|Object[]} data array of appropriate data objects (e.g. Point2D, Distribution) to use for charting
+     * @param {PlotType} type the plot type; should be one from enum PlotType
+     * @param {String} rootId div that the SVG should be created in
+     * @param {PlotKernel|Object} [userInput] custom config (i.e. any attribute in PlotKernel)
+    * @constructor
+    */
+    constructor(data, type, rootId, userInput={}) {
+        super();
+        this.customizableProp = Object.keys(this);
+
+        this._validateInputs(data, type, rootId);
+        this._userInput = userInput;
+
+        /** @property {Point2D[]} data */
+        this.data = data.map(d => {
+            return new Point2D(d.x, d.y, d.c, d.r, d.series); 
+        });
+
+        /** @property {PlotType} type */
+        this.type = type;
+        this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
+        this.hasRendered = false; 
+        this.axisInternal = {}; // do we still need this?
         this._changeSettings(userInput);
         
         // additional computed properties
         this.innerWidth = this.width - this.padding.left - this.padding.right;
         this.innerHeight = this.height - this.padding.top - this.padding.bottom;
-        this.tooltipObj = new Tooltip(this.tooltip.id);
+        this.tooltipObj = new Tooltip(this.tooltip.id); // get rid of this extra attribute
 
-        if (constants.stackedPlotTypes.includes(this.type)) {
+        if (stackedPlotTypes.includes(this.type)) {
             this.dataStack = this.createDataStack();
         }
         this.scale = this.setScales();
@@ -109,7 +115,17 @@ export class Plot {
     getCustomizable(){
         let config = {};
         this.customizableProp.forEach((prop)=>{
-            config[prop] = this[prop];
+            if ("axis"==prop) {
+                config.axis = {};
+                Object.keys(this.axis).forEach((d)=>{
+                    if (d=='x'||d=='y'){
+                        config.axis[d] = this.axisInternal[d].getCustomizable();
+                    } else {
+                        config.axis[d] = this.axis[d];
+                    }
+                })
+            }
+            else {config[prop] = this[prop];}
         });
         return config;
     }
@@ -132,7 +148,7 @@ export class Plot {
                 break;
             case "tooltip":
                 // set tooltip config based on plot properties
-                plot.tooltip.formatter = constants.tooltipFormatters[plot.type];
+                plot.tooltip.formatter = tooltipFormatters[plot.type];
                 plot.tooltip.id = `${plot.rootId}-tooltip`;
                 // update based on user input
                 if (userInput.tooltip!==undefined) plot.tooltip = Object.assign({}, plot.tooltip, userInput.tooltip);
@@ -143,9 +159,9 @@ export class Plot {
                     if (["x", "y"].includes(which)){
                         // set scale type and axis orientation based on plot type and axis
                         
-                        axis.scaleType = constants.defaultScales[plot.type][which];
+                        axis.scaleType = defaultScales[plot.type][which];
                         
-                        axis.orientation = constants.defaultAxisOrientation[plot.type][which][plot.orientation];
+                        axis.orientation = defaultAxisOrientation[plot.type][which][plot.orientation];
 
                         // update axis settings based on user input
                         if (userInput.axis!==undefined && userInput.axis[which] !== undefined) {
@@ -155,7 +171,7 @@ export class Plot {
                         // then finally creates an Axis object and assign it to plot.axisInternal[which] 
                         plot.axisInternal[which] = new Axis(which, axis);
                     } else if (which == "c") {
-                        axis.scaleType = constants.defaultScales[this.type].c;
+                        axis.scaleType = defaultScales[this.type].c;
                         if (userInput.axis!==undefined && userInput.axis.c !== undefined) {
                             axis = Object.assign({}, axis, userInput.axis.c);
                             plot.axisInternal[which] = axis;
@@ -188,14 +204,13 @@ export class Plot {
                 throw `Unknown series found in data: ${seriesCheck.join(", ")}`;
             }
         };
-        const types = constants.plotTypes;
 
         // error checking
         if (!this.series.length) {
             throw "'series' attribute was not provided; cannot create series data stacks";
         }
-        const stackAttr = this.type == types.STACKEDBAR ? "y" : "x";
-        const valAttr = this.type == types.STACKEDBAR ? "x" : "y";
+        const stackAttr = this.type == PlotType.STACKEDBAR ? "y" : "x";
+        const valAttr = this.type == PlotType.STACKEDBAR ? "x" : "y";
         const seriesInData = new Set(); // for error checking purposes
 
         // grouping data on dimension we're creating stacks for
@@ -255,36 +270,36 @@ export class Plot {
         let yRange = [this.innerHeight, 0];
         
         // adjust domain or range based on plot type and scale type
-        const types = constants.plotTypes;
+        const type = PlotType;
         switch(this.type) {
-        case types.AREAPLOT:
-        case types.LINEPLOT:
-        case types.SCATTERPLOT:
+        case type.AREAPLOT:
+        case type.LINEPLOT:
+        case type.SCATTERPLOT:
             // no further changes needed
             break;
-        case types.BARCODEPLOT:
+        case type.BARCODEPLOT:
             yDomain = [0, 1];
             break;
-        case types.BARPLOT:
+        case type.BARPLOT:
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case types.CATEGORICAL_HEATMAP:
-        case types.HEATMAP:
+        case type.CATEGORICAL_HEATMAP:
+        case type.HEATMAP:
             xDomain = this.data.map(d => d.x);
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case types.COLUMNPLOT:
+        case type.COLUMNPLOT:
             xDomain = this.data.map(d => d.x);
             break;
-        case types.STACKEDBAR: 
+        case type.STACKEDBAR: 
             xDomain = [0, d3.max(this.dataStack, d=>d3.max(d, d => d[1]))];
-            xRange = this.orientation == constants.orientations.POSITIVE ? xRange : [this.innerWidth, 0];
+            xRange = this.orientation == PlotOrientation.POSITIVE ? xRange : [this.innerWidth, 0];
             yDomain = this.data.map(d => d.y);
             yRange = [0, this.innerHeight];
             break;
-        case constants.plotTypes.STACKEDCOLUMN:
+        case type.STACKEDCOLUMN:
             xDomain = this.data.map(d => d.x);
             yDomain = [0, d3.max(this.dataStack, d=>d3.max(d, d => d[1]))];
             break;
@@ -295,12 +310,12 @@ export class Plot {
             return d3.scaleSqrt().domain(d3.extent(this.data.map(d => d.r))).range([1, 3]); // todo: how to handle these axes better?
         };
         const createColorScale = ()=>{
-            if (this.axisInternal.c.scaleType == constants.scales.ORDINAL) {
+            if (this.axisInternal.c.scaleType == ScaleType.ORDINAL) {
                 let s = d3.scaleOrdinal();
                 s.unknown(undefined);
                 return s.domain(this.axisInternal.c.domain).range(this.axisInternal.c.range);
             }
-            else if (this.axisInternal.c.scaleType == constants.scales.SEQUENTIAL) {
+            else if (this.axisInternal.c.scaleType == ScaleType.SEQUENTIAL) {
                 let s = d3.scaleSequential(this.axisInternal.c.interpolator);
                 return s.domain(this.axisInternal.c.domain);
             }
@@ -337,9 +352,10 @@ export class Plot {
         this.axisInternal.x.render(g, this);
         this.axisInternal.y.render(g, this);
         // TODO: stacked charts are passing something different for "data" than other plot types. is this an issue?
-        const data = constants.stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
+        // Note: perhaps we should have subclass of Plot?
+        const data = stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
         // TODO: update all plots to accept "orientation" parameter
-        let dataDomElements = constants.plotRenderFunction[this.type](g, data, this.scale, this.orientation);
+        let dataDomElements = plotRenderFunction[this.type](g, data, this.scale, this.orientation);
         this.hasRendered = true;
     
         // setting the tooltip
@@ -372,7 +388,7 @@ export class Plot {
             console.error("Plot type required.");
             throw "Plot type required.";
         }
-        if (!Object.values(constants.plotTypes).includes(type)) {
+        if (!Object.values(PlotType).includes(type)) {
             console.error(`Unrecognized plot type ${type}`);
             throw `Unrecognized plot type ${type}`;
         }

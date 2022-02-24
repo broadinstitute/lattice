@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Lattice Library Demos</title>
+        <!-- why do we need bootstrap css? -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="/build/css/lattice-lib.min.css">
+        <script src="/build/js/random-generator.min.js"></script>
+        <script src="/build/js/lattice-lib.min.js"></script>
+        <script src="/src/demo/violin-plots-demo.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid" style="padding: 2.5rem;">
+            <h2>A basic violin plot type</h1>
+                    
+            <div id="violin" style="padding: 2.5rem;"></div>
+           
+            <hr>
+            
+        </div>
+    </body>
+
+</html>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // show lattice config default settings
+        document.getElementById("lattice-config-opt").innerHTML = LatticeLib.getLatticeOptions();
+        // show plot config default settings
+        document.getElementById("plot-config-opt").innerHTML = LatticeLib.getPlotOptions();
+        
+        // demos
+        init();
+    });
+</script>

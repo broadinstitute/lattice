@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id=".lattice"><span class="type-signature">(static) </span>lattice<span class="signature">(plots:, id:, config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".lattice"><span class="type-signature">(static) </span>lattice<span class="signature">(plots, id, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    renter a lattice of plots
+    renters a lattice of plots
 </div>
 
 
@@ -96,6 +96,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -108,12 +110,15 @@
 
         <tr>
             
-                <td class="name"><code>plots:</code></td>
+                <td class="name"><code>plots</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">Array.&lt;<a href="PlotInLattice.html">PlotInLattice</a>></span>
+|
+
 <span class="param-type">Array.&lt;Object></span>
 
 
@@ -121,17 +126,25 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">a list of grid objects, each grid has attributes: row, column, data, type</td>
+            <td class="description last">a list of plot objects with required attributes in PlotInLattice</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>id:</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
@@ -143,6 +156,14 @@
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
             
 
             
@@ -160,6 +181,9 @@
             <td class="type">
             
                 
+<span class="param-type"><a href="LatticeKernel.html">LatticeKernel</a></span>
+|
+
 <span class="param-type">Object</span>
 
 
@@ -167,10 +191,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last"></td>
+            <td class="description last">a config object with any attribute from LatticeKernel</td>
         </tr>
 
     
@@ -211,7 +245,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line38">line 38</a>
+        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line37">line 37</a>
     </li></ul></dd>
     
 
@@ -247,7 +281,7 @@
     
 
     
-    <h4 class="name" id=".plot"><span class="type-signature">(static) </span>plot<span class="signature">(data:, type:, id:, config:)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".plot"><span class="type-signature">(static) </span>plot<span class="signature">(data, type, id, config<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -255,7 +289,7 @@
 
 
 <div class="description">
-    rendering a simple plot
+    renders a simple plot
 </div>
 
 
@@ -279,6 +313,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -291,12 +327,15 @@
 
         <tr>
             
-                <td class="name"><code>data:</code></td>
+                <td class="name"><code>data</code></td>
             
 
             <td class="type">
             
                 
+<span class="param-type">Array.&lt;<a href="Point2D.html">Point2D</a>></span>
+|
+
 <span class="param-type">Array.&lt;Object></span>
 
 
@@ -304,23 +343,56 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">array of data points to use for charting.
-                             attributes include:
-                                 - {Any} x - datapoint x-value
-                                 - {Any} y - datapoint y-value
-                                 - {String} c - color string
-                                 - {Number} r - datapoint radius -- only used in scatterplot
-                                 - {String} series - series the datapoint belongs to</td>
+            <td class="description last">array of data points (e.g. Point2D) to use for charting.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>type:</code></td>
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PlotType">PlotType</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">plot type, myst be a known value from PlotType</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
@@ -333,45 +405,33 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">plot type: controlled volcabulary</td>
+            <td class="description last">root DOM (e.g a div) ID for the plot</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>id:</code></td>
+                <td class="name"><code>config</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type"><a href="PlotKernel.html">PlotKernel</a></span>
+|
 
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">root DOM ID</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>config:</code></td>
-            
-
-            <td class="type">
-            
-                
 <span class="param-type">Object</span>
 
 
@@ -379,10 +439,20 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">customized config, optional</td>
+            <td class="description last">plot config with any attribute from PlotKernel</td>
         </tr>
 
     
@@ -423,7 +493,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line26">line 26</a>
+        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -511,7 +581,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line47">line 47</a>
+        <a href="libs_LatticeLib.js.html">libs/LatticeLib.js</a>, <a href="libs_LatticeLib.js.html#line46">line 46</a>
     </li></ul></dd>
     
 
@@ -557,13 +627,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="LatticeKernel.html">LatticeKernel</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotInLattice.html">PlotInLattice</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 01 2021 18:06:57 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 22 2021 07:48:06 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

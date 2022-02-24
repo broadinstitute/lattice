@@ -1,16 +1,20 @@
 "use strict";
 import * as constants from "../utils/constants";
 
-export default class XYEntry {
+/**
+ * @description Point2D class is a data model that stores data and metadata of a 2D data point.
+ */
+export class Point2D {
     /**
      * Represents one unit data point/entry in a Plot object
      * @param {Any} x 
      * @param {Any} y 
-     * @param {Any} c - color
-     * @param {Integer} r - radius; only used in scatterplot
-     * @param {String} series - the group a data point belongs to
+     * @param {Any} [c] - color: need more info
+     * @param {Integer} [r] - radius; only used in scatterplot
+     * @param {String} [series] - the group this data point belongs to
+     * @constructor
      */
-    constructor(x, y, c=undefined, r=1, series) {
+    constructor(x, y, c=undefined, r=1, series=undefined) {
         this._validateInputs(x, y);
         this.x = x;
         this.y = y;
@@ -35,6 +39,7 @@ export default class XYEntry {
      * Check attribute value based on scale type
      * @param {String} scaleType enum volcabulary
      * @param {string} attr: which attribute, x or y
+     * @public
      */
     validateScaleType(scaleType, attr) {
         let scales = constants.scales;
@@ -52,37 +57,5 @@ export default class XYEntry {
         default:
         }
         return invalid;
-    }
-}
-
-// TODO: not sure how to structure this...
-// ToDo: move to a separate js file
-export class HierarchyEntry {
-    /**
-     * Represents one unit data point/entry in a Plot
-     * @param {Any} name 
-     * @param {Any} value 
-     * @param {Any} color - color
-     * @param {Integer} label - radius; only used in scatterplot
-     * @param {String} series - the group a data point belongs to
-     */
-    constructor(name, value, color=undefined, label=undefined, series) {
-        this.name = name;
-        this.value = value;
-        this.color = color;
-        this.label = label;
-        this.series = series;
-    }
-
-    _validateInputs(x, y) {
-        if (x === undefined) {
-            console.error("data x value cannot be undefined");
-            throw "data x value cannot be undefined";
-        }
-
-        if (y === undefined) {
-            console.error("data y value cannot be undefined");
-            throw "data y value cannot be undefined";
-        }
     }
 }

@@ -26,49 +26,73 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Plot } from "./Plot";
-import { LATTICE_DEFAULT_PADDING } from "../utils/constants";
+            <pre class="prettyprint source linenums"><code>import {PlotInLattice} from "./PlotInLattice";
 import { createGroup, createSvg } from "../utils/plot-utils";
 import * as d3 from "d3";
+
+const LATTICE_DEFAULT_PADDING = 20; 
+/**@description LatticeKernel class is the core of Lattice */
+class LatticeKernel {
+    /**
+     * @constructor
+     * @property {String} parentId div ID that the plot should be created in, if the SVG already exists
+     * @property {Number} width - outer width of lattice plot
+     * @property {Number} height - outer height of lattice plot
+     * @property {Grid} grid                              
+     * @property {Object} padding - attr: top, right, bottom, left; padding to apply around the chart
+     */
+
+    constructor(){
+        this.parentId = undefined;
+        this.width = 1000;
+        this.height = 600;
+        /**
+         * @typedef GridSize
+         * @property {Int} row, zero-based
+         * @property {Float} size, Decimal between [0, 1]
+         */
+        /**
+         * @typedef Grid 
+         * @property {Int} rows
+         * @property {Int} columns
+         * @property {GridSize[]} rowSizes
+         * @property {GridSize[]} colSizes
+        */
+        let Grid = {
+            rows: 1,
+            columns: 1,
+            rowSizes: undefined, 
+            columnSizes: undefined
+        };
+        this.grid = Grid
+        
+        this.padding={
+            top:LATTICE_DEFAULT_PADDING, 
+            right:LATTICE_DEFAULT_PADDING, 
+            bottom:LATTICE_DEFAULT_PADDING, 
+            left:LATTICE_DEFAULT_PADDING
+        };
+    }
+}
 
 /**
  * @description Lattice class for creating a lattice visualization object
  */
-export class Lattice {
+export class Lattice extends LatticeKernel{
     /**
      * Constructor for Lattice controller. This is one of two entry points for a user using this library.
      * @constructor
-     * @param {Object[]} plots - Specifies the configuration for each individual plot. Expected attributes are:
-     *                              - row
-     *                              - column
-     *                              - Plot object attributes (excluding rootId and parentId)
+     * @param {PlotInLattice[]|Object[]} plots - Specifies the configuration for each individual plot. 
      * @param {String} rootId - div ID that the SVG should be created in
-     * @param {Object} userInput - optional, available options are described 
+     * @param {LatticeKernel|Object} userInput - optional, can include any attribute in LatticeKernel
      */ 
      
     constructor(plots, rootId, userInput) {
-    /* @param {Object} UNNAMED - contains all optional parameters
-     *          {String} parentId - div ID that the plot should be created in, if the SVG already exists
-     *          {Number} width - outer width of lattice plot
-     *          {Number} height - outer height of lattice plot
-     *          {Object} grid - attrs: {Int} rows, {Int} columns -- can be used to specify the number of rows and columns
-     *                                {Array[Object]} rowSizes -- can be used to customize size of each row
-     *                                                            attr: {Int} row, zero-based
-     *                                                                  {Float} size - Decimal between [0, 1]
-     *                                {Array[Object]} columnSizes -- can be used to customize size of each column
-     *                                                               attr: {Int} column, zero-based
-     *                                                                    {Float} size - Decimal between [0, 1]
-     *          {Object} padding - attr: top, right, bottom, left; padding to apply around the chart
-     */
+        super();
+        this.customizableProp = Object.keys(this);
+
         this.rootId = rootId;
         this._userInput = userInput;
-
-        // initiate default values for the following properties
-        this.customizableProp = ["parentId",  "width", "height", "padding", "grid"];
-
-        this.parentId = undefined;
-        this.width = 1000;
-        this.height = 600;
         this.grid = {
             rows: d3.max(plots.map((x) => x.row)) + 1 || 1,
             columns: d3.max(plots.map((x) => x.column)) + 1 || 1,
@@ -79,13 +103,6 @@ export class Lattice {
             plotSizes: undefined
         };
         this.title = undefined;
-        this.padding={
-            top:LATTICE_DEFAULT_PADDING, 
-            right:LATTICE_DEFAULT_PADDING, 
-            bottom:LATTICE_DEFAULT_PADDING, 
-            left:LATTICE_DEFAULT_PADDING
-        };
-
         this._changeSettings(userInput);
 
         // computed values
@@ -93,23 +110,19 @@ export class Lattice {
         this.innerHeight = this.height - this.padding.top - this.padding.bottom;
 
         this.plots = plots.map(d => {
-            let plotConfig = {
-                width: this.innerWidth * this.gridInternal.plotSizes[d.row][d.column].colSize,
-                height: this.innerHeight * this.gridInternal.plotSizes[d.row][d.column].rowSize,
-            };
-            plotConfig = Object.assign({}, plotConfig, d);
-            const plot = new Plot(d.data, d.type, rootId, plotConfig);
-            plot.row = d.row;
-            plot.column = d.column;
-            plot.rowStart = this.gridInternal.plotSizes[d.row][d.column].rowStart;
-            plot.colStart = this.gridInternal.plotSizes[d.row][d.column].colStart;
+            let config = d.config===undefined?d:d.config;
+            config.width = this.innerWidth * this.gridInternal.plotSizes[d.row][d.column].colSize;
+            config.height = this.innerHeight * this.gridInternal.plotSizes[d.row][d.column].rowSize;
+            const plot = new PlotInLattice(d.row, d.column, d.data, d.type, this.rootId, config);
+
+            // computed property
+            // plot.rowStart = this.gridInternal.plotSizes[d.row][d.column].rowStart; // side effect: undocumented plot properties
+            // plot.colStart = this.gridInternal.plotSizes[d.row][d.column].colStart;
             return plot;
         }, this);
         this.xScale = d3.scaleLinear().domain([0, 1]).range([0, this.innerWidth]);
         this.yScale = d3.scaleLinear().domain([0, 1]).range([0, this.innerHeight]);
-    }
-
-    
+    }  
 
     /**
      * @public
@@ -141,8 +154,8 @@ export class Lattice {
             .attr("class", "ljs--lattice-plot")
             .attr("id", (d) => `${svgId}-${d.row}-${d.column}`) // this needs to be the same as the parentId given below
             .attr("transform", (d) => {
-                let x = this.xScale(d.colStart);
-                let y = this.yScale(d.rowStart);
+                let x = this.xScale(d.colStart(this.gridInternal.plotSizes));
+                let y = this.yScale(d.rowStart(this.gridInternal.plotSizes));
                 return `translate(${x}, ${y})`;
             })
             .each((d) =>{
@@ -267,13 +280,13 @@ export class Lattice {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Lattice.html">Lattice</a></li><li><a href="Plot.html">Plot</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-LatticeLib.html">LatticeLib</a></li></ul><h3>Classes</h3><ul><li><a href="Axis.html">Axis</a></li><li><a href="AxisKernel.html">AxisKernel</a></li><li><a href="Distribution.html">Distribution</a></li><li><a href="Hierarchy.html">Hierarchy</a></li><li><a href="Lattice.html">Lattice</a></li><li><a href="LatticeKernel.html">LatticeKernel</a></li><li><a href="Plot.html">Plot</a></li><li><a href="PlotInLattice.html">PlotInLattice</a></li><li><a href="PlotKernel.html">PlotKernel</a></li><li><a href="Point2D.html">Point2D</a></li></ul><h3><a href="global.html">Global</a></h3>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 01 2021 18:06:57 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Thu Apr 22 2021 07:48:06 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
