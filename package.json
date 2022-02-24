@@ -1,6 +1,6 @@
 {
   "name": "lattice-viz",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A JavaScript library for creating coordinated multivariate visualizations for scientific data",
   "main": "src/libs/LatticeLib.js",
   "scripts": {
