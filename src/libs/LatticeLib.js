@@ -34,8 +34,8 @@ export function plot(data, type, id, config={}){
  * @param {LatticeKernel|Object} [config] a config object with any attribute from LatticeKernel
  * @public
  */
-export function lattice(plots, id, config={}){
-    const lattice = new Lattice(plots, id, config);
+export function lattice(plots, id, config={}, padding={}){
+    const lattice = new Lattice(plots, id, config, padding);
     lattice.render();
     return lattice;
 }
