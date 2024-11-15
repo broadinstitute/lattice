@@ -4,7 +4,7 @@ import * as BarPlot from "../views/BarPlot";
 import * as BarcodePlot from "../views/BarcodePlot";
 import * as ColumnPlot from "../views/ColumnPlot";
 import * as Heatmap from "../views/Heatmap";
-import * as Lineplot from "../views/Lineplot";
+import * as Lineplot from "../views/LinePlot";
 import * as ScatterPlot from "../views/ScatterPlot";
 import * as StackedBarPlot from "../views/StackedBarPlot";
 import * as StackedColumnPlot from "../views/StackedColumnPlot";
