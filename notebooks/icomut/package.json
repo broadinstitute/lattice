@@ -2,12 +2,12 @@
   "name": "icomut",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack-dev-server --config webpack.config.dev.js",
-    "build": "webpack --mode production --config webpack.config.js",
-    "umd-build": "webpack --mode production --config webpack.config.umd.js",
+    "serve": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "eslint": "eslint --fix ../../src"
   },
   "keywords": [],
@@ -17,14 +17,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "css-loader": "^4.3.0",
-    "eslint-loader": "^4.0.2",
-    "mini-css-extract-plugin": "^0.11.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "vite": "^5.4.0"
   },
   "dependencies": {
     "eslint": "^6.8.0"
