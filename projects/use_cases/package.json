@@ -2,14 +2,15 @@
   "name": "lattice-demo",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production --config webpack.config.lattice-lib.js; bash copy.sh",
-    "serve": "webpack-dev-server --config webpack.config.lattice-lib.js",
-    "random-prod": "webpack --mode production --config webpack.config.random-generator.js; bash copy.sh",
-    "random-dev": "webpack-dev-server --config webpack.config.random-generator.js",
-    "eslint": "eslint --fix ../../src",
-    "copy": "bash copy.sh"
+    "build": "vite build",
+    "serve": "vite",
+    "preview": "vite preview",
+    "random-prod": "vite build --config vite.config.random-generator.js",
+    "random-dev": "vite --config vite.config.random-generator.js",
+    "eslint": "eslint --fix ../../src"
   },
   "keywords": [],
   "author": {
@@ -18,15 +19,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "copy-webpack-plugin": "^6.4.1",
-    "css-loader": "^4.3.0",
-    "eslint-loader": "^4.0.2",
-    "mini-css-extract-plugin": "^0.11.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "vite": "^5.4.0"
   },
   "dependencies": {
     "eslint": "^6.8.0"
