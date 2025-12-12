@@ -256,10 +256,10 @@ export class Plot extends PlotKernel {
     const seriesInData = new Set(); // for error checking purposes
 
     // grouping data on dimension we're creating stacks for
-    const nestedData = d3
-      .nest()
-      .key((d) => d[stackAttr])
-      .entries(this.data);
+    const nestedData = Array.from(
+      d3.group(this.data, (d) => d[stackAttr]),
+      ([key, values]) => ({ key, values })
+    );
 
     // creating single object for each stack we want to create
     // attributes in each obj: y, every series that exists for that stack
@@ -447,14 +447,14 @@ export class Plot extends PlotKernel {
 
     // setting the tooltip
     if (dataDomElements !== undefined && this.tooltip.enabled) {
-      dataDomElements.on("mouseover", (d, i, nodes) => {
-        const el = d3.select(nodes[i]);
+      dataDomElements.on("mouseover", (event, d) => {
+        const el = d3.select(event.currentTarget);
         el.classed("ljs--mouseover", true);
-        this.tooltipObj.show(this.tooltip.formatter(d));
+        this.tooltipObj.show(this.tooltip.formatter(d), event);
       });
 
-      dataDomElements.on("mouseout", (d, i, nodes) => {
-        const el = d3.select(nodes[i]);
+      dataDomElements.on("mouseout", (event) => {
+        const el = d3.select(event.currentTarget);
         el.classed("ljs--mouseover", false);
         this.tooltipObj.hide();
       });

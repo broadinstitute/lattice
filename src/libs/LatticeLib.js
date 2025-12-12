@@ -5,7 +5,6 @@ import * as d3 from "d3";
 
 export const utils = {
   json: d3.json,
-  nest: d3.nest,
 };
 
 /**

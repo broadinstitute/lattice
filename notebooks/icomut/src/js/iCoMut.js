@@ -3,7 +3,7 @@ import "../css/icomut.css";
 import { Lattice } from "../../../../src/controllers/Lattice";
 import { getDataColumns } from "./coMutDataParser";
 import { Panel } from "./Panel";
-import { json, select, selectAll, event } from "d3";
+import { json, select, selectAll } from "d3";
 
 const configFile = "/src/config/config.json";
 // const configFile = "/src/config/config_2.json";
@@ -271,14 +271,14 @@ export default class CoMutationPlot {
       const panel = this.panels.filter((p) => p.row == plot.row)[0];
       if (yAxisTitle) {
         const label = select(`#${plot.parentId} .${yAxisLabel}`);
-        label.on("click", () => {
+        label.on("click", (event) => {
           const resetSort = !event.altKey;
           const searchKeyword = panel.searchKeyword;
           updateSort(searchKeyword, resetSort);
         });
       } else {
         const labels = selectAll(`#${plot.parentId} .${yAxis} text`);
-        labels.on("click", (d) => {
+        labels.on("click", (event, d) => {
           const resetSort = !event.altKey;
           const searchKeyword = `${panel.searchKeyword}${d}`;
           updateSort(searchKeyword, resetSort);
