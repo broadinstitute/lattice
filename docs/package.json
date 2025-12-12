@@ -14,6 +14,9 @@
     "email": "pattern-dev@broadinstitute.org"
   },
   "license": "ISC",
+  "dependencies": {
+    "d3": "^7.9.0"
+  },
   "devDependencies": {
     "vite": "^5.4.0"
   }

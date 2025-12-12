@@ -42,7 +42,7 @@
   },
   "homepage": "https://lattice.broadinstitute.org/",
   "dependencies": {
-    "d3": "^5.15.0"
+    "d3": "^7.9.0"
   },
   "devDependencies": {
     "@storybook/blocks": "^8.6.14",

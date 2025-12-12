@@ -28,28 +28,25 @@ const createDataSeries = (seriesColumns, panel) => {
  * @param {Array} data - Categorical heatmap main panel plot data. Generated from parseCategoricalHeatmapData
  */
 export const getPanelCountData = (data) => {
-  const countsByGroup = d3
-    .nest()
-    .key((d) => d.y)
-    .key((d) => d.c)
-    .rollup((v) => v.length)
-    .entries(data);
-
   const counts = {};
-  countsByGroup.forEach((g) => {
-    const y = g.key;
+
+  const countsByGroup = d3.rollup(
+    data,
+    (v) => v.length,
+    (d) => d.y,
+    (d) => d.c
+  );
+
+  for (const [y, countByC] of countsByGroup) {
     counts[y] = {};
-    g.values.forEach((k) => {
-      const c = k.key;
-      const count = k.value;
+    let total = 0;
+    for (const [c, count] of countByC) {
       counts[y][c] = count;
-      if (counts[y]["total"] === undefined) {
-        counts[y]["total"] = count;
-      } else {
-        counts[y]["total"] += count;
-      }
-    });
-  });
+      total += count;
+    }
+    counts[y]["total"] = total;
+  }
+
   return counts;
 };
 

@@ -1,4 +1,5 @@
 import * as LatticeLib from "../../../../src/libs/LatticeLib.js";
+import { group } from "d3";
 
 export function initCovidMap() {
   const rootId = "covid-plot";
@@ -41,11 +42,10 @@ function createPromises(files) {
 function createPlotData(data) {
   // COVID Tracking Project data has more data than just the 50 states
   // - filtering the data down to just what's in our coordinates data
-  const casesByState = LatticeLib.utils
-    .nest()
-    .key((d) => d.state)
-    .entries(data.cases)
-    .filter((d) => d.key in data.coordinates);
+  const casesByState = Array.from(
+    group(data.cases, (d) => d.state),
+    ([key, values]) => ({ key, values })
+  ).filter((d) => d.key in data.coordinates);
 
   const allStatesData = casesByState.map((d) => {
     const values = d.values.filter((d) => d.positiveIncrease >= 0);

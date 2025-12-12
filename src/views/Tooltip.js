@@ -41,12 +41,12 @@ export default class Tooltip {
    * Calculates new positioning for the tooltip based off the last event (mouseover) that happened.
    * If the calculated tooltip height/width will go off the screen or overlaps with the cursor location, an adjustment occurs.
    */
-  _move() {
+  _move(event) {
     const EDGE_ADJUSTMENT = 10;
     const body = d3.select("body").node();
     const tooltip = this.tooltip.node();
-    let x = d3.event.pageX;
-    let y = d3.event.pageY;
+    let x = event.pageX;
+    let y = event.pageY;
 
     if (this.verbose) {
       console.log(x);
@@ -72,21 +72,21 @@ export default class Tooltip {
 
     // mouse event + tooltip display collision check
     if (
-      x <= d3.event.pageX &&
-      d3.event.pageX <= x + tooltip.scrollWidth &&
-      y <= d3.event.pageY &&
-      d3.event.pageY <= y + tooltip.scrollHeight
+      x <= event.pageX &&
+      event.pageX <= x + tooltip.scrollWidth &&
+      y <= event.pageY &&
+      event.pageY <= y + tooltip.scrollHeight
     ) {
-      x = d3.event.pageX - tooltip.scrollWidth - EDGE_ADJUSTMENT;
+      x = event.pageX - tooltip.scrollWidth - EDGE_ADJUSTMENT;
     }
 
     this.tooltip.style("left", `${x}px`).style("top", `${y}px`);
   }
 
-  show(info) {
+  show(info, event) {
     if (this.verbose) console.log(info);
     this.tooltip.html(info);
-    this._move();
+    this._move(event);
     this.tooltip
       .style("display", "inline")
       .transition()
