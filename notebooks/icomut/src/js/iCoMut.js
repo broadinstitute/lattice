@@ -5,7 +5,7 @@ import { getDataColumns } from "./coMutDataParser";
 import { Panel } from "./Panel";
 import { json, select, selectAll } from "d3";
 
-const configFile = "/src/config/config.json";
+const configFile = "/config/comut-config.json";
 // const configFile = "/src/config/config_2.json";
 const testFile = "/data/ACC-TP.coMut_table.json";
 // const testFile = "/data/SARC-TP.coMut_table.json";
