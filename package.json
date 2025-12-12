@@ -4,10 +4,22 @@
   "description": "A JavaScript library for creating coordinated multivariate visualizations for scientific data",
   "main": "src/libs/LatticeLib.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "jsdoc -d projects/use_cases/jsdocs src/controllers/*.js src/libs/LatticeLib.js src/models/*.js src/utils/constants.js src/views/Axis.js",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "site:docs:dev": "npm --prefix docs run serve",
+    "site:docs:build": "npm --prefix docs run build",
+    "site:docs:preview": "npm --prefix docs run preview",
+    "demo:use-cases:dev": "npm --prefix projects/use_cases run serve",
+    "demo:use-cases:build": "npm --prefix projects/use_cases run build",
+    "demo:use-cases:preview": "npm --prefix projects/use_cases run preview",
+    "demo:use-cases:random:dev": "npm --prefix projects/use_cases run random-dev",
+    "demo:use-cases:random:build": "npm --prefix projects/use_cases run random-prod",
+    "demo:use-cases:lint-fix": "npm --prefix projects/use_cases run eslint",
+    "demo:icomut:dev": "npm --prefix notebooks/icomut run serve",
+    "demo:icomut:build": "npm --prefix notebooks/icomut run build",
+    "demo:icomut:preview": "npm --prefix notebooks/icomut run preview",
+    "demo:icomut:lint-fix": "npm --prefix notebooks/icomut run eslint"
   },
   "repository": {
     "type": "git",
