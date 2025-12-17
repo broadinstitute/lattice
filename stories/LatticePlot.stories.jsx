@@ -228,10 +228,10 @@ export const ColumnPlot = {
   render: Template,
   args: {
     data: [
-      { x: "A", y: 10 },
-      { x: "B", y: 25 },
-      { x: "C", y: 15 },
-      { x: "D", y: 30 },
+      { x: "A", y: 10, c: "#4c6ef5" },
+      { x: "B", y: 25, c: "#15aabf" },
+      { x: "C", y: 15, c: "#12b886" },
+      { x: "D", y: 30, c: "#fab005" },
     ],
     type: PlotType.COLUMNPLOT,
     config: {
@@ -251,10 +251,10 @@ export const ColumnPlotRotatedXTicks = {
   render: Template,
   args: {
     data: [
-      { x: "Category A", y: 10 },
-      { x: "Category B", y: 25 },
-      { x: "Category C", y: 15 },
-      { x: "Category D", y: 30 },
+      { x: "Category A", y: 10, c: "#4c6ef5" },
+      { x: "Category B", y: 25, c: "#15aabf" },
+      { x: "Category C", y: 15, c: "#12b886" },
+      { x: "Category D", y: 30, c: "#fab005" },
     ],
     type: PlotType.COLUMNPLOT,
     config: {
