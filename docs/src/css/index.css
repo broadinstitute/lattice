@@ -43,6 +43,9 @@ header {
   /* position: fixed; */
   position: fixed;
   background-color: white;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .hscroll {
@@ -93,6 +96,10 @@ footer {
   font-weight: 300;
   color: var(--lattice-blue-dark);
   margin: 0px;
+}
+
+header > #storybook-link {
+  margin-left: auto;
 }
 
 small.light-grey {

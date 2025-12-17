@@ -31,6 +31,8 @@
             style="margin-right: 5px" /></a
         >Lattice.js
       </span>
+
+      <a id="storybook-link" href="/storybook/">Storybook</a>
     </header>
     <main class="centered max-width">
       <section class="content">
@@ -199,6 +201,16 @@
     <script>
       document.getElementById("copyright-year").textContent =
         new Date().getFullYear();
+
+      const storybookLink = document.getElementById("storybook-link");
+      if (storybookLink) {
+        const isLocalhost = ["localhost", "127.0.0.1", "::1"].includes(
+          window.location.hostname
+        );
+        storybookLink.href = isLocalhost
+          ? "http://localhost:6006/"
+          : "/storybook/";
+      }
     </script>
   </body>
 </html>

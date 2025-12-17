@@ -6,8 +6,12 @@ on:
       - main
     paths:
       - "docs/**"
+      - ".storybook/**"
+      - "stories/**"
       - "src/**"
       - "notebooks/**"
+      - "package.json"
+      - "package-lock.json"
       - ".github/workflows/deploy-docs-to-pages.yml"
   workflow_dispatch:
 
@@ -30,7 +34,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: |
             package-lock.json
@@ -46,6 +50,9 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: docs
+
+      - name: Build Storybook
+        run: npm run build-storybook -- --output-dir docs/dist/storybook
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
