@@ -37,6 +37,27 @@ const lineDataTemporal = [
   { x: new Date(2024, 4, 1), y: 18 },
 ];
 
+const areaDataTemporal = [
+  { x: new Date(2024, 0, 1), y: 4 },
+  { x: new Date(2024, 1, 1), y: 9 },
+  { x: new Date(2024, 2, 1), y: 6 },
+  { x: new Date(2024, 3, 1), y: 14 },
+  { x: new Date(2024, 4, 1), y: 11 },
+  { x: new Date(2024, 5, 1), y: 16 },
+];
+
+const barcodeData = [
+  { x: 1, y: 0 },
+  { x: 1.6, y: 0 },
+  { x: 2.1, y: 0 },
+  { x: 2.9, y: 0 },
+  { x: 3.2, y: 0 },
+  { x: 3.8, y: 0 },
+  { x: 4.4, y: 0 },
+  { x: 5.1, y: 0 },
+  { x: 5.7, y: 0 },
+];
+
 const stackedColumnData = [
   { x: "A", y: 10, series: "Alpha" },
   { x: "A", y: 6, series: "Beta" },
@@ -65,7 +86,7 @@ const heatmapData = [
 ];
 
 export default {
-  title: "Lattice/LatticePlot (React)",
+  title: "Lattice/LatticePlot",
   component: LatticePlot,
   argTypes: {
     type: {
@@ -96,10 +117,46 @@ export const Scatterplot = {
     config: {
       width: 400,
       height: 300,
-      title: "Scatterplot via LatticePlot",
+      title: "Scatterplot",
       axis: {
         x: { title: "X Value" },
         y: { title: "Y Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const AreaPlot = {
+  render: Template,
+  args: {
+    data: areaDataTemporal,
+    type: PlotType.AREAPLOT,
+    config: {
+      width: 500,
+      height: 300,
+      title: "Area Plot (Temporal X)",
+      axis: {
+        x: { title: "Date" },
+        y: { title: "Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const BarcodePlot = {
+  render: Template,
+  args: {
+    data: barcodeData,
+    type: PlotType.BARCODEPLOT,
+    config: {
+      width: 500,
+      height: 140,
+      title: "Barcode Plot",
+      axis: {
+        x: { title: "Position" },
+        y: { display: false },
       },
     },
     style: defaultStyle,
@@ -154,7 +211,7 @@ export const DonutPlot = {
     config: {
       width: 300,
       height: 300,
-      title: "Donut via LatticePlot",
+      title: "Donut",
       showLabels: true,
       innerRadiusRatio: 0.6,
       categoryAccessor: (d) => d.category,
@@ -180,7 +237,7 @@ export const ColumnPlot = {
     config: {
       width: 400,
       height: 300,
-      title: "Column Plot via LatticePlot",
+      title: "Column Plot",
       axis: {
         x: { title: "Category" },
         y: { title: "Value" },
