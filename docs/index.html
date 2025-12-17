@@ -34,7 +34,7 @@
     </header>
     <main class="centered max-width">
       <section class="content">
-        <p>
+        <p class="sub-title">
           Lattice.js is a JavaScript library for creating coordinated
           multivariate visualizations for sciences. At its core, Lattice
           champions a 2D grid-based design approach, which offers an intuitive
@@ -187,7 +187,7 @@
         </div>
         <div class="push">
           <small class="light-grey">
-            &copy;2021
+            &copy;<span id="copyright-year"></span>
             <a href="https://broadinstitute.org/"
               >Broad Institute. All rights reserved.</a
             >
@@ -195,5 +195,10 @@
         </div>
       </section>
     </footer>
+
+    <script>
+      document.getElementById("copyright-year").textContent =
+        new Date().getFullYear();
+    </script>
   </body>
 </html>
