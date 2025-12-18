@@ -58,6 +58,7 @@ export function getLatticeOptions(lattice = undefined) {
 }
 
 export { LatticePlot } from "../components/LatticePlot";
+export { LatticeGrid } from "../components/LatticeGrid";
 
 export { Plot, Lattice };
 
