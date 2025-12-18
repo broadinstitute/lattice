@@ -1,7 +1,7 @@
 import React from "react";
 import { LatticePlot } from "../src/components/LatticePlot";
 import * as d3 from "d3";
-import { PlotOrientation, PlotType } from "../src/utils/constants";
+import { PlotOrientation, PlotType, ScaleType } from "../src/utils/constants";
 
 const Template = (args) => <LatticePlot {...args} />;
 const defaultStyle = { border: "1px solid #eee" };
@@ -285,6 +285,52 @@ export const LinePlotTemporalX = {
       },
     },
     style: defaultStyle,
+  },
+};
+
+export const InlineSparkline = {
+  render: () => {
+    const data = Array.from({ length: 24 }, (_, i) => ({
+      x: i,
+      y: 10 + Math.sin(i / 3) * 2 + (i % 5) * 0.15,
+    }));
+
+    return (
+      <div style={{ fontSize: 14, lineHeight: "20px", padding: 16 }}>
+        CPU usage{" "}
+        <LatticePlot
+          data={data}
+          type={PlotType.LINEPLOT}
+          config={{
+            width: 120,
+            height: 24,
+            padding: { top: 2, right: 2, bottom: 2, left: 2 },
+            tooltip: { enabled: false },
+            axis: {
+              x: {
+                scaleType: ScaleType.LINEAR,
+                hideAxis: true,
+                hideTicks: true,
+                hideLabels: true,
+                hideTitle: true,
+              },
+              y: {
+                hideAxis: true,
+                hideTicks: true,
+                hideLabels: true,
+                hideTitle: true,
+              },
+            },
+          }}
+          style={{
+            display: "inline-block",
+            verticalAlign: "middle",
+            margin: "0 6px",
+          }}
+        />
+        last 24h
+      </div>
+    );
   },
 };
 
