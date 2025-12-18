@@ -139,6 +139,70 @@ export const TwoByTwo = {
   },
 };
 
+export const CustomRowAndColumnSizes = {
+  render: Template,
+  args: {
+    plots: [
+      {
+        row: 0,
+        column: 0,
+        data: scatterData,
+        type: PlotType.SCATTERPLOT,
+        config: {
+          title: "Narrow Cell (0,0)",
+          axis: { x: { title: "X" }, y: { title: "Y" } },
+        },
+      },
+      {
+        row: 0,
+        column: 1,
+        data: lineDataTemporal,
+        type: PlotType.LINEPLOT,
+        config: {
+          title: "Big Cell (0,1)",
+          axis: { x: { title: "Date" }, y: { title: "Value" } },
+        },
+      },
+      {
+        row: 1,
+        column: 0,
+        data: barcodeData,
+        type: PlotType.BARCODEPLOT,
+        config: {
+          title: "Small Cell (1,0)",
+          axis: { x: { title: "Position" }, y: { display: false } },
+        },
+      },
+      {
+        row: 1,
+        column: 1,
+        data: columnData,
+        type: PlotType.COLUMNPLOT,
+        config: {
+          title: "Wide Cell (1,1)",
+          axis: { x: { title: "Category" }, y: { title: "Value" } },
+        },
+      },
+    ],
+    config: {
+      width: 900,
+      height: 550,
+      padding: { top: 20, right: 20, bottom: 20, left: 20 },
+      grid: {
+        rowSizes: [
+          { row: 0, size: 0.65 },
+          { row: 1, size: 0.35 },
+        ],
+        columnSizes: [
+          { column: 0, size: 0.3 },
+          { column: 1, size: 0.7 },
+        ],
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
 export const LineSmallMultiples = {
   render: Template,
   args: {
