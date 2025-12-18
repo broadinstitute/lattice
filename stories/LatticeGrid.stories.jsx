@@ -203,6 +203,76 @@ export const CustomRowAndColumnSizes = {
   },
 };
 
+export const SparseGrid = {
+  render: Template,
+  args: {
+    plots: [
+      {
+        row: 0,
+        column: 0,
+        data: makeTemporalLineData(2, 24),
+        type: PlotType.AREAPLOT,
+        config: {
+          title: "Area",
+          axis: {
+            x: { hideLabels: true, hideTitle: true },
+            y: { hideLabels: true, hideTitle: true },
+          },
+        },
+      },
+      {
+        row: 0,
+        column: 5,
+        data: barcodeData,
+        type: PlotType.BARCODEPLOT,
+        config: {
+          title: "Barcode",
+          axis: {
+            x: { hideLabels: true, hideTitle: true },
+            y: { display: false },
+          },
+        },
+      },
+      {
+        row: 2,
+        column: 2,
+        data: scatterData,
+        type: PlotType.SCATTERPLOT,
+        config: {
+          title: "Scatter",
+          axis: {
+            x: { hideLabels: true, hideTitle: true },
+            y: { hideLabels: true, hideTitle: true },
+          },
+        },
+      },
+      {
+        row: 4,
+        column: 3,
+        data: columnData,
+        type: PlotType.COLUMNPLOT,
+        config: {
+          title: "Column",
+          axis: {
+            x: { hideLabels: true, hideTitle: true },
+            y: { hideLabels: true, hideTitle: true },
+          },
+        },
+      },
+    ],
+    config: {
+      width: 900,
+      height: 600,
+      padding: { top: 20, right: 20, bottom: 20, left: 20 },
+      grid: {
+        rows: 5,
+        columns: 6,
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
 export const LineSmallMultiples = {
   render: Template,
   args: {
