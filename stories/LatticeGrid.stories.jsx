@@ -139,6 +139,101 @@ export const TwoByTwo = {
   },
 };
 
+export const BeforeAfterSmallMultiples = {
+  render: Template,
+  args: {
+    plots: (() => {
+      const makeTemporalLineData = (seed = 0, points = 18, delta = 0) => {
+        const start = new Date(2024, 0, 1);
+        const rng = d3.randomLcg(seed + 1);
+        const noise = d3.randomNormal.source(rng)(0, 0.35);
+        const phase = ((seed % 97) / 97) * Math.PI * 2;
+        const amp1 = 3.0 + (seed % 7) * 0.2;
+        const amp2 = 1.2 + (seed % 5) * 0.15;
+        const trend = ((seed % 3) - 1) * 0.12;
+        const baseline = 10 + (seed % 10) * 0.45 + delta;
+
+        return Array.from({ length: points }, (_, i) => {
+          const x = new Date(start.getFullYear(), start.getMonth() + i, 1);
+          const t = points === 1 ? 0 : i / (points - 1);
+          const w1 = Math.sin(t * Math.PI * 2 + phase);
+          const w2 = Math.sin(t * Math.PI * 6 + phase * 0.7);
+          const y = baseline + trend * i + amp1 * w1 + amp2 * w2 + noise();
+          return { x, y };
+        });
+      };
+
+      const cohorts = [
+        { name: "Cohort A", seed: 11, delta: -0.6 },
+        { name: "Cohort B", seed: 12, delta: +0.8 },
+        { name: "Cohort C", seed: 13, delta: -1.1 },
+        { name: "Cohort D", seed: 14, delta: +1.5 },
+        { name: "Cohort E", seed: 15, delta: -0.2 },
+        { name: "Cohort F", seed: 16, delta: +0.4 },
+      ];
+
+      const plots = [];
+      cohorts.forEach((c, row) => {
+        const beforeColor = "#4c6ef5";
+        const afterColor = "#fa5252";
+
+        plots.push({
+          row,
+          column: 0,
+          data: makeTemporalLineData(c.seed, 18, 0),
+          type: PlotType.LINEPLOT,
+          config: {
+            animate: false,
+            color: beforeColor,
+            title: row === 0 ? "Before" : undefined,
+            padding: { top: 6, right: 6, bottom: 6, left: 34 },
+            tooltip: { enabled: true },
+            axis: {
+              x: { display: false },
+              y: { hideTitle: true, ticks: 2 },
+            },
+          },
+        });
+
+        plots.push({
+          row,
+          column: 1,
+          data: makeTemporalLineData(c.seed, 18, c.delta),
+          type: PlotType.LINEPLOT,
+          config: {
+            animate: false,
+            color: afterColor,
+            title: row === 0 ? "After" : undefined,
+            padding: { top: 6, right: 6, bottom: 6, left: 10 },
+            tooltip: { enabled: true },
+            axis: {
+              x: { display: false },
+              y: { display: false },
+            },
+          },
+        });
+      });
+      return plots;
+    })(),
+    config: {
+      animate: false,
+      width: 500,
+      height: 400,
+      padding: { top: 24, right: 12, bottom: 12, left: 12 },
+      grid: {
+        rows: 6,
+        columns: 2,
+        rowSizes: Array.from({ length: 6 }, (_, row) => ({ row, size: 1 / 6 })),
+        columnSizes: [
+          { column: 0, size: 0.5 },
+          { column: 1, size: 0.5 },
+        ],
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
 export const CustomRowAndColumnSizes = {
   render: Template,
   args: {
