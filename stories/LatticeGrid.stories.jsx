@@ -1,6 +1,7 @@
 import React from "react";
 import { LatticeGrid } from "../src/components/LatticeGrid";
 import { PlotType } from "../src/utils/constants";
+import * as d3 from "d3";
 
 const Template = (args) => <LatticeGrid {...args} />;
 const defaultStyle = { border: "1px solid #eee" };
@@ -39,6 +40,27 @@ const barcodeData = [
   { x: 5.1, y: 0 },
   { x: 5.7, y: 0 },
 ];
+
+const makeTemporalLineData = (seed = 0, points = 12) => {
+  const start = new Date(2024, 0, 1);
+  const rng = d3.randomLcg(seed + 1);
+  const noise = d3.randomNormal.source(rng)(0, 0.4);
+
+  const phase = ((seed % 97) / 97) * Math.PI * 2;
+  const amp1 = 3.5 + (seed % 7) * 0.25;
+  const amp2 = 1.4 + (seed % 5) * 0.2;
+  const trend = ((seed % 3) - 1) * 0.15;
+  const baseline = 10 + (seed % 10) * 0.6;
+
+  return Array.from({ length: points }, (_, i) => {
+    const x = new Date(start.getFullYear(), start.getMonth() + i, 1);
+    const t = points === 1 ? 0 : i / (points - 1);
+    const w1 = Math.sin(t * Math.PI * 2 + phase);
+    const w2 = Math.sin(t * Math.PI * 6 + phase * 0.7);
+    const y = baseline + trend * i + amp1 * w1 + amp2 * w2 + noise();
+    return { x, y };
+  });
+};
 
 export default {
   title: "Lattice/LatticeGrid",
@@ -111,6 +133,56 @@ export const TwoByTwo = {
       grid: {
         rows: 2,
         columns: 2,
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const LineSmallMultiples = {
+  render: Template,
+  args: {
+    plots: (() => {
+      const rows = 15;
+      const columns = 10;
+      const plots = [];
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++) {
+          const seed = row * columns + column;
+          const showYAxis = true;
+          const xT = columns === 1 ? 0 : column / (columns - 1);
+          const yT = rows === 1 ? 0 : row / (rows - 1);
+          const color = d3.hsl(360 * xT, 0.9, 0.25 + 0.5 * yT).formatHex();
+          plots.push({
+            row,
+            column,
+            data: makeTemporalLineData(seed),
+            type: PlotType.LINEPLOT,
+            config: {
+              animate: false,
+              color,
+              padding: { top: 2, right: 2, bottom: 2, left: 28 },
+              tooltip: { enabled: true },
+              axis: {
+                x: { display: false },
+                y: showYAxis
+                  ? { hideTitle: true, ticks: 2 }
+                  : { display: false },
+              },
+            },
+          });
+        }
+      }
+      return plots;
+    })(),
+    config: {
+      animate: false,
+      width: 600,
+      height: 400,
+      padding: { top: 10, right: 10, bottom: 10, left: 10 },
+      grid: {
+        rows: 15,
+        columns: 10,
       },
     },
     style: defaultStyle,

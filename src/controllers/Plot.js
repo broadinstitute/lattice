@@ -23,6 +23,7 @@ class PlotKernel {
    * @property {String} parentId parent SVG ID
    * @property {Number} width
    * @property {Number} height
+   * @property {Boolean} animate enable/disable transitions/animations
    * @property {PlotOrientation} orientation
    * @property {String} title plot title
    * @property {PlotPadding} padding plot padding object
@@ -36,6 +37,9 @@ class PlotKernel {
 
     this.width = 300;
     this.height = 300;
+
+    this.animate = true;
+    this.color = undefined;
 
     this.orientation = PlotOrientation.POSITIVE;
     this.title = undefined;
@@ -441,7 +445,8 @@ export class Plot extends PlotKernel {
       g,
       data,
       this.scale,
-      this.orientation
+      this.orientation,
+      this
     );
     this.hasRendered = true;
 

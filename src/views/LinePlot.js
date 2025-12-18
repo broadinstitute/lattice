@@ -3,7 +3,10 @@ import * as d3 from "d3";
 /**
  * Draws a line plot
  */
-function render(svg, data, scale) {
+function render(svg, data, scale, orientation, plot) {
+  const animate =
+    plot && typeof plot.animate === "boolean" ? plot.animate : true;
+
   const transitionDuration = 500;
 
   const lineStart = d3
@@ -18,14 +21,24 @@ function render(svg, data, scale) {
     .x((d) => scale.x(d.x))
     .y((d) => scale.y(d.y));
 
-  svg
+  const path = svg
     .append("path")
     .datum(data)
-    .attr("class", "ljs--lineplot-path")
-    .attr("d", lineStart)
-    .transition()
-    .duration(transitionDuration)
-    .attr("d", line);
+    .attr("class", "ljs--lineplot-path");
+
+  if (plot && plot.color) {
+    path.style("stroke", plot.color);
+  }
+
+  if (animate) {
+    path
+      .attr("d", lineStart)
+      .transition()
+      .duration(transitionDuration)
+      .attr("d", line);
+  } else {
+    path.attr("d", line);
+  }
 
   const rects = svg
     .selectAll(".ljs--lineplot-rect")
