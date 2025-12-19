@@ -82,6 +82,7 @@ export default {
 };
 
 export const TwoByTwo = {
+  name: "Layouts/Two By Two",
   render: Template,
   args: {
     plots: [
@@ -140,6 +141,7 @@ export const TwoByTwo = {
 };
 
 export const BeforeAfterSmallMultiples = {
+  name: "Small Multiples/Before vs After",
   render: Template,
   args: {
     plots: (() => {
@@ -234,7 +236,59 @@ export const BeforeAfterSmallMultiples = {
   },
 };
 
+export const LineSmallMultiples = {
+  name: "Small Multiples/Line Grid",
+  render: Template,
+  args: {
+    plots: (() => {
+      const rows = 15;
+      const columns = 10;
+      const plots = [];
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++) {
+          const seed = row * columns + column;
+          const showYAxis = true;
+          const xT = columns === 1 ? 0 : column / (columns - 1);
+          const yT = rows === 1 ? 0 : row / (rows - 1);
+          const color = d3.hsl(360 * xT, 0.9, 0.25 + 0.5 * yT).formatHex();
+          plots.push({
+            row,
+            column,
+            data: makeTemporalLineData(seed),
+            type: PlotType.LINEPLOT,
+            config: {
+              animate: false,
+              color,
+              padding: { top: 2, right: 2, bottom: 2, left: 28 },
+              tooltip: { enabled: true },
+              axis: {
+                x: { display: false },
+                y: showYAxis
+                  ? { hideTitle: true, ticks: 2 }
+                  : { display: false },
+              },
+            },
+          });
+        }
+      }
+      return plots;
+    })(),
+    config: {
+      animate: false,
+      width: 600,
+      height: 400,
+      padding: { top: 10, right: 10, bottom: 10, left: 10 },
+      grid: {
+        rows: 15,
+        columns: 10,
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
 export const CustomRowAndColumnSizes = {
+  name: "Layouts/Custom Row + Column Sizes",
   render: Template,
   args: {
     plots: [
@@ -299,6 +353,7 @@ export const CustomRowAndColumnSizes = {
 };
 
 export const SparseGrid = {
+  name: "Layouts/Sparse Grid",
   render: Template,
   args: {
     plots: [
@@ -362,56 +417,6 @@ export const SparseGrid = {
       grid: {
         rows: 5,
         columns: 6,
-      },
-    },
-    style: defaultStyle,
-  },
-};
-
-export const LineSmallMultiples = {
-  render: Template,
-  args: {
-    plots: (() => {
-      const rows = 15;
-      const columns = 10;
-      const plots = [];
-      for (let row = 0; row < rows; row++) {
-        for (let column = 0; column < columns; column++) {
-          const seed = row * columns + column;
-          const showYAxis = true;
-          const xT = columns === 1 ? 0 : column / (columns - 1);
-          const yT = rows === 1 ? 0 : row / (rows - 1);
-          const color = d3.hsl(360 * xT, 0.9, 0.25 + 0.5 * yT).formatHex();
-          plots.push({
-            row,
-            column,
-            data: makeTemporalLineData(seed),
-            type: PlotType.LINEPLOT,
-            config: {
-              animate: false,
-              color,
-              padding: { top: 2, right: 2, bottom: 2, left: 28 },
-              tooltip: { enabled: true },
-              axis: {
-                x: { display: false },
-                y: showYAxis
-                  ? { hideTitle: true, ticks: 2 }
-                  : { display: false },
-              },
-            },
-          });
-        }
-      }
-      return plots;
-    })(),
-    config: {
-      animate: false,
-      width: 600,
-      height: 400,
-      padding: { top: 10, right: 10, bottom: 10, left: 10 },
-      grid: {
-        rows: 15,
-        columns: 10,
       },
     },
     style: defaultStyle,
