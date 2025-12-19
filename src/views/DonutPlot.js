@@ -32,7 +32,7 @@ function render(config) {
     svg = d3.select(`#${svgId}`);
   }
 
-  // Inner drawing area (Lattice already computes these for other plots)
+  // inner drawing area
   const innerWidth =
     config.innerWidth ??
     config.width - (config.padding.left + config.padding.right);
@@ -56,12 +56,12 @@ function render(config) {
   const valueAccessor = config.valueAccessor || ((d) => d.value);
   const data = config.data || [];
 
-  // Categories + colors
+  // categories + colors
   const categories = Array.from(new Set(data.map(categoryAccessor)));
   const colorScale =
     config.colorScale || d3.scaleOrdinal(categories, d3.schemeTableau10);
 
-  // Pie + arcs
+  // pie + arcs
   const pie = d3
     .pie()
     .sort(null)
@@ -76,7 +76,7 @@ function render(config) {
 
   const arcsData = pie(data);
 
-  // Visible slices
+  // visible slices
   const slices = g
     .selectAll(".ljs--donutplot-slice")
     .data(arcsData)
@@ -86,7 +86,7 @@ function render(config) {
     .attr("d", arc)
     .attr("fill", (d) => colorScale(categoryAccessor(d.data)));
 
-  // Optional labels
+  // optional labels
   if (config.showLabels) {
     const labelArc = d3
       .arc()
@@ -110,7 +110,7 @@ function render(config) {
       });
   }
 
-  // Optional title (mirrors lineplot pattern)
+  // optional title
   if (config.title) {
     svg
       .append("text")
@@ -121,7 +121,7 @@ function render(config) {
       .text(config.title);
   }
 
-  // Hit targets for interactivity (similar role as ljs--lineplot-rect)
+  // hit targets for interactivity
   const hitArcs = g
     .selectAll(".ljs--donutplot-hit")
     .data(arcsData)
@@ -132,7 +132,7 @@ function render(config) {
     .attr("fill", "none")
     .style("pointer-events", "all");
 
-  // Callers can attach mouse/touch events to hitArcs
+  // callers can attach mouse/touch events to hitArcs
   return hitArcs;
 }
 

@@ -2,65 +2,17 @@ import React from "react";
 import { LatticeGrid } from "../src/components/LatticeGrid";
 import { PlotType } from "../src/utils/constants";
 import * as d3 from "d3";
+import {
+  barcodeData,
+  columnData,
+  lineDataTemporal,
+  makeTemporalLineData,
+  makeTemporalLineDataWithDelta,
+  scatterData,
+} from "./fixtures/plotData";
 
 const Template = (args) => <LatticeGrid {...args} />;
 const defaultStyle = { border: "1px solid #eee" };
-
-const scatterData = [
-  { x: 1, y: 2 },
-  { x: 2, y: 4 },
-  { x: 3, y: 3 },
-  { x: 4, y: 7 },
-  { x: 5, y: 5 },
-];
-
-const lineDataTemporal = [
-  { x: new Date(2024, 0, 1), y: 10 },
-  { x: new Date(2024, 1, 1), y: 15 },
-  { x: new Date(2024, 2, 1), y: 12 },
-  { x: new Date(2024, 3, 1), y: 20 },
-  { x: new Date(2024, 4, 1), y: 18 },
-];
-
-const columnData = [
-  { x: "A", y: 10, c: "#4c6ef5" },
-  { x: "B", y: 25, c: "#15aabf" },
-  { x: "C", y: 15, c: "#12b886" },
-  { x: "D", y: 30, c: "#fab005" },
-];
-
-const barcodeData = [
-  { x: 1, y: 0 },
-  { x: 1.6, y: 0 },
-  { x: 2.1, y: 0 },
-  { x: 2.9, y: 0 },
-  { x: 3.2, y: 0 },
-  { x: 3.8, y: 0 },
-  { x: 4.4, y: 0 },
-  { x: 5.1, y: 0 },
-  { x: 5.7, y: 0 },
-];
-
-const makeTemporalLineData = (seed = 0, points = 12) => {
-  const start = new Date(2024, 0, 1);
-  const rng = d3.randomLcg(seed + 1);
-  const noise = d3.randomNormal.source(rng)(0, 0.4);
-
-  const phase = ((seed % 97) / 97) * Math.PI * 2;
-  const amp1 = 3.5 + (seed % 7) * 0.25;
-  const amp2 = 1.4 + (seed % 5) * 0.2;
-  const trend = ((seed % 3) - 1) * 0.15;
-  const baseline = 10 + (seed % 10) * 0.6;
-
-  return Array.from({ length: points }, (_, i) => {
-    const x = new Date(start.getFullYear(), start.getMonth() + i, 1);
-    const t = points === 1 ? 0 : i / (points - 1);
-    const w1 = Math.sin(t * Math.PI * 2 + phase);
-    const w2 = Math.sin(t * Math.PI * 6 + phase * 0.7);
-    const y = baseline + trend * i + amp1 * w1 + amp2 * w2 + noise();
-    return { x, y };
-  });
-};
 
 export default {
   title: "Lattice/LatticeGrid",
@@ -145,26 +97,6 @@ export const BeforeAfterSmallMultiples = {
   render: Template,
   args: {
     plots: (() => {
-      const makeTemporalLineData = (seed = 0, points = 18, delta = 0) => {
-        const start = new Date(2024, 0, 1);
-        const rng = d3.randomLcg(seed + 1);
-        const noise = d3.randomNormal.source(rng)(0, 0.35);
-        const phase = ((seed % 97) / 97) * Math.PI * 2;
-        const amp1 = 3.0 + (seed % 7) * 0.2;
-        const amp2 = 1.2 + (seed % 5) * 0.15;
-        const trend = ((seed % 3) - 1) * 0.12;
-        const baseline = 10 + (seed % 10) * 0.45 + delta;
-
-        return Array.from({ length: points }, (_, i) => {
-          const x = new Date(start.getFullYear(), start.getMonth() + i, 1);
-          const t = points === 1 ? 0 : i / (points - 1);
-          const w1 = Math.sin(t * Math.PI * 2 + phase);
-          const w2 = Math.sin(t * Math.PI * 6 + phase * 0.7);
-          const y = baseline + trend * i + amp1 * w1 + amp2 * w2 + noise();
-          return { x, y };
-        });
-      };
-
       const cohorts = [
         { name: "Cohort A", seed: 11, delta: -0.6 },
         { name: "Cohort B", seed: 12, delta: +0.8 },
@@ -182,7 +114,7 @@ export const BeforeAfterSmallMultiples = {
         plots.push({
           row,
           column: 0,
-          data: makeTemporalLineData(c.seed, 18, 0),
+          data: makeTemporalLineDataWithDelta(c.seed, 18, 0),
           type: PlotType.LINEPLOT,
           config: {
             animate: false,
@@ -200,7 +132,7 @@ export const BeforeAfterSmallMultiples = {
         plots.push({
           row,
           column: 1,
-          data: makeTemporalLineData(c.seed, 18, c.delta),
+          data: makeTemporalLineDataWithDelta(c.seed, 18, c.delta),
           type: PlotType.LINEPLOT,
           config: {
             animate: false,
