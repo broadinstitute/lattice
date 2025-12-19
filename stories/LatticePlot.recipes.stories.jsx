@@ -256,10 +256,7 @@ export const TableWithInlineMicroCharts = {
     };
 
     return (
-      <div style={{ padding: 16 }}>
-        <div style={{ fontSize: 13, color: "#555", marginBottom: 10 }}>
-          Inline micro-charts inside a table
-        </div>
+      <>
         <div
           style={{
             border: "1px solid #eee",
@@ -389,7 +386,7 @@ export const TableWithInlineMicroCharts = {
             </tbody>
           </table>
         </div>
-      </div>
+      </>
     );
   },
 };
