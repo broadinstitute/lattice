@@ -99,6 +99,27 @@ export const BarPlot = {
   },
 };
 
+export const BarPlotFullWidth = {
+  name: "Bar/Full Width (Auto)",
+  render: (args) => (
+    <div style={{ width: "100%", border: "1px solid #eee" }}>
+      <LatticePlot {...args} />
+    </div>
+  ),
+  args: {
+    data: barData,
+    type: PlotType.BARPLOT,
+    config: {
+      height: 300,
+      title: "Bar Plot (Full Width)",
+      axis: {
+        x: { title: "Value" },
+        y: { title: "Fruit" },
+      },
+    },
+  },
+};
+
 export const BarPlotNegative = {
   name: "Bar/Negative Orientation",
   render: Template,

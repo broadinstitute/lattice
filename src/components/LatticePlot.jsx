@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useId } from "react";
+import React, { useEffect, useRef, useId, useState, useMemo } from "react";
 import { Plot } from "../controllers/Plot";
 
 /**
@@ -15,15 +15,43 @@ export function LatticePlot({ data, type, config = {}, className, style }) {
   const containerRef = useRef(null);
   const plotRef = useRef(null);
   const containerId = useId().replace(/:/g, "-");
+  const autoWidth = config.width === undefined || config.width === "auto";
+  const [measuredWidth, setMeasuredWidth] = useState(null);
+
+  // full width
+  useEffect(() => {
+    if (!autoWidth || !containerRef.current) return;
+    let debounceTimer;
+    const ro = new ResizeObserver(([entry]) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const w = Math.floor(entry.contentRect.width);
+        if (w > 0) setMeasuredWidth(w);
+      }, 100);
+    });
+    ro.observe(containerRef.current);
+    return () => {
+      clearTimeout(debounceTimer);
+      ro.disconnect();
+    };
+  }, [autoWidth]);
+
+  // merge calculated width into config
+  const effectiveConfig = useMemo(() => {
+    if (!autoWidth) return config;
+    if (measuredWidth === null) return null;
+    const { width: _, ...rest } = config;
+    return { ...rest, width: measuredWidth };
+  }, [config, autoWidth, measuredWidth]);
 
   useEffect(() => {
-    if (!containerRef.current || !data || !type) return;
+    if (!containerRef.current || !data || !type || !effectiveConfig) return;
 
     // Clear previous render
     containerRef.current.innerHTML = "";
 
     // Create and render the plot
-    plotRef.current = new Plot(data, type, containerId, config);
+    plotRef.current = new Plot(data, type, containerId, effectiveConfig);
     plotRef.current.render();
 
     // Cleanup on unmount
@@ -33,7 +61,7 @@ export function LatticePlot({ data, type, config = {}, className, style }) {
       }
       plotRef.current = null;
     };
-  }, [data, type, config, containerId]);
+  }, [data, type, effectiveConfig, containerId]);
 
   return (
     <div

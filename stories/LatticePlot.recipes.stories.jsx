@@ -419,7 +419,6 @@ export const DivergingBarChart = {
     const padTop = 30;
     const padBottom = 40;
     const plotHeight = 260;
-    const plotWidth = 280;
     const labelWidth = 100;
     const innerHeight = plotHeight - padTop - padBottom;
 
@@ -439,14 +438,13 @@ export const DivergingBarChart = {
     };
 
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div style={{ display: "flex", alignItems: "flex-start" }}>
-          <div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <LatticePlot
               data={leftData}
               type={PlotType.BARPLOT}
               config={{
-                width: plotWidth,
                 height: plotHeight,
                 orientation: PlotOrientation.NEGATIVE,
                 padding: { top: padTop, right: 0, bottom: padBottom, left: 40 },
@@ -459,8 +457,8 @@ export const DivergingBarChart = {
             style={{
               position: "relative",
               width: labelWidth,
+              flexShrink: 0,
               height: plotHeight,
-              marginTop: 13,
             }}
           >
             {categories.map((cat, i) => (
@@ -483,12 +481,11 @@ export const DivergingBarChart = {
             ))}
           </div>
 
-          <div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <LatticePlot
               data={rightData}
               type={PlotType.BARPLOT}
               config={{
-                width: plotWidth,
                 height: plotHeight,
                 orientation: PlotOrientation.POSITIVE,
                 padding: { top: padTop, right: 40, bottom: padBottom, left: 0 },
