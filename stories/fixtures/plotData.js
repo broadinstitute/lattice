@@ -79,6 +79,14 @@ export const heatmapData = [
   { x: "C", y: "Row 3", c: 0.6 },
 ];
 
+export const barData = [
+  { x: 30, y: "Apples", c: "#4c6ef5" },
+  { x: 20, y: "Bananas", c: "#15aabf" },
+  { x: 45, y: "Cherries", c: "#12b886" },
+  { x: 15, y: "Dates", c: "#fab005" },
+  { x: 35, y: "Elderberries", c: "#fa5252" },
+];
+
 export const columnData = [
   { x: "A", y: 10, c: "#4c6ef5" },
   { x: "B", y: 25, c: "#15aabf" },
@@ -110,7 +118,7 @@ export const makeTemporalLineData = (seed = 0, points = 12) => {
 export const makeTemporalLineDataWithDelta = (
   seed = 0,
   points = 18,
-  delta = 0
+  delta = 0,
 ) => {
   const start = new Date(2024, 0, 1);
   const rng = d3.randomLcg(seed + 1);

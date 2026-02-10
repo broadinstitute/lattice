@@ -1,10 +1,13 @@
+import { orientations } from "../utils/constants";
+
 /**
  * renders a bar plot
  * @param {D3} svg
  * @param {Entry[]} data
  * @param {Object} scale with three attributes: x, y
+ * @param {String} orientation plot orientation (positive or negative)
  */
-function render(svg, data, scale) {
+function render(svg, data, scale, orientation) {
   const transitionDuration = 1000;
 
   const rects = svg
@@ -15,7 +18,10 @@ function render(svg, data, scale) {
         enter
           .append("rect")
           .attr("class", "ljs--bar")
-          .attr("x", 0)
+          .attr(
+            "x",
+            orientation == orientations.POSITIVE ? 0 : (d) => scale.x(d.x),
+          )
           .attr("y", (d) => scale.y(d.y))
           .attr("height", scale.y.bandwidth())
           .attr("fill", (d) => d.c)
@@ -23,15 +29,27 @@ function render(svg, data, scale) {
             enter
               .transition()
               .duration(transitionDuration)
-              .attr("width", (d) => scale.x(d.x))
-              .attr("opacity", 1)
+              .attr("width", (d) =>
+                orientation == orientations.POSITIVE
+                  ? scale.x(d.x)
+                  : scale.x(0) - scale.x(d.x),
+              )
+              .attr("opacity", 1),
           ),
 
       (update) =>
         update
           .transition()
           .duration(transitionDuration)
-          .attr("width", (d) => scale.x(d.x))
+          .attr(
+            "x",
+            orientation == orientations.POSITIVE ? 0 : (d) => scale.x(d.x),
+          )
+          .attr("width", (d) =>
+            orientation == orientations.POSITIVE
+              ? scale.x(d.x)
+              : scale.x(0) - scale.x(d.x),
+          )
           .attr("y", (d) => scale.y(d.y))
           .attr("height", scale.y.bandwidth()),
 
@@ -40,7 +58,7 @@ function render(svg, data, scale) {
           .transition()
           .duration(transitionDuration)
           .attr("opacity", 0)
-          .remove()
+          .remove(),
     );
   return rects;
 }

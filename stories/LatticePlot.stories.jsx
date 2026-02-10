@@ -4,6 +4,7 @@ import * as d3 from "d3";
 import { PlotOrientation, PlotType } from "../src/utils/constants";
 import {
   areaDataTemporal,
+  barData,
   barcodeData,
   columnData,
   donutData,
@@ -73,6 +74,45 @@ export const AreaPlot = {
       axis: {
         x: { title: "Date" },
         y: { title: "Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const BarPlot = {
+  name: "Bar/Basic",
+  render: Template,
+  args: {
+    data: barData,
+    type: PlotType.BARPLOT,
+    config: {
+      width: 400,
+      height: 300,
+      title: "Bar Plot",
+      axis: {
+        x: { title: "Value" },
+        y: { title: "Fruit" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const BarPlotNegative = {
+  name: "Bar/Negative Orientation",
+  render: Template,
+  args: {
+    data: barData,
+    type: PlotType.BARPLOT,
+    config: {
+      width: 400,
+      height: 300,
+      title: "Bar Plot (Negative Orientation)",
+      orientation: PlotOrientation.NEGATIVE,
+      axis: {
+        x: { title: "Value" },
+        y: { title: "Fruit" },
       },
     },
     style: defaultStyle,

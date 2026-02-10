@@ -244,7 +244,7 @@ export class Plot extends PlotKernel {
      */
     const validateSeries = (dataSeriesSet, inputSeriesKey) => {
       const seriesCheck = Array.from(dataSeriesSet).filter(
-        (d) => !inputSeriesKey.includes(d)
+        (d) => !inputSeriesKey.includes(d),
       );
       if (seriesCheck.length) {
         throw `Unknown series found in data: ${seriesCheck.join(", ")}`;
@@ -262,7 +262,7 @@ export class Plot extends PlotKernel {
     // grouping data on dimension we're creating stacks for
     const nestedData = Array.from(
       d3.group(this.data, (d) => d[stackAttr]),
-      ([key, values]) => ({ key, values })
+      ([key, values]) => ({ key, values }),
     );
 
     // creating single object for each stack we want to create
@@ -330,6 +330,11 @@ export class Plot extends PlotKernel {
         yDomain = [0, 1];
         break;
       case type.BARPLOT:
+        xDomain = [0, d3.max(this.data, (d) => d.x)];
+        xRange =
+          this.orientation == PlotOrientation.POSITIVE
+            ? xRange
+            : [this.innerWidth, 0];
         yDomain = this.data.map((d) => d.y);
         yRange = [0, this.innerHeight];
         break;
@@ -422,7 +427,7 @@ export class Plot extends PlotKernel {
         this.parentId = plotUtils.createSvg(
           this.rootId,
           this.width,
-          this.height
+          this.height,
         );
       }
       g = plotUtils.createGroup(this.parentId, this.padding, this.type);
@@ -446,7 +451,7 @@ export class Plot extends PlotKernel {
       data,
       this.scale,
       this.orientation,
-      this
+      this,
     );
     this.hasRendered = true;
 
