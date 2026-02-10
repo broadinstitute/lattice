@@ -1,7 +1,7 @@
 import React from "react";
 import { LatticePlot } from "../src/components/LatticePlot";
 import * as d3 from "d3";
-import { PlotType, ScaleType } from "../src/utils/constants";
+import { PlotOrientation, PlotType, ScaleType } from "../src/utils/constants";
 
 export default {
   title: "Lattice/LatticePlot/Recipes",
@@ -225,7 +225,7 @@ export const TableWithInlineMicroCharts = {
         x: `T-${4 - j}`,
         y: Math.max(
           0,
-          (last * 0.25 + j * 0.35 + (i % 3) * 0.25) * (0.85 + (j % 2) * 0.12)
+          (last * 0.25 + j * 0.35 + (i % 3) * 0.25) * (0.85 + (j % 2) * 0.12),
         ),
         c: "#4c6ef5",
       }));
@@ -387,6 +387,117 @@ export const TableWithInlineMicroCharts = {
           </table>
         </div>
       </>
+    );
+  },
+};
+
+export const DivergingBarChart = {
+  name: "Composition/Diverging Bar Chart",
+  render: () => {
+    const categories = [
+      "Apples",
+      "Bananas",
+      "Cherries",
+      "Dates",
+      "Elderberries",
+    ];
+    const leftValues = [30, 12, 45, 22, 35];
+    const rightValues = [18, 40, 25, 38, 10];
+    const maxValue = Math.max(...leftValues, ...rightValues);
+
+    const leftData = categories.map((cat, i) => ({
+      x: leftValues[i],
+      y: cat,
+      c: "#4c6ef5",
+    }));
+    const rightData = categories.map((cat, i) => ({
+      x: rightValues[i],
+      y: cat,
+      c: "#fa5252",
+    }));
+
+    const padTop = 30;
+    const padBottom = 40;
+    const plotHeight = 260;
+    const plotWidth = 280;
+    const labelWidth = 100;
+    const innerHeight = plotHeight - padTop - padBottom;
+
+    const bandPadding = 0.15;
+    const n = categories.length;
+    const step = innerHeight / n;
+    const bandwidth = step * (1 - bandPadding);
+
+    const axisConfig = {
+      x: { title: "Value", max: maxValue },
+      y: {
+        hideLabels: true,
+        hideTitle: true,
+        hideTicks: true,
+        hideAxis: true,
+      },
+    };
+
+    return (
+      <div>
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <div>
+            <LatticePlot
+              data={leftData}
+              type={PlotType.BARPLOT}
+              config={{
+                width: plotWidth,
+                height: plotHeight,
+                orientation: PlotOrientation.NEGATIVE,
+                padding: { top: padTop, right: 0, bottom: padBottom, left: 40 },
+                axis: axisConfig,
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              width: labelWidth,
+              height: plotHeight,
+              marginTop: 13,
+            }}
+          >
+            {categories.map((cat, i) => (
+              <div
+                key={cat}
+                style={{
+                  position: "absolute",
+                  top: padTop + step * i + bandwidth / 2,
+                  left: 0,
+                  width: labelWidth,
+                  textAlign: "center",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#333",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                {cat}
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <LatticePlot
+              data={rightData}
+              type={PlotType.BARPLOT}
+              config={{
+                width: plotWidth,
+                height: plotHeight,
+                orientation: PlotOrientation.POSITIVE,
+                padding: { top: padTop, right: 40, bottom: padBottom, left: 0 },
+                axis: axisConfig,
+              }}
+            />
+          </div>
+        </div>
+      </div>
     );
   },
 };
