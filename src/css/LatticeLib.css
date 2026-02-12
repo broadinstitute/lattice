@@ -4,3 +4,9 @@
 @import "./interactive.css";
 @import "./LinePlot.css";
 @import "./Tooltip.css";
+
+/* Bar plot labels */
+.ljs--bar-label {
+  font-size: 11px;
+  fill: #333;
+}

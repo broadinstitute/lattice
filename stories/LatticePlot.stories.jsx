@@ -90,6 +90,7 @@ export const BarPlot = {
       width: 400,
       height: 300,
       title: "Bar Plot",
+      showLabels: true,
       axis: {
         x: { title: "Value" },
         y: { title: "Fruit" },
@@ -131,6 +132,7 @@ export const BarPlotNegative = {
       height: 300,
       title: "Bar Plot (Negative Orientation)",
       orientation: PlotOrientation.NEGATIVE,
+      showLabels: true,
       axis: {
         x: { title: "Value" },
         y: { title: "Fruit" },

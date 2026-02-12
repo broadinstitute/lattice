@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 import { orientations } from "../utils/constants";
 
 /**
@@ -6,8 +7,11 @@ import { orientations } from "../utils/constants";
  * @param {Entry[]} data
  * @param {Object} scale with three attributes: x, y
  * @param {String} orientation plot orientation (positive or negative)
+ * @param {Object} config optional configuration object
+ * @param {Boolean} config.showLabels whether to display value labels
+ * @param {Function} config.valueFormatter function to format label values (default: d3.format(".1f"))
  */
-function render(svg, data, scale, orientation) {
+function render(svg, data, scale, orientation, config = {}) {
   const transitionDuration = 1000;
 
   const rects = svg
@@ -61,6 +65,61 @@ function render(svg, data, scale, orientation) {
           .attr("opacity", 0)
           .remove(),
     );
+
+  // Optional value labels
+  const showLabels = config?.showLabels || config?._userInput?.showLabels;
+  const valueFormatter =
+    config?.valueFormatter || config?._userInput?.valueFormatter;
+
+  if (showLabels) {
+    const formatValue = valueFormatter || d3.format(".1f");
+    const labelPadding = 4;
+
+    svg
+      .selectAll(".ljs--bar-label")
+      .data(data)
+      .join(
+        (enter) =>
+          enter
+            .append("text")
+            .attr("class", "ljs--bar-label")
+            .attr("x", (d) =>
+              orientation == orientations.POSITIVE
+                ? scale.x(d.x) + labelPadding
+                : scale.x(d.x) - labelPadding,
+            )
+            .attr("y", (d) => scale.y(d.y) + scale.y.bandwidth() / 2)
+            .attr("dy", "0.35em")
+            .attr(
+              "text-anchor",
+              orientation == orientations.POSITIVE ? "start" : "end",
+            )
+            .attr("opacity", 0)
+            .text((d) => formatValue(d.x))
+            .call((enter) =>
+              enter
+                .transition()
+                .delay(transitionDuration)
+                .duration(300)
+                .attr("opacity", 1),
+            ),
+
+        (update) =>
+          update
+            .transition()
+            .duration(transitionDuration)
+            .attr("x", (d) =>
+              orientation == orientations.POSITIVE
+                ? scale.x(d.x) + labelPadding
+                : scale.x(d.x) - labelPadding,
+            )
+            .attr("y", (d) => scale.y(d.y) + scale.y.bandwidth() / 2)
+            .text((d) => formatValue(d.x)),
+
+        (exit) => exit.transition().duration(300).attr("opacity", 0).remove(),
+      );
+  }
+
   return rects;
 }
 

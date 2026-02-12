@@ -447,6 +447,7 @@ export const DivergingBarChart = {
               config={{
                 height: plotHeight,
                 orientation: PlotOrientation.NEGATIVE,
+                showLabels: true,
                 padding: { top: padTop, right: 0, bottom: padBottom, left: 40 },
                 axis: axisConfig,
               }}
@@ -488,6 +489,7 @@ export const DivergingBarChart = {
               config={{
                 height: plotHeight,
                 orientation: PlotOrientation.POSITIVE,
+                showLabels: true,
                 padding: { top: padTop, right: 40, bottom: padBottom, left: 0 },
                 axis: axisConfig,
               }}
