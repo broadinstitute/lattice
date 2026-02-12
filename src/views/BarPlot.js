@@ -18,10 +18,7 @@ function render(svg, data, scale, orientation) {
         enter
           .append("rect")
           .attr("class", "ljs--bar")
-          .attr(
-            "x",
-            orientation == orientations.POSITIVE ? 0 : (d) => scale.x(d.x),
-          )
+          .attr("x", orientation == orientations.POSITIVE ? 0 : scale.x(0))
           .attr("y", (d) => scale.y(d.y))
           .attr("height", scale.y.bandwidth())
           .attr("fill", (d) => d.c)
@@ -29,6 +26,10 @@ function render(svg, data, scale, orientation) {
             enter
               .transition()
               .duration(transitionDuration)
+              .attr(
+                "x",
+                orientation == orientations.POSITIVE ? 0 : (d) => scale.x(d.x),
+              )
               .attr("width", (d) =>
                 orientation == orientations.POSITIVE
                   ? scale.x(d.x)
