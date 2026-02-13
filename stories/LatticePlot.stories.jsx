@@ -200,6 +200,34 @@ export const ScatterplotTooltipDisabled = {
   },
 };
 
+export const ScatterplotCustomTooltip = {
+  name: "Scatter/Custom Tooltip",
+  render: Template,
+  args: {
+    data: scatterDataColored,
+    type: PlotType.SCATTERPLOT,
+    config: {
+      width: 400,
+      height: 300,
+      title: "Scatterplot (Custom Tooltip)",
+      tooltip: {
+        formatter: (d) =>
+          `<div style="font-family: Arial, sans-serif; padding: 8px; background-color: rgba(255, 255, 255, 0.9); border: 1px solid #ccc; border-radius: 4px;">
+            <div style="font-weight: bold; color: ${d.c};">Details</div>
+            <div>X: <strong>${d.x}</strong></div>
+            <div>Y: <strong>${d.y}</strong></div>
+            <div>Color: <span style="background: ${d.c}; padding: 2px 8px; border-radius: 3px;">${d.c}</span></div>
+           </div>`,
+      },
+      axis: {
+        x: { title: "X Value" },
+        y: { title: "Y Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
 /**
  * Donut plot using the LatticePlot React component
  */
