@@ -15,6 +15,14 @@ export const donutData = [
   { category: "Group D", value: 35 },
 ];
 
+export const petalData = [
+  { label: "Group A", value: 1.5, width: 0.2, color: "#4c6ef5" },
+  { label: "Group B", value: -1.2, width: 1, color: "#15aabf" },
+  { label: "Group C", value: 1.8, width: 1, color: "#12b886" },
+  { label: "Group D", value: -0.5, width: 0.05, color: "#fab005" },
+  { label: "Group E", value: 0.8, width: 0.5, color: "#fa5252" },
+];
+
 export const scatterDataColored = [
   { x: 1, y: 2, c: "#4c6ef5", r: 2 },
   { x: 2, y: 4, c: "#15aabf", r: 4 },
@@ -136,5 +144,20 @@ export const makeTemporalLineDataWithDelta = (
     const w2 = Math.sin(t * Math.PI * 6 + phase * 0.7);
     const y = baseline + trend * i + amp1 * w1 + amp2 * w2 + noise();
     return { x, y };
+  });
+};
+
+export const makePetalData = (seed = 0, numPetals = 8, color = "#fa5252") => {
+  const rng = d3.randomLcg(seed + 1);
+  const labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+
+  return Array.from({ length: numPetals }, (_, i) => {
+    const value = (rng() - 0.5) * 6; // Range roughly -3 to 3
+    return {
+      label: labels[i] || `P${i}`,
+      value,
+      width: 0.3 + rng() * 0.6,
+      color,
+    };
   });
 };

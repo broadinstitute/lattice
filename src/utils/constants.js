@@ -5,16 +5,13 @@ import * as DonutPlot from "../views/DonutPlot";
 import * as ColumnPlot from "../views/ColumnPlot";
 import * as Heatmap from "../views/Heatmap";
 import * as Lineplot from "../views/LinePlot";
+import * as PetalPlot from "../views/PetalPlot";
 import * as ScatterPlot from "../views/ScatterPlot";
 import * as StackedBarPlot from "../views/StackedBarPlot";
 import * as StackedColumnPlot from "../views/StackedColumnPlot";
 
 /**
  * Review and reorganize code in this script
- */
-/**
- * @typedef {String} PlotType
- * @enum {PlotType}
  */
 export const PlotType = Object.freeze({
   AREAPLOT: "areaplot",
@@ -25,6 +22,7 @@ export const PlotType = Object.freeze({
   DONUT: "donut",
   HEATMAP: "heatmap",
   LINEPLOT: "lineplot",
+  PETALPLOT: "petalplot",
   SCATTERPLOT: "scatterplot",
   STACKEDBAR: "stackedbarplot",
   STACKEDCOLUMN: "stackedcolumnplot",
@@ -36,20 +34,12 @@ export const plots = PlotType;
 
 // plots requiring data to be stacked
 
-/**
- * @typedef {String} PlotOrientation
- * @enum {Orientation}
- */
 export const PlotOrientation = Object.freeze({
   POSITIVE: 1,
   NEGATIVE: -1,
 });
 export const orientations = PlotOrientation;
 
-/**
- * @typedef {String} ScaleType
- * @enum {ScaleType}
- */
 // valid scale type enums
 export const ScaleType = {
   CATEGORICAL: "categorical",
@@ -62,10 +52,6 @@ export const ScaleType = {
 
 export const scales = ScaleType;
 
-/**
- * @typedef {String} AxisType
- * @enum {AxisType}
- */
 export const AxisType = {
   X: "x",
   Y: "y",
@@ -82,6 +68,7 @@ export const plotRenderFunction = {
   [PlotType.DONUT]: DonutPlot.render,
   [PlotType.HEATMAP]: Heatmap.render,
   [PlotType.LINEPLOT]: Lineplot.render,
+  [PlotType.PETALPLOT]: PetalPlot.render,
   [PlotType.SCATTERPLOT]: ScatterPlot.render,
   [PlotType.STACKEDBAR]: StackedBarPlot.render,
   [PlotType.STACKEDCOLUMN]: StackedColumnPlot.render,

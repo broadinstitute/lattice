@@ -1,0 +1,46 @@
+.ljs--petalplot-root {
+  /* Container for the petal plot */
+}
+
+.ljs--petalplot-gridline {
+  fill: none;
+  stroke: #d6d6d6;
+  stroke-width: 1.3;
+}
+
+.ljs--petalplot-gridline-label {
+  fill: #b2b2b2;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.ljs--petalplot-petal {
+  fill-opacity: 1;
+  stroke: rgba(0, 0, 0, 0.7);
+  stroke-width: 1;
+  transition: fill-opacity 0.2s ease;
+}
+
+.ljs--petalplot-petal:hover {
+  fill-opacity: 0.8;
+  cursor: pointer;
+}
+
+.ljs--petalplot-petal-group {
+  transition: transform 0.2s ease;
+}
+
+.ljs--petalplot-axis-label {
+  font-size: 12px;
+  font-weight: bold;
+  fill: #1a1818;
+  font-family: sans-serif;
+  text-transform: capitalize;
+}
+
+.ljs--petalplot-title {
+  font-size: 14px;
+  font-weight: 600;
+  fill: #333333;
+  font-family: sans-serif;
+}

@@ -10,6 +10,7 @@ import {
   donutData,
   heatmapData,
   lineDataTemporal,
+  petalData,
   scatterData,
   scatterDataColored,
   stackedColumnData,
@@ -245,6 +246,30 @@ export const DonutPlot = {
       innerRadiusRatio: 0.6,
       categoryAccessor: (d) => d.category,
       valueAccessor: (d) => d.value,
+    },
+    style: defaultStyle,
+  },
+};
+
+/**
+ * Petal plot - a radial, flower-like chart where each petal radiates from the center
+ */
+export const PetalPlot = {
+  name: "Petal/Basic",
+  render: Template,
+  args: {
+    data: petalData,
+    type: PlotType.PETALPLOT,
+    config: {
+      width: 300,
+      height: 300,
+      title: "Petal Plot",
+      valueDomain: [-4, 4],
+      gridlineValues: [-2, 0, 2],
+      valueAccessor: (d) => d.value,
+      widthAccessor: (d) => d.width,
+      labelAccessor: (d) => d.label,
+      colorAccessor: (d) => d.color,
     },
     style: defaultStyle,
   },

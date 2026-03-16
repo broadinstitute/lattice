@@ -8,6 +8,7 @@ import {
   lineDataTemporal,
   makeTemporalLineData,
   makeTemporalLineDataWithDelta,
+  makePetalData,
   scatterData,
 } from "./fixtures/plotData";
 
@@ -349,6 +350,48 @@ export const SparseGrid = {
       grid: {
         rows: 5,
         columns: 6,
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const PetalSmallMultiples = {
+  name: "Small Multiples/Petal Grid",
+  render: Template,
+  args: {
+    plots: (() => {
+      const rows = 10;
+      const columns = 15;
+      const plots = [];
+      for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++) {
+          const seed = row * columns + column;
+          plots.push({
+            row,
+            column,
+            data: makePetalData(seed, 8, "#fa5252"),
+            type: PlotType.PETALPLOT,
+            config: {
+              valueDomain: [-4, 4],
+              showLabels: false,
+              showGridlineLabels: false,
+              radiusMargin: 3,
+              padding: { top: 0, right: 0, bottom: 0, left: 0 },
+            },
+          });
+        }
+      }
+      return plots;
+    })(),
+    config: {
+      animate: false,
+      width: 900,
+      height: 600,
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      grid: {
+        rows: 10,
+        columns: 15,
       },
     },
     style: defaultStyle,

@@ -14,7 +14,7 @@ import { Point2D } from "../models/Point2D";
 import { Axis } from "../views/Axis";
 
 const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
-const axislessPlotTypes = [PlotType.DONUT];
+const axislessPlotTypes = [PlotType.DONUT, PlotType.PETALPLOT];
 const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 
 class PlotKernel {
