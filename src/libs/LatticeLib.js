@@ -1,5 +1,6 @@
 import { PlotType } from "../utils/constants";
 import { Plot } from "../controllers/Plot";
+import { ComposePlot } from "../controllers/ComposePlot";
 import { Lattice } from "../controllers/Lattice";
 import * as d3 from "d3";
 
@@ -23,6 +24,21 @@ export function plot(data, type, id, config = {}) {
   let myPlot = new Plot(data, type, id, config);
   myPlot.render();
   return myPlot;
+}
+
+/**
+ * Renders a composite plot with multiple layers on shared axes.
+ * Layers must have compatible scale types.
+ * @param {Array<{type: PlotType, data: Object[], color?: string, series?: Object[], tooltip?: Object, axis?: Object}>} layers
+ * @param {String} id root DOM ID
+ * @param {Object} [config] shared config (width, height, padding, axis, title, animate)
+ * @returns {ComposePlot}
+ * @public
+ */
+export function compose(layers, id, config = {}) {
+  const plot = new ComposePlot(layers, id, config);
+  plot.render();
+  return plot;
 }
 
 /**
@@ -60,6 +76,6 @@ export function getLatticeOptions(lattice = undefined) {
 export { LatticePlot } from "../components/LatticePlot";
 export { LatticeGrid } from "../components/LatticeGrid";
 
-export { Plot, Lattice };
+export { Plot, ComposePlot, Lattice };
 
 export default class LatticeLib {}

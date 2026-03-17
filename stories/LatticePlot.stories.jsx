@@ -408,3 +408,129 @@ export const Heatmap = {
     style: defaultStyle,
   },
 };
+
+export const CompositeColumnLine = {
+  name: "Composite/Column + Line",
+  render: Template,
+  args: {
+    layers: [
+      { type: PlotType.COLUMNPLOT, data: columnData },
+      {
+        type: PlotType.LINEPLOT,
+        data: columnData,
+        color: "#fa5252",
+        // change to categorical x-axis for line layer to match column layer
+        axis: { x: { scaleType: "categorical" } },
+      },
+    ],
+    config: {
+      width: 450,
+      height: 300,
+      title: "Column + Line Overlay",
+      animate: false,
+      axis: {
+        x: { title: "Category" },
+        y: { title: "Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const CompositeAreaLine = {
+  name: "Composite/Area + Line",
+  render: Template,
+  args: {
+    layers: [
+      { type: PlotType.AREAPLOT, data: areaDataTemporal },
+      { type: PlotType.LINEPLOT, data: lineDataTemporal, color: "#fa5252" },
+    ],
+    config: {
+      width: 450,
+      height: 300,
+      title: "Area + Line (Temporal)",
+      axis: {
+        x: { title: "Date" },
+        y: { title: "Value" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const CompositeScatterLine = {
+  name: "Composite/Scatter + Line",
+  render: Template,
+  args: {
+    layers: [
+      { type: PlotType.SCATTERPLOT, data: scatterData },
+      { type: PlotType.LINEPLOT, data: scatterData, color: "#15aabf", axis: { x: { scaleType: "linear" } } },
+    ],
+    config: {
+      width: 450,
+      height: 300,
+      title: "Scatter + Trend Line",
+      animate: false,
+      axis: {
+        x: { title: "X" },
+        y: { title: "Y" },
+      },
+    },
+    style: defaultStyle,
+  },
+};
+
+export const ScatterWithReferenceLines = {
+  name: "References/Scatter + Quartile Lines + Diagonal",
+  render: Template,
+  args: {
+    data: scatterData,
+    type: PlotType.SCATTERPLOT,
+    config: {
+      width: 450,
+      height: 300,
+      title: "Scatter with Reference Lines",
+      animate: false,
+      axis: {
+        x: { title: "X" },
+        y: { title: "Y" },
+      },
+      references: [
+        { axis: "x", value: 2, label: "Q1", stroke: "#999", dasharray: "4 2" },
+        { axis: "x", value: 3, label: "Median", stroke: "#333" },
+        { axis: "x", value: 4, label: "Q3", stroke: "#999", dasharray: "4 2" },
+        { axis: "y", value: 4, label: "Mean Y", stroke: "#e67700", dasharray: "6 3" },
+        {
+          points: [
+            { x: 2, y: 2 },
+            { x: 5, y: 5 },
+          ],
+          label: "x = y",
+          stroke: "#aaa",
+          dasharray: "6 3",
+        },
+      ],
+    },
+    style: defaultStyle,
+  },
+};
+
+export const ColumnWithHorizontalReference = {
+  name: "References/Column + Horizontal Target Line",
+  render: Template,
+  args: {
+    data: columnData,
+    type: PlotType.COLUMNPLOT,
+    config: {
+      width: 400,
+      height: 300,
+      title: "Column Plot with Target",
+      axis: {
+        x: { title: "Category" },
+        y: { title: "Value" },
+      },
+      references: [{ axis: "y", value: 20, label: "Target", stroke: "#e03131", dasharray: "8 4" }],
+    },
+    style: defaultStyle,
+  },
+};

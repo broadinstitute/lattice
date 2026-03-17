@@ -10,3 +10,14 @@
   font-size: 11px;
   fill: #333;
 }
+
+/* Reference lines */
+.ljs--reference-line {
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.ljs--reference-label {
+  font-size: 10px;
+  pointer-events: none;
+}

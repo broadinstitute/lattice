@@ -32,7 +32,14 @@ export const PlotType = Object.freeze({
 export const plotTypes = PlotType; // do not like the word plots
 export const plots = PlotType;
 
-// plots requiring data to be stacked
+// Plot types that require data to be stacked
+export const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
+
+// Plot types with no shared axes (cannot be composed/layered)
+export const axislessPlotTypes = [PlotType.DONUT, PlotType.PETALPLOT];
+
+// Default padding value
+export const DEFAULT_PADDING = 50;
 
 export const PlotOrientation = Object.freeze({
   POSITIVE: 1,
@@ -74,12 +81,7 @@ export const plotRenderFunction = {
   [PlotType.STACKEDCOLUMN]: StackedColumnPlot.render,
 };
 
-export const NUMERICAL_SCALES = [
-  scales.LINEAR,
-  scales.SEQUENTIAL,
-  scales.SQRT,
-  scales.TEMPORAL,
-];
+export const NUMERICAL_SCALES = [scales.LINEAR, scales.SEQUENTIAL, scales.SQRT, scales.TEMPORAL];
 
 export const sortDirections = {
   ASC: "asc",
@@ -290,3 +292,63 @@ export const tooltipFormatters = {
   [PlotType.STACKEDBAR]: xAsSeriesTooltipFormatter,
   [PlotType.STACKEDCOLUMN]: yAsSeriesTooltipFormatter,
 };
+
+/** Set of plot types that can be used as layers in a composite plot */
+export const composableTypes = new Set(Object.values(PlotType).filter((t) => !new Set(axislessPlotTypes).has(t)));
+
+/**
+ * Resolves the effective x/y scale types for a layer, accounting for optional
+ * per-layer axis overrides.
+ * @param {PlotType} type
+ * @param {Object} [layerAxisConfig] - optional `{ x: { scaleType }, y: { scaleType } }`
+ * @returns {{ x: ScaleType, y: ScaleType }}
+ */
+export function getEffectiveScales(type, layerAxisConfig = {}) {
+  const defaults = defaultScales[type];
+  if (!defaults) throw `Unknown plot type: ${type}`;
+  return {
+    x: layerAxisConfig.x?.scaleType ?? defaults.x,
+    y: layerAxisConfig.y?.scaleType ?? defaults.y,
+  };
+}
+
+/**
+ * Validates that all layers in a composite plot are compatible.
+ * Throws a descriptive error if:
+ * - any layer uses an axisless plot type
+ * - layers resolve to different x or y scale types
+ *
+ * @param {Array<{ type: PlotType, axis?: Object }>} layers
+ * @returns {{ x: ScaleType, y: ScaleType }} the resolved common scale types
+ */
+export function validateLayerCompatibility(layers) {
+  if (!layers || layers.length === 0) {
+    throw "At least one layer is required for a composite plot.";
+  }
+
+  for (const layer of layers) {
+    if (!composableTypes.has(layer.type)) {
+      throw `Plot type "${layer.type}" cannot be used in a composite plot (no shared axes).`;
+    }
+  }
+
+  const resolved = layers.map((l) => getEffectiveScales(l.type, l.axis));
+  const first = resolved[0];
+
+  for (let i = 1; i < resolved.length; i++) {
+    if (resolved[i].x !== first.x) {
+      throw (
+        `Incompatible x scale types in composite layers: "${layers[0].type}" uses "${first.x}" but "${layers[i].type}" uses "${resolved[i].x}". ` +
+        `Override with axis.x.scaleType on the layer to make them compatible.`
+      );
+    }
+    if (resolved[i].y !== first.y) {
+      throw (
+        `Incompatible y scale types in composite layers: "${layers[0].type}" uses "${first.y}" but "${layers[i].type}" uses "${resolved[i].y}". ` +
+        `Override with axis.y.scaleType on the layer to make them compatible.`
+      );
+    }
+  }
+
+  return first;
+}
