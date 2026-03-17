@@ -45,13 +45,13 @@
     "d3": "^7.9.0"
   },
   "devDependencies": {
-    "@storybook/react-vite": "^10.1.10",
+    "@storybook/addon-docs": "^10.2.19",
+    "@storybook/react-vite": "^10.2.19",
     "css-loader": "^5.2.0",
     "jsdoc": "^3.6.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "storybook": "^10.1.10",
-    "style-loader": "^2.0.0",
-    "@storybook/addon-docs": "^10.1.10"
+    "storybook": "^10.2.19",
+    "style-loader": "^2.0.0"
   }
 }
