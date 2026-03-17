@@ -8,14 +8,13 @@ import {
   defaultAxisOrientation,
   ScaleType,
   plotRenderFunction,
-} from "../utils/constants"; // Note: constants are too generic, let's review what's in the script and organize the code better
+  stackedPlotTypes,
+  axislessPlotTypes,
+  DEFAULT_PADDING,
+} from "../utils/constants";
 import Tooltip from "../views/Tooltip";
 import { Point2D } from "../models/Point2D";
 import { Axis } from "../views/Axis";
-
-const stackedPlotTypes = [PlotType.STACKEDBAR, PlotType.STACKEDCOLUMN];
-const axislessPlotTypes = [PlotType.DONUT, PlotType.PETALPLOT];
-const PLOT_DEFAULT_PADDING = 50; // don't find where this is used
 
 class PlotKernel {
   /**
@@ -46,10 +45,10 @@ class PlotKernel {
 
     /** @typedef PlotPadding */
     let PlotPadding = {
-      top: PLOT_DEFAULT_PADDING,
-      left: PLOT_DEFAULT_PADDING,
-      bottom: PLOT_DEFAULT_PADDING,
-      right: PLOT_DEFAULT_PADDING,
+      top: DEFAULT_PADDING,
+      left: DEFAULT_PADDING,
+      bottom: DEFAULT_PADDING,
+      right: DEFAULT_PADDING,
     };
     this.padding = PlotPadding;
 
@@ -131,7 +130,7 @@ export class Plot extends PlotKernel {
     this.tooltipObj = new Tooltip(this.tooltip.id); // get rid of this extra attribute
 
     if (stackedPlotTypes.includes(this.type)) {
-      this.dataStack = this.createDataStack();
+      this.dataStack = plotUtils.createDataStack(this.data, this.type, this.series);
     }
     this.scale = this.setScales();
   }
@@ -174,8 +173,7 @@ export class Plot extends PlotKernel {
       ) {
         case "padding":
           // if (userInput.padding!==undefined) update(prop);
-          if (userInput.padding !== undefined)
-            plot.padding = Object.assign({}, plot.padding, userInput.padding); // merge with userInput.padding
+          if (userInput.padding !== undefined) plot.padding = Object.assign({}, plot.padding, userInput.padding); // merge with userInput.padding
 
           break;
         case "tooltip":
@@ -183,8 +181,7 @@ export class Plot extends PlotKernel {
           plot.tooltip.formatter = tooltipFormatters[plot.type];
           plot.tooltip.id = `${plot.rootId}-tooltip`;
           // update based on user input
-          if (userInput.tooltip !== undefined)
-            plot.tooltip = Object.assign({}, plot.tooltip, userInput.tooltip);
+          if (userInput.tooltip !== undefined) plot.tooltip = Object.assign({}, plot.tooltip, userInput.tooltip);
           break;
         case "axis":
           // Skip axis setup for axisless plots (e.g. donut)
@@ -198,14 +195,10 @@ export class Plot extends PlotKernel {
 
               axis.scaleType = defaultScales[plot.type][which];
 
-              axis.orientation =
-                defaultAxisOrientation[plot.type][which][plot.orientation];
+              axis.orientation = defaultAxisOrientation[plot.type][which][plot.orientation];
 
               // update axis settings based on user input
-              if (
-                userInput.axis !== undefined &&
-                userInput.axis[which] !== undefined
-              ) {
+              if (userInput.axis !== undefined && userInput.axis[which] !== undefined) {
                 axis = Object.assign({}, axis, userInput.axis[which]);
               }
 
@@ -213,10 +206,7 @@ export class Plot extends PlotKernel {
               plot.axisInternal[which] = new Axis(which, axis);
             } else if (which == "c") {
               axis.scaleType = defaultScales[this.type].c;
-              if (
-                userInput.axis !== undefined &&
-                userInput.axis.c !== undefined
-              ) {
+              if (userInput.axis !== undefined && userInput.axis.c !== undefined) {
                 axis = Object.assign({}, axis, userInput.axis.c);
                 plot.axisInternal[which] = axis;
               }
@@ -228,69 +218,6 @@ export class Plot extends PlotKernel {
           if (userInput[prop] !== undefined) plot[prop] = userInput[prop];
       }
     });
-  }
-
-  /**
-   * @description Transforms user input data into data stacks for plot types that require it.
-   * Also takes series color information (by name) and stores it with the data.
-   * Transformed data is stored in a separate class variable, "dataStack".
-   * @private
-   */
-  createDataStack() {
-    /**
-     * Checks that all series assigned to individual data entries is defined in the user provided "series" list.
-     * @param {Set} dataSeriesSet - a set of all unique series found within the data
-     * @param {Array} inputSeriesKey - list of series' names (from user input)
-     */
-    const validateSeries = (dataSeriesSet, inputSeriesKey) => {
-      const seriesCheck = Array.from(dataSeriesSet).filter(
-        (d) => !inputSeriesKey.includes(d),
-      );
-      if (seriesCheck.length) {
-        throw `Unknown series found in data: ${seriesCheck.join(", ")}`;
-      }
-    };
-
-    // error checking
-    if (!this.series.length) {
-      throw "'series' attribute was not provided; cannot create series data stacks";
-    }
-    const stackAttr = this.type == PlotType.STACKEDBAR ? "y" : "x";
-    const valAttr = this.type == PlotType.STACKEDBAR ? "x" : "y";
-    const seriesInData = new Set(); // for error checking purposes
-
-    // grouping data on dimension we're creating stacks for
-    const nestedData = Array.from(
-      d3.group(this.data, (d) => d[stackAttr]),
-      ([key, values]) => ({ key, values }),
-    );
-
-    // creating single object for each stack we want to create
-    // attributes in each obj: y, every series that exists for that stack
-    const stackedData = nestedData.map((d) => {
-      const entry = { [stackAttr]: d.key };
-      d.values.forEach((d) => {
-        seriesInData.add(d.series);
-        entry[d.series] = d[valAttr];
-      });
-      return entry;
-    });
-    const stackKeys = this.series.map((d) => d.name);
-    validateSeries(seriesInData, stackKeys);
-    const seriesColorMap = {};
-    this.series.forEach((s) => (seriesColorMap[s.name] = s.color));
-
-    const stackFn = d3.stack().keys(stackKeys);
-    // creates a 2D array; each array corresponds to one series
-    // element in the inner array corresponds to the part of the stack for a particular series and its value
-    const dataStack = stackFn(stackedData).map((d) => {
-      d.forEach((v) => {
-        v.series = d.key;
-        v.color = seriesColorMap[v.series];
-      });
-      return d;
-    });
-    return dataStack;
   }
 
   /**
@@ -331,10 +258,7 @@ export class Plot extends PlotKernel {
         break;
       case type.BARPLOT:
         xDomain = [0, d3.max(this.data, (d) => d.x)];
-        xRange =
-          this.orientation == PlotOrientation.POSITIVE
-            ? xRange
-            : [this.innerWidth, 0];
+        xRange = this.orientation == PlotOrientation.POSITIVE ? xRange : [this.innerWidth, 0];
         yDomain = this.data.map((d) => d.y);
         yRange = [0, this.innerHeight];
         break;
@@ -349,10 +273,7 @@ export class Plot extends PlotKernel {
         break;
       case type.STACKEDBAR:
         xDomain = [0, d3.max(this.dataStack, (d) => d3.max(d, (d) => d[1]))];
-        xRange =
-          this.orientation == PlotOrientation.POSITIVE
-            ? xRange
-            : [this.innerWidth, 0];
+        xRange = this.orientation == PlotOrientation.POSITIVE ? xRange : [this.innerWidth, 0];
         yDomain = this.data.map((d) => d.y);
         yRange = [0, this.innerHeight];
         break;
@@ -363,29 +284,11 @@ export class Plot extends PlotKernel {
       default:
         console.error("unknown plot type");
     }
-    const createRadiusScale = () => {
-      return d3
-        .scaleSqrt()
-        .domain(d3.extent(this.data.map((d) => d.r)))
-        .range([1, 3]); // todo: how to handle these axes better?
-    };
-    const createColorScale = () => {
-      if (this.axisInternal.c.scaleType == ScaleType.ORDINAL) {
-        let s = d3.scaleOrdinal();
-        s.unknown(undefined);
-        return s
-          .domain(this.axisInternal.c.domain)
-          .range(this.axisInternal.c.range);
-      } else if (this.axisInternal.c.scaleType == ScaleType.SEQUENTIAL) {
-        let s = d3.scaleSequential(this.axisInternal.c.interpolator);
-        return s.domain(this.axisInternal.c.domain);
-      }
-    };
     return {
       x: this.axisInternal.x.createScale(xDomain, xRange),
       y: this.axisInternal.y.createScale(yDomain, yRange),
-      r: createRadiusScale(),
-      c: this.axisInternal.c === undefined ? undefined : createColorScale(),
+      r: plotUtils.createRadiusScale(this.data),
+      c: plotUtils.createColorScale(this.axisInternal.c),
     };
   }
 
@@ -423,51 +326,36 @@ export class Plot extends PlotKernel {
     if (this.hasRendered) {
       g = d3.select(`#${this.parentId}-${this.type}`);
     } else {
-      if (this.parentId === undefined) {
-        this.parentId = plotUtils.createSvg(
-          this.rootId,
-          this.width,
-          this.height,
-        );
-      }
-      g = plotUtils.createGroup(this.parentId, this.padding, this.type);
-      if (this.title !== undefined)
-        g.append("text")
-          .html(this.title)
-          .attr("x", this.innerWidth / 2)
-          .attr("y", -this.padding.top / 3)
-          .attr("text-anchor", "middle");
+      const result = plotUtils.setupPlotGroup({
+        parentId: this.parentId,
+        rootId: this.rootId,
+        width: this.width,
+        height: this.height,
+        padding: this.padding,
+        tag: this.type,
+        title: this.title,
+        innerWidth: this.innerWidth,
+      });
+      g = result.g;
+      this.parentId = result.parentId;
     }
     this.axisInternal.x.render(g, this);
     this.axisInternal.y.render(g, this);
     // TODO: stacked charts are passing something different for "data" than other plot types. is this an issue?
     // Note: perhaps we should have subclass of Plot?
-    const data = stackedPlotTypes.includes(this.type)
-      ? this.dataStack
-      : this.data;
+    const data = stackedPlotTypes.includes(this.type) ? this.dataStack : this.data;
     // TODO: update all plots to accept "orientation" parameter
-    let dataDomElements = plotRenderFunction[this.type](
-      g,
-      data,
-      this.scale,
-      this.orientation,
-      this,
-    );
+    let dataDomElements = plotRenderFunction[this.type](g, data, this.scale, this.orientation, this);
     this.hasRendered = true;
 
     // setting the tooltip
-    if (dataDomElements !== undefined && this.tooltip.enabled) {
-      dataDomElements.on("mouseover", (event, d) => {
-        const el = d3.select(event.currentTarget);
-        el.classed("ljs--mouseover", true);
-        this.tooltipObj.show(this.tooltip.formatter(d), event);
-      });
+    if (this.tooltip.enabled) {
+      plotUtils.attachTooltip(dataDomElements, this.tooltip.formatter, this.tooltipObj);
+    }
 
-      dataDomElements.on("mouseout", (event) => {
-        const el = d3.select(event.currentTarget);
-        el.classed("ljs--mouseover", false);
-        this.tooltipObj.hide();
-      });
+    // reference lines
+    if (this._userInput.references) {
+      plotUtils.renderReferences(g, this._userInput.references, this.scale, this.innerWidth, this.innerHeight);
     }
   }
 

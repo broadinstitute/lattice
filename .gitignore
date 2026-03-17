@@ -1,5 +1,7 @@
 node_modules
 
 docs/dist
+projects/use_cases/build
+storybook-static
 
 .DS_Store

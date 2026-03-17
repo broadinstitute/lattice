@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useId, useState, useMemo } from "react";
 import { Plot } from "../controllers/Plot";
+import { ComposePlot } from "../controllers/ComposePlot";
 
 /**
  * LatticePlot - A lightweight React wrapper for Lattice plots
@@ -11,7 +12,7 @@ import { Plot } from "../controllers/Plot";
  * @param {string} props.className - Optional CSS class for the container
  * @param {Object} props.style - Optional inline styles for the container
  */
-export function LatticePlot({ data, type, config = {}, className, style }) {
+export function LatticePlot({ data, type, layers, config = {}, className, style }) {
   const containerRef = useRef(null);
   const plotRef = useRef(null);
   const containerId = useId().replace(/:/g, "-");
@@ -44,14 +45,21 @@ export function LatticePlot({ data, type, config = {}, className, style }) {
     return { ...rest, width: measuredWidth };
   }, [config, autoWidth, measuredWidth]);
 
+  const isComposite = Array.isArray(layers) && layers.length > 0;
+
   useEffect(() => {
-    if (!containerRef.current || !data || !type || !effectiveConfig) return;
+    if (!containerRef.current || !effectiveConfig) return;
+    if (!isComposite && (!data || !type)) return;
 
     // Clear previous render
     containerRef.current.innerHTML = "";
 
     // Create and render the plot
-    plotRef.current = new Plot(data, type, containerId, effectiveConfig);
+    if (isComposite) {
+      plotRef.current = new ComposePlot(layers, containerId, effectiveConfig);
+    } else {
+      plotRef.current = new Plot(data, type, containerId, effectiveConfig);
+    }
     plotRef.current.render();
 
     // Cleanup on unmount
@@ -61,16 +69,9 @@ export function LatticePlot({ data, type, config = {}, className, style }) {
       }
       plotRef.current = null;
     };
-  }, [data, type, effectiveConfig, containerId]);
+  }, [data, type, layers, isComposite, effectiveConfig, containerId]);
 
-  return (
-    <div
-      ref={containerRef}
-      id={containerId}
-      className={className}
-      style={style}
-    />
-  );
+  return <div ref={containerRef} id={containerId} className={className} style={style} />;
 }
 
 export default LatticePlot;

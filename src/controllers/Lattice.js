@@ -1,4 +1,5 @@
 import { PlotInLattice } from "./PlotInLattice";
+import { ComposePlot } from "./ComposePlot";
 import { createGroup, createSvg } from "../utils/plot-utils";
 import * as d3 from "d3";
 
@@ -85,18 +86,20 @@ export class Lattice extends LatticeKernel {
 
     this.plots = plots.map((d) => {
       let config = d.config === undefined ? d : d.config;
-      config.width =
-        this.innerWidth * this.gridInternal.plotSizes[d.row][d.column].colSize;
-      config.height =
-        this.innerHeight * this.gridInternal.plotSizes[d.row][d.column].rowSize;
-      const plot = new PlotInLattice(
-        d.row,
-        d.column,
-        d.data,
-        d.type,
-        this.rootId,
-        config
-      );
+      config.width = this.innerWidth * this.gridInternal.plotSizes[d.row][d.column].colSize;
+      config.height = this.innerHeight * this.gridInternal.plotSizes[d.row][d.column].rowSize;
+
+      // ComposePlots have layers array
+      if (Array.isArray(d.layers) && d.layers.length > 0) {
+        const composePlot = new ComposePlot(d.layers, this.rootId, config);
+        composePlot.row = d.row;
+        composePlot.column = d.column;
+        composePlot.rowStart = (grids) => grids[d.row][d.column].rowStart;
+        composePlot.colStart = (grids) => grids[d.row][d.column].colStart;
+        return composePlot;
+      }
+
+      const plot = new PlotInLattice(d.row, d.column, d.data, d.type, this.rootId, config);
 
       // computed property
       // plot.rowStart = this.gridInternal.plotSizes[d.row][d.column].rowStart; // side effect: undocumented plot properties
@@ -126,12 +129,7 @@ export class Lattice extends LatticeKernel {
   render() {
     let svg;
     if (this.parentId === undefined) {
-      this.parentId = createSvg(
-        this.rootId,
-        this.width,
-        this.height,
-        "lattice"
-      );
+      this.parentId = createSvg(this.rootId, this.width, this.height, "lattice");
     }
     svg = createGroup(this.parentId, this.padding, "lattice");
 
@@ -153,11 +151,7 @@ export class Lattice extends LatticeKernel {
       });
 
     if (this.animate) {
-      enterPlot
-        .attr("opacity", 0)
-        .transition()
-        .duration(500)
-        .attr("opacity", 1);
+      enterPlot.attr("opacity", 0).transition().duration(500).attr("opacity", 1);
     } else {
       enterPlot.attr("opacity", 1);
     }
@@ -174,11 +168,7 @@ export class Lattice extends LatticeKernel {
     Object.keys(userInput).forEach((prop) => {
       switch (prop) {
         case "padding":
-          lattice.padding = Object.assign(
-            {},
-            lattice.padding,
-            userInput.padding
-          );
+          lattice.padding = Object.assign({}, lattice.padding, userInput.padding);
           break;
         case "grid":
           lattice.grid = Object.assign({}, lattice.grid, userInput.grid);
@@ -217,14 +207,9 @@ export class Lattice extends LatticeKernel {
 
     if (this.grid.columnSizes !== undefined) {
       this.grid.columns = this.grid.columnSizes.length;
-      const colGridTotal = this.grid.columnSizes.reduce(
-        (a, b) => a + b.size,
-        0
-      );
+      const colGridTotal = this.grid.columnSizes.reduce((a, b) => a + b.size, 0);
       if (Number(colGridTotal.toPrecision(2)) != 1) {
-        console.error(
-          "In columnSizes, sum of all size values must add up to 1."
-        );
+        console.error("In columnSizes, sum of all size values must add up to 1.");
         throw "In columnSizes, sum of all size values must add up to 1.";
       }
     } else {
