@@ -23,112 +23,116 @@
       >
     </noscript>
     <header>
-      <span class="logo"
-        ><a href="/">
-          <img
-            src="img/lattice-logo.png"
-            width="25"
-            style="margin-right: 5px" /></a
-        >Lattice.js
-      </span>
-
-      <a id="storybook-link" href="/storybook/">Storybook</a>
+      <div class="container">
+        <span class="logo">
+          <a href="/">
+            <img src="img/lattice-logo.png" width="25" alt="Lattice.js logo" />
+          </a>
+          Lattice.js
+        </span>
+        <a id="storybook-link" href="/storybook/">storybook →</a>
+      </div>
     </header>
-    <main class="centered max-width">
-      <section class="content">
-        <p class="sub-title">
-          Lattice.js is a JavaScript library for creating coordinated
-          multivariate visualizations for sciences. At its core, Lattice
-          champions a 2D grid-based design approach, which offers an intuitive
-          yet powerful visual solution for rendering multivariate data.
-        </p>
-      </section>
+    <main>
+      <div class="container">
+        <section class="hero">
+          <p class="eyebrow">// LATTICE.JS · v1.0 · pattern @ broad</p>
+          <h1>Lattice.js</h1>
+          <p class="lede">
+            Lattice.js is a JavaScript library for creating coordinated
+            multivariate visualizations for sciences. At its core, Lattice
+            champions a 2D grid-based design approach, which offers an intuitive
+            yet powerful visual solution for rendering multivariate data.
+          </p>
+        </section>
+      </div>
 
-      <section class="content">
-        <h2>Use case: A scatter plot with histograms</h2>
-        <div>
-          <p>
+      <div class="rule"></div>
+
+      <section class="section section-with-band">
+        <div class="container">
+          <p class="label"><span class="num">01</span> · USE CASE</p>
+          <h2>A scatter plot with histograms</h2>
+          <p class="body">
             When viewing a scatter plot with a lot of data points, it is often
             not as easy to get a true sense of the marginal distributions. Using
             Lattice, we can easily render a scatter plot and the marginal
             distributions as histograms along both axes.
           </p>
-          <div>
-            <button onclick="demoScatterHistograms('randomNormal')">
-              Normal
-            </button>
-            <button onclick="demoScatterHistograms('randomInt')">
-              Random Integers
-            </button>
-            <button onclick="demoScatterHistograms('randomExponential')">
-              Exponential
-            </button>
-            <br /><small class="light-grey"
-              >(Click to view a different data set)
-            </small>
+        </div>
+        <div class="demo-band">
+          <div class="demo-band-inner">
+            <div class="demo-buttons">
+              <button onclick="demoScatterHistograms('randomNormal')">Normal</button>
+              <button onclick="demoScatterHistograms('randomInt')">Random Integers</button>
+              <button onclick="demoScatterHistograms('randomExponential')">Exponential</button>
+            </div>
+            <p class="demo-hint">// click to view a different data set</p>
+            <div id="scatter-hist" class="hscroll"></div>
           </div>
+        </div>
+      </section>
+      <div class="rule"></div>
 
-          <div id="scatter-hist" class="hscroll center"></div>
+      <section class="section section-with-band">
+        <div class="container">
+          <p class="label"><span class="num">02</span> · USE CASE</p>
+          <h2>Daily new positive COVID cases in the US</h2>
+          <p class="body">
+            A small multiple is a special kind of grid-based visualization design,
+            where a series of similar charts are rendered and organized in a grid
+            structure. A small multiple makes it easy to compare across many
+            similar datasets. Here, we use Lattice to render the daily positive
+            COVID cases in the 50 states over time as a series of bar graphs,
+            arranged in a less conventional grid that loosely resembles the US
+            map. The daily positive COVID data are obtained from the
+            <a href="https://covidtracking.com/" target="_blank">COVID Tracking Project <i class="fas fa-external-link-alt"></i></a>.
+          </p>
+        </div>
+        <div class="demo-band">
+          <div class="demo-band-inner">
+            <div id="covid-plot" class="hscroll"></div>
+          </div>
         </div>
       </section>
-      <hr />
-      <section class="content">
-        <h2>Use case: Daily new positive COVID cases in the US</h2>
-        <p>
-          A small multiple is a special kind of grid-based visualization design,
-          where a series of similar charts are rendered and organized in a grid
-          structure. A small multiple makes it easy to compare across many
-          similar datasets. Here, we use Lattice to render the daily positive
-          COVID cases in the 50 states over time as a series of bar graphs,
-          arranged in a less conventional grid that loosely resembles the US
-          map. The daily positive COVID data are obtained from the
-          <a href="https://covidtracking.com/" target="_blank"
-            >COVID Tracking Project <i class="fas fa-external-link-alt"></i></a
-          >.
-        </p>
-        <div>
-          <div id="covid-plot" class="hscroll"></div>
-        </div>
-      </section>
-      <hr />
-      <section class="content">
-        <h2>Use case: iCoMut——a visualization for cancer genomes</h2>
-        <p>
-          CoMut plot, introduced by
-          <a
-            href="https://www.broadinstitute.org/blog/visualizing-cancer-genome"
-            target="_blank"
-            >Nicolas Stransky <i class="fas fa-external-link-alt"></i
-          ></a>
-          , is often seen in cancer research publications as a visual summary of
-          genetic variations/mutations in cancer cohorts. The plot itself is
-          essentially a lattice of varous chart types aligned and interconnected
-          via a common variable (X or Y axis). The central panel of a CoMut plot
-          render mutation analyses and metadata of the patients in various
-          charts vertically aligned with a shared X axis (i.e. patients).
-          iCoMut, in production on
-          <a
-            href="http://www.tumorportal.org/tumor_types?ttype=BRCA"
-            target="_blank"
-            >TumorPortal <i class="fas fa-external-link-alt"></i
-          ></a>
-          and
-          <a href="http://firebrowse.org/iCoMut/?cohort=CESC" target="_blank"
-            >FireBrowse <i class="fas fa-external-link-alt"></i></a
-          >, aims to further transform the static image into an interactive data
-          exporer providing greater access to the research community. The cohort
-          data shown below are from FireBrowse.
-        </p>
-        <div>
-          <div id="comut-plot" class="hscroll center"></div>
-        </div>
-      </section>
-      <hr />
+      <div class="rule"></div>
 
-      <section class="flex-container">
-        <div class="content">
+      <section class="section section-with-band">
+        <div class="container">
+          <p class="label"><span class="num">03</span> · USE CASE</p>
+          <h2>iCoMut——a visualization for cancer genomes</h2>
+          <p class="body">
+            CoMut plot, introduced by
+            <a href="https://www.broadinstitute.org/blog/visualizing-cancer-genome" target="_blank">Nicolas Stransky <i class="fas fa-external-link-alt"></i></a>,
+            is often seen in cancer research publications as a visual summary of
+            genetic variations/mutations in cancer cohorts. The plot itself is
+            essentially a lattice of various chart types aligned and interconnected
+            via a common variable (X or Y axis). The central panel of a CoMut plot
+            render mutation analyses and metadata of the patients in various
+            charts vertically aligned with a shared X axis (i.e. patients).
+            iCoMut, in production on
+            <a href="http://www.tumorportal.org/tumor_types?ttype=BRCA" target="_blank">TumorPortal <i class="fas fa-external-link-alt"></i></a>
+            and
+            <a href="http://firebrowse.org/iCoMut/?cohort=CESC" target="_blank">FireBrowse <i class="fas fa-external-link-alt"></i></a>,
+            aims to further transform the static image into an interactive data
+            explorer providing greater access to the research community. The cohort
+            data shown below are from FireBrowse.
+          </p>
+        </div>
+        <div class="demo-band">
+          <div class="demo-band-inner">
+            <div id="comut-plot" class="hscroll"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="rule"></div>
+
+      <div class="container">
+        <section class="section">
+          <p class="label"><span class="num">04</span> · CHART TYPES</p>
           <h2>Basic chart types</h2>
-          <p>
+          <p class="body">
             Lattice offers many basic chart types that can be directly used
             without using a lattice. Here is the list of currently available
             chart types, and each chart below is rendering a random set of data.
@@ -137,65 +141,36 @@
             visualizations. However, more new types of charts will be added as
             we continue to develop new visualizations with Lattice.
           </p>
-          <div class="flex-container flex-wrap">
-            <div class="flex-box">
-              <h3>bar plot</h3>
-              <div id="bar-plot"></div>
-            </div>
-            <div class="flex-box">
-              <h3>column plot</h3>
-              <div id="column-plot"></div>
-            </div>
-            <div class="flex-box">
-              <h3>stacked bar plot</h3>
-              <div id="stacked-bar"></div>
-            </div>
-            <div class="flex-box">
-              <h3>stacked column plot</h3>
-              <div id="stacked-column"></div>
-            </div>
-            <div class="flex-box">
-              <h3>categorical heatmap</h3>
-              <div id="cat-heatmap"></div>
-            </div>
-            <div class="flex-box">
-              <h3>heatmap</h3>
-              <div id="heatmap"></div>
-            </div>
-            <div class="flex-box">
-              <h3>scatter plot</h3>
-              <div id="scatter-plot"></div>
-            </div>
-            <div class="flex-box">
-              <h3>area plot</h3>
-              <div id="area-plot"></div>
-            </div>
-            <div class="flex-box">
-              <h3>barcode plot</h3>
-              <div id="barcode-plot"></div>
-            </div>
+          <div class="gallery-grid">
+            <div class="cell"><h3>bar plot</h3><div id="bar-plot"></div></div>
+            <div class="cell"><h3>column plot</h3><div id="column-plot"></div></div>
+            <div class="cell"><h3>stacked bar plot</h3><div id="stacked-bar"></div></div>
+            <div class="cell"><h3>stacked column plot</h3><div id="stacked-column"></div></div>
+            <div class="cell"><h3>categorical heatmap</h3><div id="cat-heatmap"></div></div>
+            <div class="cell"><h3>heatmap</h3><div id="heatmap"></div></div>
+            <div class="cell"><h3>scatter plot</h3><div id="scatter-plot"></div></div>
+            <div class="cell"><h3>area plot</h3><div id="area-plot"></div></div>
+            <div class="cell"><h3>barcode plot</h3><div id="barcode-plot"></div></div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
 
     <footer>
-      <section class="flex-container flex-wrap">
-        <div>
+      <div class="container">
+        <span>
           <small>
             Lattice.js is designed and developed by
             <a href="https://pattern.broadinstitute.org">Pattern</a>
           </small>
-        </div>
-        <div class="push">
-          <small class="light-grey">
+        </span>
+        <span class="push">
+          <small>
             &copy;<span id="copyright-year"></span>
-            <a href="https://broadinstitute.org/"
-              >Broad Institute. All rights reserved.</a
-            >
+            <a href="https://broadinstitute.org/">Broad Institute. All rights reserved.</a>
           </small>
-        </div>
-      </section>
+        </span>
+      </div>
     </footer>
 
     <script>

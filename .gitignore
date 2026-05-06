@@ -5,3 +5,4 @@ projects/use_cases/build
 storybook-static
 
 .DS_Store
+.superpowers/
