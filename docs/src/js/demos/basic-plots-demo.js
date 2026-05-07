@@ -218,6 +218,64 @@ export function demoStackedColumnPlot() {
   LatticeLib.plot(data, "stackedcolumnplot", id, plotConfig);
 }
 
+export function demoLinePlot() {
+  const id = "line-plot";
+  const distri = "randomNormal";
+  const data = RandomDataLib.createRandomNumericalData(30, distri);
+  data.sort((a, b) => a.x - b.x);
+  const plotConfig = {
+    padding: { top: 20, bottom: 50 },
+    color: latticeColorScheme10[4],
+    axis: {
+      x: { title: "x value", ticks: 5, scaleType: "linear" },
+      y: { title: "y value", ticks: 5 },
+    },
+  };
+  LatticeLib.plot(data, "lineplot", id, plotConfig);
+}
+
+export function demoDonutPlot() {
+  const id = "donut-plot";
+  const data = [
+    { category: "A", value: 30 },
+    { category: "B", value: 22 },
+    { category: "C", value: 18 },
+    { category: "D", value: 15 },
+    { category: "E", value: 15 },
+  ];
+  const plotConfig = {
+    // All four sides must be specified; render() spreads userInput.padding,
+    // overwriting the merged default and leaving missing sides undefined.
+    padding: { top: 20, right: 20, bottom: 20, left: 20 },
+    showLabels: true,
+    innerRadiusRatio: 0.6,
+    categoryAccessor: (d) => d.category,
+    valueAccessor: (d) => d.value,
+  };
+  LatticeLib.plot(data, "donut", id, plotConfig);
+}
+
+export function demoPetalPlot() {
+  const id = "petal-plot";
+  const data = [
+    { label: "A", value: 1.6, width: 0.4, color: latticeColorScheme10[2] },
+    { label: "B", value: -1.1, width: 0.9, color: latticeColorScheme10[3] },
+    { label: "C", value: 1.9, width: 0.8, color: latticeColorScheme10[4] },
+    { label: "D", value: -0.6, width: 0.3, color: latticeColorScheme10[5] },
+    { label: "E", value: 0.9, width: 0.6, color: latticeColorScheme10[0] },
+  ];
+  const plotConfig = {
+    padding: { top: 30, right: 30, bottom: 30, left: 30 },
+    valueDomain: [-2, 2],
+    gridlineValues: [-1, 0, 1],
+    valueAccessor: (d) => d.value,
+    widthAccessor: (d) => d.width,
+    labelAccessor: (d) => d.label,
+    colorAccessor: (d) => d.color,
+  };
+  LatticeLib.plot(data, "petalplot", id, plotConfig);
+}
+
 export function demoStackedBarPlot() {
   const id = "stacked-bar";
   const nBars = 20;
