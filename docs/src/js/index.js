@@ -7,7 +7,10 @@ import {
   demoBarPlot,
   demoColumnPlot,
   demoCategoricalHeatmap,
+  demoDonutPlot,
   demoHeatmap,
+  demoLinePlot,
+  demoPetalPlot,
   demoScatterPlot,
   demoStackedBarPlot,
   demoStackedColumnPlot,
@@ -16,11 +19,13 @@ import {
 import { demoScatterHistograms } from "./demos/scatterplot-histograms-demo.js";
 import { initCovidMap } from "./demos/covid-us-map-demo.js";
 import { init as iCoMutInit } from "../../../notebooks/icomut/src/js/iCoMut.js";
+import { renderHomeTiles } from "./demos/home-tiles-demo.js";
 
 // Expose demoScatterHistograms to window for onclick handlers in HTML
 window.demoScatterHistograms = demoScatterHistograms;
 
 document.addEventListener("DOMContentLoaded", function () {
+  renderHomeTiles();
   plotTypeDemo();
   coordinatedScatterDemo();
   initCovidMap();
@@ -33,7 +38,10 @@ const plotTypeDemo = () => {
   demoBarPlot();
   demoColumnPlot();
   demoCategoricalHeatmap();
+  demoDonutPlot();
   demoHeatmap();
+  demoLinePlot();
+  demoPetalPlot();
   demoScatterPlot();
   demoStackedBarPlot();
   demoStackedColumnPlot();
