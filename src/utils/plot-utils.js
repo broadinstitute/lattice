@@ -2,46 +2,45 @@ import * as d3 from "d3";
 import { NUMERICAL_SCALES, PlotType, ScaleType } from "./constants";
 
 /**
- * Creates an SVG element in the given rootId and returns it.
- * @param {*} rootId
- * @param {*} width
- * @param {*} height
+ * Creates an SVG element inside the given root element and returns its d3 selection.
+ *
+ * Takes an HTMLElement (not an id string) so that mounting works inside shadow
+ * roots (e.g. marimo anywidget hosts), where `document.querySelector("#id")`
+ * cannot reach elements that live in a shadow DOM.
+ *
+ * @param {HTMLElement} rootEl - the container element to append the <svg> to
+ * @param {Number} width
+ * @param {Number} height
+ * @returns {d3.Selection} selection wrapping the newly created <svg>
  */
-export function createSvg(rootId, width, height) {
-  const root = d3.select(`#${rootId}`);
-
-  if (root.empty()) {
-    console.error(`Element with id ${rootId} not found`);
-    throw `Element with id ${rootId} not found`;
+export function createSvg(rootEl, width, height) {
+  if (!rootEl) {
+    console.error("rootEl not provided for creating new SVG");
+    throw "rootEl not provided for creating new SVG";
   }
-  // create svg
-  const svgId = `${rootId}-svg`;
-  root.append("svg").attr("id", svgId).attr("width", width).attr("height", height);
-  return svgId;
+  // shadow-DOM-safe: select via element ref, not a document-scoped ID lookup
+  const root = d3.select(rootEl);
+  return root.append("svg").attr("width", width).attr("height", height);
 }
 
 /**
- * Creates a group in the given rootId and returns it.
- * @param {String} parentId
- * @param {Object} padding
- * @param {String} tag  - id to be appended to end of the group name in the form of config.rootId-id
+ * Creates a group inside the given parent selection and returns its d3 selection.
+ *
+ * @param {d3.Selection} parentSel - d3 selection of the parent svg/g element
+ * @param {Object} padding - { top, left, right, bottom }
+ * @param {String} tag - class/id suffix for debugging visibility (selection is
+ *   the source of truth — sub-selection uses chaining, not document lookups)
+ * @returns {d3.Selection} selection wrapping the newly created <g>
  */
-export function createGroup(parentId, padding, tag) {
-  if (parentId === undefined) {
-    console.error("parentId not provided for creating new group for plot");
-    throw "parentId not provided for creating new group for plot";
+export function createGroup(parentSel, padding, tag) {
+  if (!parentSel || parentSel.empty()) {
+    console.error("parentSel not provided for creating new group for plot");
+    throw "parentSel not provided for creating new group for plot";
   }
-
-  const parent = d3.select(`#${parentId}`);
-  if (parent.empty()) {
-    console.error(`Element with id ${parentId} not found`);
-    throw `Element with id ${parentId} not found`;
-  }
-  const g = parent
+  return parentSel
     .append("g")
-    .attr("id", `${parentId}-${tag}`)
+    .attr("class", `ljs--${tag}`)
     .attr("transform", `translate(${padding.left}, ${padding.top})`);
-  return g;
 }
 
 export function isNumericalScale(type) {
@@ -147,22 +146,26 @@ export function attachTooltip(elements, formatter, tooltipObj) {
 
 /**
  * Creates or selects the SVG + inner group for a plot, including optional title.
+ *
+ * Caller must pass either `parentSel` (an existing <svg> selection to draw into)
+ * or `rootEl` (a DOM container where a new <svg> should be created).
+ *
  * @param {Object} opts
- * @param {string} opts.parentId - existing SVG ID (if already created)
- * @param {string} opts.rootId - DOM container ID
+ * @param {d3.Selection} [opts.parentSel] - existing SVG selection (if already created)
+ * @param {HTMLElement} [opts.rootEl] - DOM container element
  * @param {number} opts.width - SVG width
  * @param {number} opts.height - SVG height
  * @param {Object} opts.padding - { top, left, right, bottom }
- * @param {string} opts.tag - group ID suffix
+ * @param {string} opts.tag - group class suffix
  * @param {string} [opts.title] - optional title text
  * @param {number} opts.innerWidth - plot inner width
- * @returns {{ g: d3.Selection, parentId: string }} the group and resolved parentId
+ * @returns {{ g: d3.Selection, parentSel: d3.Selection }} the group and resolved parent svg selection
  */
-export function setupPlotGroup({ parentId, rootId, width, height, padding, tag, title, innerWidth }) {
-  if (parentId === undefined) {
-    parentId = createSvg(rootId, width, height);
+export function setupPlotGroup({ parentSel, rootEl, width, height, padding, tag, title, innerWidth }) {
+  if (parentSel === undefined) {
+    parentSel = createSvg(rootEl, width, height);
   }
-  const g = createGroup(parentId, padding, tag);
+  const g = createGroup(parentSel, padding, tag);
   if (title !== undefined) {
     g.append("text")
       .html(title)
@@ -170,7 +173,7 @@ export function setupPlotGroup({ parentId, rootId, width, height, padding, tag, 
       .attr("y", -padding.top / 3)
       .attr("text-anchor", "middle");
   }
-  return { g, parentId };
+  return { g, parentSel };
 }
 
 /**

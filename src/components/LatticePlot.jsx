@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useId, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { Plot } from "../controllers/Plot";
 import { ComposePlot } from "../controllers/ComposePlot";
 
@@ -13,9 +13,12 @@ import { ComposePlot } from "../controllers/ComposePlot";
  * @param {Object} props.style - Optional inline styles for the container
  */
 export function LatticePlot({ data, type, layers, config = {}, className, style }) {
+  // shadow-DOM-safe: hold the DOM element directly. We used to derive a string id
+  // via useId() and pass it to d3.select(`#${id}`), which doesn't cross shadow
+  // roots (breaks marimo). Passing the element ref through avoids ID lookups
+  // entirely — d3.select(element) works regardless of shadow boundaries.
   const containerRef = useRef(null);
   const plotRef = useRef(null);
-  const containerId = useId().replace(/:/g, "-");
   const autoWidth = config.width === undefined || config.width === "auto";
   const [measuredWidth, setMeasuredWidth] = useState(null);
 
@@ -54,11 +57,11 @@ export function LatticePlot({ data, type, layers, config = {}, className, style 
     // Clear previous render
     containerRef.current.innerHTML = "";
 
-    // Create and render the plot
+    // Create and render the plot — pass the DOM element directly (shadow-DOM safe)
     if (isComposite) {
-      plotRef.current = new ComposePlot(layers, containerId, effectiveConfig);
+      plotRef.current = new ComposePlot(layers, containerRef.current, effectiveConfig);
     } else {
-      plotRef.current = new Plot(data, type, containerId, effectiveConfig);
+      plotRef.current = new Plot(data, type, containerRef.current, effectiveConfig);
     }
     plotRef.current.render();
 
@@ -69,9 +72,9 @@ export function LatticePlot({ data, type, layers, config = {}, className, style 
       }
       plotRef.current = null;
     };
-  }, [data, type, layers, isComposite, effectiveConfig, containerId]);
+  }, [data, type, layers, isComposite, effectiveConfig]);
 
-  return <div ref={containerRef} id={containerId} className={className} style={style} />;
+  return <div ref={containerRef} className={className} style={style} />;
 }
 
 export default LatticePlot;

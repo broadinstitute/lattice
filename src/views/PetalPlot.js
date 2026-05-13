@@ -32,8 +32,8 @@ function petalPath(position, halfAngle) {
  * @param {Object} config - plot configuration object
  * Expected fields:
  *   - data: array of data points
- *   - rootId: DOM element id to render into (if no parentId)
- *   - parentId: parent SVG group id (for embedding in Lattice)
+ *   - rootEl: DOM container element to render into (if no parentSel)
+ *   - parentSel: parent d3 selection (for embedding in Lattice)
  *   - width: total width of the SVG
  *   - height: total height of the SVG
  *   - padding: { top, right, bottom, left }
@@ -49,20 +49,13 @@ function petalPath(position, halfAngle) {
 function render(config) {
   const plotIdentifier = "petalplot";
 
+  // shadow-DOM-safe: use the parent selection / root element directly
+  // (createSvg returns a selection, no document-scoped ID lookup needed)
   let svg;
-  if (config.parentId) {
-    svg = plotUtils.createGroup(
-      config.parentId,
-      config.padding,
-      plotIdentifier,
-    );
+  if (config.parentSel) {
+    svg = plotUtils.createGroup(config.parentSel, config.padding, plotIdentifier);
   } else {
-    const svgId = plotUtils.createSvg(
-      config.rootId,
-      config.width,
-      config.height,
-    );
-    svg = d3.select(`#${svgId}`);
+    svg = plotUtils.createSvg(config.rootEl, config.width, config.height);
   }
 
   // Inner drawing area dimensions

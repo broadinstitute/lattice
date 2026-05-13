@@ -3,38 +3,28 @@ import * as d3 from "d3";
 export default class Tooltip {
   /**
    * Tooltip object constructor.
-   * This tooltip will hold a reference to an HTML element that will serve as the tooltip.
-   * @param {String} id - id for the tooltip;
+   * Creates a fresh tooltip <div> appended to document.body and caches the
+   * d3 selection. Tooltips live at the document level (not inside the chart)
+   * so they can use page coordinates and escape any parent overflow.
+   *
+   * Shadow-DOM-safe: the cached selection wraps the element we just created,
+   * so we never need a document.querySelector("#id") lookup to find it later.
+   *
    * @param {Boolean} verbose - for debugging; set to true for console logging
    * @param {Integer} offsetX - number of pixels to offset the tooltip from the mouse cursor horizontally
    * @param {Integer} offsetY - number of pixels to offset the tooltip from the mouse cursor vertically
    * @param {Integer} duration - amount of time (in milliseconds) when transitioning tooltip states
-   * @param {d3 Selection} tooltip - Selection containing the tooltip HTML element
    */
-  constructor(id, verbose = false, offsetX = 10, offsetY = 12, duration = 100) {
-    this.id = id;
+  constructor(verbose = false, offsetX = 10, offsetY = 12, duration = 100) {
     this.verbose = verbose;
     this.offsetX = offsetX;
     this.offsetY = offsetY;
     this.duration = duration;
-    this.tooltip = undefined;
 
-    this._createTooltip();
-  }
-
-  /**
-   * Creates a tooltip HTML div element if needed, and stores the selection in the object's tooltip attribute
-   */
-  _createTooltip() {
-    if (d3.select(`#${this.id}`).empty()) {
-      this.tooltip = d3
-        .select("body")
-        .append("div")
-        .attr("class", "ljs--tooltip")
-        .attr("id", this.id);
-    } else {
-      this.tooltip = d3.select(`#${this.id}`);
-    }
+    this.tooltip = d3
+      .select("body")
+      .append("div")
+      .attr("class", "ljs--tooltip");
   }
 
   /**

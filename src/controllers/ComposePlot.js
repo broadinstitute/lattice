@@ -32,18 +32,19 @@ import { Axis } from "../views/Axis";
 export class ComposePlot {
   /**
    * @param {Array<Object>} layers - each with { type, data, color?, series?, tooltip?, axis? }
-   * @param {String} rootId - DOM element ID to render into
+   * @param {HTMLElement} rootEl - DOM element to render into
    * @param {Object} [config] - shared config (width, height, padding, axis, title, animate, orientation)
    */
-  constructor(layers, rootId, config = {}) {
-    if (!rootId) throw "rootId cannot be undefined.";
+  constructor(layers, rootEl, config = {}) {
+    if (!rootEl) throw "rootEl cannot be undefined.";
     if (!layers || !layers.length) throw "At least one layer is required.";
 
     // Validate layer compatibility — throws on mismatch
     const resolvedScales = validateLayerCompatibility(layers);
 
-    this.rootId = rootId;
-    this.parentId = config.parentId;
+    // shadow-DOM-safe: hold the container element + parent SVG selection, not IDs
+    this.rootEl = rootEl;
+    this.parentSel = config.parentSel;
     this.hasRendered = false;
 
     // Shared dimensions & layout
@@ -108,7 +109,6 @@ export class ComposePlot {
       const tooltipConfig = Object.assign(
         {
           enabled: true,
-          id: `${rootId}-tooltip`,
           formatter: tooltipFormatters[layer.type],
         },
         layer.tooltip,
@@ -125,7 +125,7 @@ export class ComposePlot {
 
     // compute unified scales
     this.scale = this._setScales();
-    this.tooltipObj = new Tooltip(`${rootId}-tooltip`);
+    this.tooltipObj = new Tooltip();
   }
 
   /**
@@ -223,17 +223,19 @@ export class ComposePlot {
    */
   render(reset = false) {
     if (reset && this.hasRendered) {
-      d3.select(`#${this.parentId}-compose`).remove();
+      // shadow-DOM-safe: re-use cached group selection rather than re-querying by id
+      if (this._groupSel) this._groupSel.remove();
+      this._groupSel = undefined;
       this.hasRendered = false;
     }
 
     let g;
-    if (this.hasRendered) {
-      g = d3.select(`#${this.parentId}-compose`);
+    if (this.hasRendered && this._groupSel) {
+      g = this._groupSel;
     } else {
       const result = plotUtils.setupPlotGroup({
-        parentId: this.parentId,
-        rootId: this.rootId,
+        parentSel: this.parentSel,
+        rootEl: this.rootEl,
         width: this.width,
         height: this.height,
         padding: this.padding,
@@ -242,7 +244,8 @@ export class ComposePlot {
         innerWidth: this.innerWidth,
       });
       g = result.g;
-      this.parentId = result.parentId;
+      this.parentSel = result.parentSel;
+      this._groupSel = g;
     }
 
     this.axisInternal.x.render(g, this);

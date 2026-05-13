@@ -19,7 +19,7 @@ import { Axis } from "../views/Axis";
 class PlotKernel {
   /**
    * @constructor
-   * @property {String} parentId parent SVG ID
+   * @property {d3.Selection} parentSel parent SVG selection
    * @property {Number} width
    * @property {Number} height
    * @property {Boolean} animate enable/disable transitions/animations
@@ -32,7 +32,8 @@ class PlotKernel {
    */
   constructor() {
     // initiate default values for the following properties
-    this.parentId = undefined;
+    // shadow-DOM-safe: hold a d3 selection of the parent SVG, not an element ID
+    this.parentSel = undefined;
 
     this.width = 300;
     this.height = 300;
@@ -74,7 +75,6 @@ class PlotKernel {
     /** @typedef PlotTooltip */
     let PlotTooltip = {
       enabled: true,
-      id: undefined,
       formatter: undefined, // formatter - Function that takes a single argument (single datum for a particular plot) to generate HTML for tooltip
     };
     this.tooltip = PlotTooltip;
@@ -91,20 +91,21 @@ export class Plot extends PlotKernel {
    * Constructor for Plot
    * @param {Point2D[]|Distribution[]|Object[]} data array of appropriate data objects (e.g. Point2D, Distribution) to use for charting
    * @param {PlotType} type the plot type; should be one from enum PlotType
-   * @param {String} rootId div that the SVG should be created in
+   * @param {HTMLElement} rootEl DOM element that the SVG should be created in
    * @param {PlotKernel|Object} [userInput] custom config (i.e. any attribute in PlotKernel)
    * @constructor
    */
-  constructor(data, type, rootId, userInput = {}) {
+  constructor(data, type, rootEl, userInput = {}) {
     super();
     this.customizableProp = Object.keys(this);
 
-    this._validateInputs(data, type, rootId);
+    this._validateInputs(data, type, rootEl);
     this._userInput = userInput;
 
     /** @property {PlotType} type */
     this.type = type;
-    this.rootId = rootId; // question: why do we allow users to provide rootId and parentId?
+    // shadow-DOM-safe: hold the container element, not an ID string
+    this.rootEl = rootEl;
     this.hasRendered = false;
     this.axisInternal = {}; // do we still need this?
 
@@ -127,7 +128,7 @@ export class Plot extends PlotKernel {
     // additional computed properties
     this.innerWidth = this.width - this.padding.left - this.padding.right;
     this.innerHeight = this.height - this.padding.top - this.padding.bottom;
-    this.tooltipObj = new Tooltip(this.tooltip.id); // get rid of this extra attribute
+    this.tooltipObj = new Tooltip();
 
     if (stackedPlotTypes.includes(this.type)) {
       this.dataStack = plotUtils.createDataStack(this.data, this.type, this.series);
@@ -179,7 +180,6 @@ export class Plot extends PlotKernel {
         case "tooltip":
           // set tooltip config based on plot properties
           plot.tooltip.formatter = tooltipFormatters[plot.type];
-          plot.tooltip.id = `${plot.rootId}-tooltip`;
           // update based on user input
           if (userInput.tooltip !== undefined) plot.tooltip = Object.assign({}, plot.tooltip, userInput.tooltip);
           break;
@@ -299,15 +299,17 @@ export class Plot extends PlotKernel {
    */
   render(reset = false) {
     if (reset && this.hasRendered) {
-      d3.select(`#${this.parentId}-${this.type}`).remove();
+      // shadow-DOM-safe: re-use cached group selection rather than re-querying by id
+      if (this._groupSel) this._groupSel.remove();
+      this._groupSel = undefined;
       this.hasRendered = false;
     }
 
     // Axisless plots (e.g. donut) use their own render function with a config object
     if (axislessPlotTypes.includes(this.type)) {
       const config = {
-        rootId: this.rootId,
-        parentId: this.parentId,
+        rootEl: this.rootEl,
+        parentSel: this.parentSel,
         width: this.width,
         height: this.height,
         innerWidth: this.innerWidth,
@@ -323,12 +325,12 @@ export class Plot extends PlotKernel {
     }
 
     let g;
-    if (this.hasRendered) {
-      g = d3.select(`#${this.parentId}-${this.type}`);
+    if (this.hasRendered && this._groupSel) {
+      g = this._groupSel;
     } else {
       const result = plotUtils.setupPlotGroup({
-        parentId: this.parentId,
-        rootId: this.rootId,
+        parentSel: this.parentSel,
+        rootEl: this.rootEl,
         width: this.width,
         height: this.height,
         padding: this.padding,
@@ -337,7 +339,8 @@ export class Plot extends PlotKernel {
         innerWidth: this.innerWidth,
       });
       g = result.g;
-      this.parentId = result.parentId;
+      this.parentSel = result.parentSel;
+      this._groupSel = g;
     }
     this.axisInternal.x.render(g, this);
     this.axisInternal.y.render(g, this);
@@ -363,7 +366,7 @@ export class Plot extends PlotKernel {
    * @description checks that required inputs are provided. Throws an error if that isn't the case.
    * @private
    */
-  _validateInputs(data, type, rootId) {
+  _validateInputs(data, type, rootEl) {
     if (data === undefined) {
       console.error("No data provided.");
       throw "No data provided.";
@@ -378,9 +381,9 @@ export class Plot extends PlotKernel {
       throw `Unrecognized plot type ${type}`;
     }
 
-    if (rootId === undefined) {
-      console.error("rootId cannot be undefined.");
-      throw "rootId cannot be undefined.";
+    if (rootEl === undefined) {
+      console.error("rootEl cannot be undefined.");
+      throw "rootEl cannot be undefined.";
     }
   }
 

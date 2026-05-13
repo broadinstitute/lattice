@@ -8,7 +8,7 @@ const LATTICE_DEFAULT_PADDING = 20;
 class LatticeKernel {
   /**
    * @constructor
-   * @property {String} parentId div ID that the plot should be created in, if the SVG already exists
+   * @property {d3.Selection} parentSel SVG selection that the plot should be drawn into, if the SVG already exists
    * @property {Number} width - outer width of lattice plot
    * @property {Number} height - outer height of lattice plot
    * @property {Boolean} animate enable/disable transitions/animations
@@ -17,7 +17,8 @@ class LatticeKernel {
    */
 
   constructor() {
-    this.parentId = undefined;
+    // shadow-DOM-safe: hold a d3 selection of the parent SVG, not an element ID
+    this.parentSel = undefined;
     this.width = 1000;
     this.height = 600;
     this.animate = true;
@@ -58,15 +59,16 @@ export class Lattice extends LatticeKernel {
    * Constructor for Lattice controller. This is one of two entry points for a user using this library.
    * @constructor
    * @param {PlotInLattice[]|Object[]} plots - Specifies the configuration for each individual plot.
-   * @param {String} rootId - div ID that the SVG should be created in
+   * @param {HTMLElement} rootEl - DOM element that the SVG should be created in
    * @param {LatticeKernel|Object} userInput - optional, can include any attribute in LatticeKernel
    */
 
-  constructor(plots, rootId, userInput) {
+  constructor(plots, rootEl, userInput) {
     super();
     this.customizableProp = Object.keys(this);
 
-    this.rootId = rootId;
+    // shadow-DOM-safe: hold the container element, not an ID string
+    this.rootEl = rootEl;
     this._userInput = userInput;
     this.grid = {
       rows: d3.max(plots.map((x) => x.row)) + 1 || 1,
@@ -91,7 +93,7 @@ export class Lattice extends LatticeKernel {
 
       // ComposePlots have layers array
       if (Array.isArray(d.layers) && d.layers.length > 0) {
-        const composePlot = new ComposePlot(d.layers, this.rootId, config);
+        const composePlot = new ComposePlot(d.layers, this.rootEl, config);
         composePlot.row = d.row;
         composePlot.column = d.column;
         composePlot.rowStart = (grids) => grids[d.row][d.column].rowStart;
@@ -99,7 +101,7 @@ export class Lattice extends LatticeKernel {
         return composePlot;
       }
 
-      const plot = new PlotInLattice(d.row, d.column, d.data, d.type, this.rootId, config);
+      const plot = new PlotInLattice(d.row, d.column, d.data, d.type, this.rootEl, config);
 
       // computed property
       // plot.rowStart = this.gridInternal.plotSizes[d.row][d.column].rowStart; // side effect: undocumented plot properties
@@ -127,26 +129,25 @@ export class Lattice extends LatticeKernel {
    * @description rendering function of a Lattice object. It creates an SVG/group element as needed for the initial Lattice, generates a group for each individual plot
    */
   render() {
-    let svg;
-    if (this.parentId === undefined) {
-      this.parentId = createSvg(this.rootId, this.width, this.height, "lattice");
+    if (this.parentSel === undefined) {
+      // shadow-DOM-safe: create svg via element ref, not document-scoped ID lookup
+      this.parentSel = createSvg(this.rootEl, this.width, this.height);
     }
-    svg = createGroup(this.parentId, this.padding, "lattice");
+    const svg = createGroup(this.parentSel, this.padding, "lattice");
 
-    const svgId = svg.attr("id");
     let plot = svg.selectAll(".ljs--lattice-plot").data(this.plots);
     const enterPlot = plot
       .enter()
       .append("g")
       .attr("class", "ljs--lattice-plot")
-      .attr("id", (d) => `${svgId}-${d.row}-${d.column}`) // this needs to be the same as the parentId given below
       .attr("transform", (d) => {
         let x = this.xScale(d.colStart(this.gridInternal.plotSizes));
         let y = this.yScale(d.rowStart(this.gridInternal.plotSizes));
         return `translate(${x}, ${y})`;
       })
-      .each((d) => {
-        d.parentId = `${svgId}-${d.row}-${d.column}`;
+      .each(function (d) {
+        // pass the wrapper <g> selection directly as the sub-plot's parent
+        d.parentSel = d3.select(this);
         d.render();
       });
 

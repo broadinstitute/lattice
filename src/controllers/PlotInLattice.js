@@ -8,18 +8,18 @@ export class PlotInLattice extends Plot {
      * @constructor
      * @param {Integer} row 0-based
      * @param {Integer} column 0-based
-     * @param {Point2D[]|Object[]} data 
-     * @param {PlotType} type 
-     * @param {String} [rootId]
-     * @param {PlotKernel|Object} [config] customization 
-      * @property {Integer} row row position 
+     * @param {Point2D[]|Object[]} data
+     * @param {PlotType} type
+     * @param {HTMLElement} [rootEl]
+     * @param {PlotKernel|Object} [config] customization
+      * @property {Integer} row row position
       * @property {Integer} column column posiiotn
       * @property {Point2D[]|Object[]} data
       * @property {PlotType} type
       * */
-    constructor(row, column, data, type, rootId, config){
-        super(data, type, rootId, config);
-       
+    constructor(row, column, data, type, rootEl, config){
+        super(data, type, rootEl, config);
+
         this.row = row;
         this.column = column;
     }

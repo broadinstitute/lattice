@@ -6,6 +6,8 @@ import * as d3 from "d3";
  * @param {Object} config - plot configuration object. See Config.js for more information
  * Expected fields:
  *   - data: array of rows
+ *   - rootEl (or parentSel): DOM container element to render into, or a parent
+ *     d3 selection if embedded in a Lattice
  *   - categoryAccessor (optional): function(d) -> category string
  *   - valueAccessor (optional): function(d) -> numeric value
  *   - innerRadiusRatio (optional): 0–1, default 0.6
@@ -16,20 +18,13 @@ import * as d3 from "d3";
 function render(config) {
   const plotIdentifier = "donutplot";
 
+  // shadow-DOM-safe: use the parent selection / root element directly
+  // (createSvg returns a selection, no document-scoped ID lookup needed)
   let svg;
-  if (config.parentId) {
-    svg = plotUtils.createGroup(
-      config.parentId,
-      config.padding,
-      plotIdentifier
-    );
+  if (config.parentSel) {
+    svg = plotUtils.createGroup(config.parentSel, config.padding, plotIdentifier);
   } else {
-    const svgId = plotUtils.createSvg(
-      config.rootId,
-      config.width,
-      config.height
-    );
-    svg = d3.select(`#${svgId}`);
+    svg = plotUtils.createSvg(config.rootEl, config.width, config.height);
   }
 
   // inner drawing area
