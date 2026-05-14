@@ -35,7 +35,7 @@ export function render(svg, data, scale) {
           .attr("y", (d) => scale.y(d[1]))
           .attr("height", (d) => scale.y(d[0]) - scale.y(d[1]))
           .attr("width", scale.x.bandwidth())
-          .attr("fill", (d) => colorMap[d.series]),
+          .attr("fill", (d) => d.color),
 
       (exit) =>
         exit
