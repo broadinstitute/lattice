@@ -153,7 +153,7 @@ export default class CoMutationPlot {
       height: height,
       grid: this.config.grid,
     };
-    this.lattice = new Lattice(this.latticePlots, this.rootId, latticeConfig);
+    this.lattice = new Lattice(this.latticePlots, document.getElementById(this.rootId), latticeConfig);
 
     const sampleBasedColumn = this.config.sampleBasedColumn;
     this.sampleBasedPlots = this.lattice.plots.filter(

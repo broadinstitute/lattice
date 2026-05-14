@@ -97,7 +97,9 @@ export class Plot extends PlotKernel {
    */
   constructor(data, type, rootEl, userInput = {}) {
     super();
-    this.customizableProp = Object.keys(this);
+    // parentSel holds an internal d3 selection (set during render); excluding
+    // it keeps getCustomizable() output JSON-serializable
+    this.customizableProp = Object.keys(this).filter((k) => k !== "parentSel");
 
     this._validateInputs(data, type, rootEl);
     this._userInput = userInput;

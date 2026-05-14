@@ -65,7 +65,9 @@ export class Lattice extends LatticeKernel {
 
   constructor(plots, rootEl, userInput) {
     super();
-    this.customizableProp = Object.keys(this);
+    // parentSel holds an internal d3 selection (set during render); excluding
+    // it keeps getCustomizable() output JSON-serializable
+    this.customizableProp = Object.keys(this).filter((k) => k !== "parentSel");
 
     // shadow-DOM-safe: hold the container element, not an ID string
     this.rootEl = rootEl;
