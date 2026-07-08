@@ -4,18 +4,11 @@
   "description": "A JavaScript library for creating coordinated multivariate visualizations for scientific data",
   "main": "src/libs/LatticeLib.js",
   "scripts": {
-    "docs": "jsdoc -d projects/use_cases/jsdocs src/controllers/*.js src/libs/LatticeLib.js src/models/*.js src/utils/constants.js src/views/Axis.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "site:docs:dev": "npm --prefix docs run serve",
     "site:docs:build": "npm --prefix docs run build",
     "site:docs:preview": "npm --prefix docs run preview",
-    "demo:use-cases:dev": "npm --prefix projects/use_cases run serve",
-    "demo:use-cases:build": "npm --prefix projects/use_cases run build",
-    "demo:use-cases:preview": "npm --prefix projects/use_cases run preview",
-    "demo:use-cases:random:dev": "npm --prefix projects/use_cases run random-dev",
-    "demo:use-cases:random:build": "npm --prefix projects/use_cases run random-prod",
-    "demo:use-cases:lint-fix": "npm --prefix projects/use_cases run eslint",
     "demo:icomut:dev": "npm --prefix notebooks/icomut run serve",
     "demo:icomut:build": "npm --prefix notebooks/icomut run build",
     "demo:icomut:preview": "npm --prefix notebooks/icomut run preview",
@@ -41,17 +34,17 @@
     "url": "https://github.com/broadinstitute/lattice/issues"
   },
   "homepage": "https://lattice.broadinstitute.org/",
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "d3": "^7.9.0"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.2.19",
     "@storybook/react-vite": "^10.2.19",
-    "css-loader": "^5.2.0",
-    "jsdoc": "^3.6.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "storybook": "^10.2.19",
-    "style-loader": "^2.0.0"
+    "storybook": "^10.2.19"
   }
 }

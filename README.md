@@ -34,7 +34,7 @@ Out-of-the-box CSS styling has been provided for easy usage of the lattice.js li
 import "lattice-viz/src/css/LatticeLib.css";
 ```
 
-You will need to install [style-loader](https://github.com/webpack-contrib/style-loader) and [css-loader](https://github.com/webpack-contrib/css-loader) and add a basic rule for css to your webpack config.
+If you bundle with webpack, you will need to install [style-loader](https://github.com/webpack-contrib/style-loader) and [css-loader](https://github.com/webpack-contrib/css-loader) and add a basic rule for css to your webpack config. Bundlers that handle CSS imports natively (e.g., Vite) need no extra configuration.
 
 ```
 ...
@@ -56,9 +56,3 @@ module: {
 ### Getting started
 
 After cloning the respository from GitHub, run `npm install` at the root of the repository.
-
-### To generate jsdocs
-
-```
-npm run docs
-```
